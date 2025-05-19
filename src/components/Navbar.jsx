@@ -3,7 +3,7 @@ import { routes } from "../config/constant";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center flex-column justify-between border p-6 shadow-md">
+    <nav className="flex items-center flex-column justify-between p-6">
       <Link href={routes.home}>
         <h1 className="md:text-2xl font-bold text-primary md:ml-20">CuratED</h1>
       </Link>
