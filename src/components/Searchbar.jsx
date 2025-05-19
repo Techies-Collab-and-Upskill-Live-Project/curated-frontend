@@ -1,4 +1,4 @@
-import { FiSearch } from 'react-icons/fi';
+import { IconSearch } from '@tabler/icons-react';
 
 export default function Searchbar() {
   return (
@@ -6,7 +6,7 @@ export default function Searchbar() {
       <div className="flex items-center border rounded-[10px] gap-2 mb-2">
         {/* Input Container with Icon */}
         <div className="relative flex-1">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-900" />
+          <IconSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-900" />
           <input
             type="text"
             placeholder="Search/Playlist Link..."
