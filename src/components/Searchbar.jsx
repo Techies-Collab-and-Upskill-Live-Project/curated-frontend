@@ -22,6 +22,8 @@ export default function Searchbar({ onSearch }) {
             placeholder="Search/Playlist Link..."
             className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent"
             required
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
         </div>
 
