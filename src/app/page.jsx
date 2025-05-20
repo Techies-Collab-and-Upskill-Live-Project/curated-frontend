@@ -24,9 +24,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-6 py-16">
         <div className="flex flex-col items-center text-center">
           <Herosection />
-
           <Searchbar onSearch={handleSearch} />
-
           <Videotopicgrid />
         </div>
       </main>
