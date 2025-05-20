@@ -1,9 +1,23 @@
-import Navbar from "@/components/Navbar"; 
+'use client'
+
+import Navbar from "@/components/Navbar";
 import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
 import Videotopicgrid from "@/components/Videotopicgrid";
+import { useState } from "react";
+import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 
 export default function Home() {
+
+  const [videos, setVideos] = useState([]);
+
+  const handleSearch = async (query) => {
+    const results = await fetchYouTubeVideos(query);
+    setVideos(results);
+  };
+
+  console.log(videos)
+
   return (
     <>
       <Navbar />
@@ -11,10 +25,10 @@ export default function Home() {
         <div className="flex flex-col items-center text-center">
           <Herosection />
 
-          <Searchbar />
+          <Searchbar onSearch={handleSearch} />
 
           <Videotopicgrid />
-        </div>      
+        </div>
       </main>
     </>
   );
