@@ -1,4 +1,4 @@
-import { FaLightbulb } from 'react-icons/fa';
+// import { FaLightbulb } from 'react-icons/fa';
 
 export default function Herosection() {
     return (

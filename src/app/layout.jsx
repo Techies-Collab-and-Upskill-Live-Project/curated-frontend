@@ -1,4 +1,4 @@
-import { poppins } from "@/assets/fonts";
+import { poppins } from "../../public/assets/fonts";
 import "@/app/styles/globals.css";
 
 
@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.variable}>
       <body
         className={`${poppins.className} antialiased`}
       >
