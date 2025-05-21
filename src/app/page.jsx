@@ -2,7 +2,7 @@
 import Navbar from "@/components/Navbar";
 import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
-import Videotopicgrid from "@/components/Videotopicgrid";
+// import Videotopicgrid from "@/components/Videotopicgrid";
 
 export default function Home() {
   return (
