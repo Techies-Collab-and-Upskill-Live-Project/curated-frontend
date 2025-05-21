@@ -19,16 +19,16 @@ export default function Videotopicgrid() {
 
   return (
     <div className="mt-12 w-full max-w-4xl mx-auto">
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {topics.map((topic, index) => (
-          <Link 
+          <Link
             key={index}
             href={topic.href}
             className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-100"
           >
             <h3 className="text-xl font-bold text-center">{topic.title}</h3>
-            
+
             {topic.subtitle && (
               typeof topic.subtitle === 'string' ? (
                 <p className="text-gray-600 text-center mt-2">{topic.subtitle}</p>
