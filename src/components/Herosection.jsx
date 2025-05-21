@@ -7,6 +7,7 @@ export default function Herosection() {
             <div className="absolute left-[13%] -top-10">
                 <Image
                     src="/icons/Bulb.svg"
+                    className='md:w-[200px]'
                     alt="Lightbulb icon"
                     width={81.34}
                     height={104.41}
