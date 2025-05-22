@@ -5,8 +5,8 @@ export default function Herosection() {
         <div className="text-center relative">
             {/* Bulb Icon Image */}
             <div className="absolute 
-                left-[5%] sm:left-[-4%] md:left-[8%] lg:left-[11%] xl:left-[14%] 
-          -top-6 sm:-top-8 md:-top-10">
+                left-[15%] sm:left-[-4%] md:left-[8%] lg:left-[11%] xl:left-[14%] 
+                -top-6 sm:-top-8 md:-top-10">
                 <Image
                     src="/icons/Bulb.svg"
                     alt="Lightbulb icon"
@@ -17,10 +17,10 @@ export default function Herosection() {
             </div>
 
             <div className="pt-12 sm:pt-14 md:pt-16 lg:pt-20">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                     Discover Smarter Ways to Learn
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
+                <p className="sm:text-md md:text-lg text-white mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
                     CuratED helps you find insightful, educational videos tailored to your interests
                 </p>
             </div>
