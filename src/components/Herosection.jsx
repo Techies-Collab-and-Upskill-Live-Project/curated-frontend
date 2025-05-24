@@ -5,7 +5,7 @@ export default function Herosection() {
                 <div className="flex flex-col items-center text-center">
                 {/* Lightbulb Icon */}
                 <div className="flex justify-centre -mb-2">
-                    <FaLightbulb className="text-yellow-400 text2xl" />
+                    {/* <FaLightbulb className="text-yellow-400 text2xl" /> */}
                 </div>
                 <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
                     Discover Smarter Ways to Learn
