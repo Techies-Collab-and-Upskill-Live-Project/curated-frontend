@@ -6,6 +6,7 @@ import Searchbar from "@/components/Searchbar";
 import Videotopicgrid from "@/components/Videotopicgrid";
 import { useState } from "react";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
+import FeaturedVideos from "@/components/FeaturedVideos";
 
 export default function Home() {
 
@@ -25,6 +26,7 @@ export default function Home() {
         <div className="flex flex-col items-center text-center">
           <Herosection />
           <Searchbar onSearch={handleSearch} />
+          <FeaturedVideos />
           <Videotopicgrid />
         </div>
       </main>
