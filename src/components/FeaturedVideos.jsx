@@ -40,12 +40,12 @@ const FeaturedVideos = () => {
           <div key={id} className="aspect-w-16 aspect-h-9">
             <iframe
               className="w-full h-full rounded-lg"
-              src={`https://www.youtube.com/embed/${id}`}
+              src={`https://www.youtube.com/embed/${id}?modestbranding=1&controls=0&rel=0`}
               title={`YouTube video ${id}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               loading="lazy"
-            ></iframe>
+            />
           </div>
         ))}
       </div>
