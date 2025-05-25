@@ -11,6 +11,7 @@ function getRandomVideos(count = VIDEO_COUNT) {
 
 const FeaturedVideos = () => {
   const [selectedVideos, setSelectedVideos] = useState([]);
+  const [playVideoIds, setPlayVideoIds] = useState([]);
 
   useEffect(() => {
     try {
@@ -32,20 +33,32 @@ const FeaturedVideos = () => {
     }
   }, []);
 
+  const handleThumbnailClick = (id) => {
+    setPlayVideoIds((prev) => [...prev, id]);
+  };
+
   return (
-    <section className="py-8 px-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">🎥 Featured Videos</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section className="py-6 px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {selectedVideos.map((id) => (
-          <div key={id} className="aspect-w-16 aspect-h-9">
-            <iframe
-              className="w-full h-full rounded-lg"
-              src={`https://www.youtube.com/embed/${id}?modestbranding=1&controls=0&rel=0`}
-              title={`YouTube video ${id}`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-            />
+          <div key={id} className="aspect-w-16 w-[370px] h-[180px] aspect-h-10 cursor-pointer rounded overflow-hidden shadow">
+            {playVideoIds.includes(id) ? (
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`}
+                title={`YouTube video ${id}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              ></iframe>
+            ) : (
+              <img
+                onClick={() => handleThumbnailClick(id)}
+                src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+              />
+            )}
           </div>
         ))}
       </div>
