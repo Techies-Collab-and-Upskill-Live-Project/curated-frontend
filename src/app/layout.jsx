@@ -1,6 +1,6 @@
 import { poppins } from "@/assets/fonts";
 import "@/app/styles/globals.css";
-
+import NextTopLoader from "@/components/ui/top-loader";
 
 export const metadata = {
   title: "CuratED - Curated Education",
@@ -10,9 +10,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className} antialiased`}
-      >
+      <body className={`${poppins.className} antialiased`}>
+        <NextTopLoader />
         {children}
       </body>
     </html>
