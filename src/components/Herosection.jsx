@@ -5,8 +5,7 @@ export default function Herosection() {
         <div className="text-center relative">
             {/* Bulb Icon Image */}
             <div className="absolute 
-                left-[15%] sm:left-[-4%] md:left-[8%] lg:left-[11%] xl:left-[14%] 
-                -top-6 sm:-top-8 md:-top-10">
+                right-[89%] -translate-x-1/2 mt-12">
                 <Image
                     src="/icons/Bulb.svg"
                     alt="Lightbulb icon"
@@ -16,7 +15,7 @@ export default function Herosection() {
                 />
             </div>
 
-            <div className="pt-12 sm:pt-14 md:pt-16 lg:pt-20">
+            <div className="mt-20 sm:pt-14 md:pt-16 lg:pt-20">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                     Discover Smarter Ways to Learn
                 </h1>
