@@ -13,9 +13,9 @@ export default function Searchbar({ onSearch }) {
 
   return (
     <div className="w-full max-w-2xl relative">
-      <div className="flex items-center border rounded-[10px] gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-2">
         {/* Input Container with Icon */}
-        <div className="relative flex-1">
+        <div className="relative flex-1 border rounded-[10px]">
           <IconSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white" />
           <input
             type="text"
@@ -28,7 +28,7 @@ export default function Searchbar({ onSearch }) {
         </div>
 
         {/* Search Button */}
-        <button onClick={handleSubmit} className="bg-primary text-white px-6 py-2 rounded-md transition-colors">
+        <button onClick={handleSubmit} className="bg-primary text-white px-6 py-2 border border-primary rounded-md transition-colors">
           Search
         </button>
       </div>
