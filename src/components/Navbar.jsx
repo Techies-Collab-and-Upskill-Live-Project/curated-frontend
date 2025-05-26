@@ -10,7 +10,7 @@ export default function Navbar() {
       <div className="flex items-center gap-2">
         <Link
           href={routes.login}
-          className="px-4 py-2 border rounded-[10px] md:px-6 md:py-3"
+          className="px-4 py-2 border border-primary rounded-[10px] md:px-6 md:py-3 font-medium"
         >
           Login
         </Link>
