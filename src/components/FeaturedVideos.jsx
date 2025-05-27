@@ -39,30 +39,36 @@ const FeaturedVideos = () => {
 
   return (
     <section className="py-6 px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {selectedVideos.map((id) => (
-          <div key={id} className="aspect-w-16 w-[370px] h-[180px] aspect-h-10 cursor-pointer rounded overflow-hidden shadow">
-            {playVideoIds.includes(id) ? (
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`}
-                title={`YouTube video ${id}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              ></iframe>
-            ) : (
-              <img
-                onClick={() => handleThumbnailClick(id)}
-                src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
-                alt="Video thumbnail"
-                className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-              />
-            )}
-          </div>
-        ))}
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold">Enjoy Your Learning Experience</h2>
+        <p className="sm:text-md md:text-lg mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
+                    with properly created content designed just for you.
+                </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {selectedVideos.map((id) => (
+              <div key={id} className="aspect-w-16 w-[370px] h-[180px] aspect-h-10 cursor-pointer rounded overflow-hidden shadow">
+                {playVideoIds.includes(id) ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`}
+                    title={`YouTube video ${id}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
+                ) : (
+                  <img
+                    onClick={() => handleThumbnailClick(id)}
+                    src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
+                    alt="Video thumbnail"
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                  />
+                )}
+              </div>
+            ))}
+        </div>
       </div>
-    </section>
+    </section >
   );
 };
 
