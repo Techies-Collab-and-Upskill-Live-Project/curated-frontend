@@ -40,14 +40,10 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <Herosection />
             <Searchbar onSearch={handleSearch} />
-            <FeaturedVideos />
             <Videotopicgrid />
-            <div className="flex justify-center">
-              <div className="w-full max-w-4xl">
-              </div>
-            </div>
           </div>
         </header>
+        <FeaturedVideos />
         <Testimonials />
       </div>
 
