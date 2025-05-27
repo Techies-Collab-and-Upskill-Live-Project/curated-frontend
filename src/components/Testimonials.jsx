@@ -26,20 +26,12 @@ const testimonials = [
       "I didn’t know I needed this app until I started using it. Now I can’t imagine going back.",
   },
   {
-    name: "Emily Chen",
-    role: "UX Designer",
-    image: "/avatars/avatar4.jpg",
-    stars: 5,
-    message:
-      "Finally, an app that does what it’s meant to—and just does it well.",
-  },
-  {
     name: "Amanda Lee",
     role: "Financial Analyst",
-    image: "/avatars/avatar5.jpg",
+    image: "/avatars/avatar8.jpg",
     stars: 5,
     message:
-      "It’s rare to find an app that feels this lightweight and powerful at the same time.",
+      "It's rare to find an app that feels this lightweight and powerful at the same time.",
   },
   {
     name: "James Okafor",
@@ -57,22 +49,14 @@ const testimonials = [
     message:
       "I’ve tried a few alternatives, but this one is easily the most reliable and user-friendly.",
   },
-  {
-    name: "Ethan Park",
-    role: "Accountant",
-    image: "/avatars/avatar8.jpg",
-    stars: 5,
-    message:
-      "I appreciate how it respects my time—no clutter, just results.",
-  },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-20 px-4 bg-white">
+    <section className="mb-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-12">Success Stories</h2>
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 text-left">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 text-left">
           {testimonials.map((t, idx) => (
             <div
               key={idx}

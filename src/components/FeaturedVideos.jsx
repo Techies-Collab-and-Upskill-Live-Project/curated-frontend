@@ -44,7 +44,7 @@ const FeaturedVideos = () => {
         <p className="sm:text-md md:text-lg mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
                     with properly created content designed just for you.
                 </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-3 gap-4">
             {selectedVideos.map((id) => (
               <div key={id} className="aspect-w-16 w-[370px] h-[180px] aspect-h-10 cursor-pointer rounded overflow-hidden shadow">
                 {playVideoIds.includes(id) ? (
