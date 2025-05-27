@@ -28,31 +28,32 @@ export default function Home() {
       <div className="flex flex-col">
         <header className="relative">
           <div className="absolute inset-0 -z-10 h-full w-full">
-            <Image 
+            <Image
               src="/icons/Landing-Image.svg"
               alt="Header Background"
               fill
-              className="object-cover object-center"    
-              priority    
+              className="object-cover object-center"
+              priority
             />
           </div>
 
           <div className="flex flex-col items-center text-center">
             <Herosection />
-            <Searchbar />
-            {/* <Videotopicgrid /> */}
+            <Searchbar onSearch={handleSearch} />
+            <FeaturedVideos />
+            <Videotopicgrid />
             <div className="flex justify-center">
               <div className="w-full max-w-4xl">
-              </div>            
+              </div>
             </div>
-          </div>        
+          </div>
         </header>
         <Testimonials />
       </div>
-      
+
       <footer>
-                <Footer />
+        <Footer />
       </footer>
     </>
-   );
+  );
 }
