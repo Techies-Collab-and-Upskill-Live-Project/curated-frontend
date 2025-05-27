@@ -1,14 +1,27 @@
 "use client";
+
 import Image from 'next/image';
 import Navbar from "@/components/Navbar";
 import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
-import Featuresgrid from "@/components/Featuresgrid";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-// import Videotopicgrid from "@/components/Videotopicgrid";
+import Videotopicgrid from "@/components/Videotopicgrid";
+import FeaturedVideos from "@/components/FeaturedVideos";
+import { useState } from "react";
+import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 
 export default function Home() {
+
+  const [videos, setVideos] = useState([]);
+
+  const handleSearch = async (query) => {
+    const results = await fetchYouTubeVideos(query);
+    setVideos(results);
+  };
+
+  console.log(videos)
+
   return (
     <>
       <Navbar />
@@ -30,18 +43,11 @@ export default function Home() {
             {/* <Videotopicgrid /> */}
             <div className="flex justify-center">
               <div className="w-full max-w-4xl">
-                <Featuresgrid />
               </div>            
             </div>
           </div>        
         </header>
         <Testimonials />
-
-        <main className="container mx-auto px-4 py-12">
-          
-          
-        </main>
-
       </div>
 
       <footer>
