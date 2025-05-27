@@ -8,6 +8,8 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import Videotopicgrid from "@/components/Videotopicgrid";
 import FeaturedVideos from "@/components/FeaturedVideos";
+import Valueproposition from "@/components/Valueproposition";
+import Howitworks from "@/components/Howitworks";
 import { useState } from "react";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 
@@ -44,6 +46,8 @@ export default function Home() {
           </div>
         </header>
         <FeaturedVideos />
+        <Valueproposition />
+        <Howitworks />
         <Testimonials />
       </div>
 
