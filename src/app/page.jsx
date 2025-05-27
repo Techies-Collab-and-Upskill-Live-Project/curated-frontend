@@ -49,10 +49,10 @@ export default function Home() {
         </header>
         <Testimonials />
       </div>
-
+      
       <footer>
-        <Footer />
+                <Footer />
       </footer>
     </>
-  );
+   );
 }
