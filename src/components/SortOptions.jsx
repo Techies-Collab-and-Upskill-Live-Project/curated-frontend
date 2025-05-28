@@ -1,13 +1,24 @@
-const SortOptions = () => {
+// components/SortOptions.jsx
+import React, { useState } from 'react';
+import BeautifulButton from './BeautifulButton';
+
+const options = ["All", "Sort by Topic", "Sort by Date", "By Relevance", "By Hashtags"];
+
+export default function SortOptions() {
+    const [selected, setSelected] = useState("All");
+
     return (
-        <div className="flex flex-wrap gap-2 px-4 pb-2">
-            {["All", "Sort by Topic", "Sort by Date", "By Relevance", "By Hashtags"].map((label) => (
-                <button key={label} className="px-4 py-2 bg-gray-200 rounded-full text-sm hover:bg-gray-300">
+        <div className="flex flex-wrap py-8 gap-2 px-4 pb-2">
+            {options.map((label) => (
+                <BeautifulButton
+                    key={label}
+                    variant={selected === label ? 'playlist' : 'default'}
+                    className="text-sm px-14 py-3 rounded-[8px]"
+                    onClick={() => setSelected(label)}
+                >
                     {label}
-                </button>
+                </BeautifulButton>
             ))}
         </div>
     );
-};
-
-export default SortOptions;
+}

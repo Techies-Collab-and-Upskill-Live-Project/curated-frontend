@@ -1,5 +1,6 @@
 "use client"
 
+import Navbar from '@/components/Navbar';
 import SortOptions from '@/components/SortOptions';
 import VideoList from '@/components/VideoList';
 import { useSearchStore } from '@/store/useSearchStore'
@@ -40,8 +41,8 @@ const page = () => {
     }, [results, router]);
 
     return (
-        <div className="max-w-6xl mx-auto">
-            page
+        <div className="mx-auto">
+            <Navbar />
             <SortOptions />
             <VideoList videos={results} />
         </div>

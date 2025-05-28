@@ -1,3 +1,5 @@
+import { FaSave } from "react-icons/fa";
+
 const VideoCard = ({ video }) => {
     return (
         <div className="flex gap-4 p-4 border-b">
@@ -16,7 +18,7 @@ const VideoCard = ({ video }) => {
                 <div className="text-xs text-gray-500 mt-1">
                     3months Ago • 100k vies
                 </div>
-                <button className="mt-2 text-sm text-blue-500 hover:underline">Save to Playlist</button>
+                <FaSave className="mt-2 text-sm text-blue-500 hover:underline" />
             </div>
         </div>
     );
