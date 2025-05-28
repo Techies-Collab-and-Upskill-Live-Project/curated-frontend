@@ -13,10 +13,11 @@ import Howitworks from "@/components/Howitworks";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 import { useSearchStore } from '@/store/useSearchStore';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Home() {
   const router = useRouter()
-  const { results, setResults, setLoading, clearResults } = useSearchStore();
+  const { results, setResults, loading, setLoading, clearResults } = useSearchStore();
 
   const handleSearch = async (query) => {
     setLoading(true);
@@ -33,6 +34,8 @@ export default function Home() {
   };
 
   console.log(results)
+
+  if (loading) return <LoadingSpinner />
 
   return (
     <>
