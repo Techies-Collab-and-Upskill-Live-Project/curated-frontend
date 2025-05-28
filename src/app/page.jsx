@@ -12,9 +12,10 @@ import Valueproposition from "@/components/Valueproposition";
 import Howitworks from "@/components/Howitworks";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 import { useSearchStore } from '@/store/useSearchStore';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-
+  const router = useRouter()
   const { results, setResults, setLoading, clearResults } = useSearchStore();
 
   const handleSearch = async (query) => {
@@ -22,6 +23,7 @@ export default function Home() {
     try {
       const results = await fetchYouTubeVideos(query);
       setResults(results);
+      router.push('/results')
     } catch (error) {
       console.error("Error fetching videos:", error);
       clearResults();
