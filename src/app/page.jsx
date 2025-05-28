@@ -10,19 +10,27 @@ import Videotopicgrid from "@/components/Videotopicgrid";
 import FeaturedVideos from "@/components/FeaturedVideos";
 import Valueproposition from "@/components/Valueproposition";
 import Howitworks from "@/components/Howitworks";
-import { useState } from "react";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
+import { useSearchStore } from '@/store/useSearchStore';
 
 export default function Home() {
 
-  const [videos, setVideos] = useState([]);
+  const { results, setResults, setLoading, clearResults } = useSearchStore();
 
   const handleSearch = async (query) => {
-    const results = await fetchYouTubeVideos(query);
-    setVideos(results);
+    setLoading(true);
+    try {
+      const results = await fetchYouTubeVideos(query);
+      setResults(results);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+      clearResults();
+    } finally {
+      setLoading(false);
+    }
   };
 
-  console.log(videos)
+  console.log(results)
 
   return (
     <>
