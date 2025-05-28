@@ -4,7 +4,7 @@ const testimonials = [
   {
     name: "John Doe",
     role: "Product Manager",
-    image: "/avatars/avatar1.jpg",
+    image: "/icons/Avatar1.svg",
     stars: 5,
     message:
       "This app just gets me. Everything is simple, clean, and works exactly how I expect it to.",
@@ -12,7 +12,7 @@ const testimonials = [
   {
     name: "Sarah Benson",
     role: "Software Engineer",
-    image: "/avatars/avatar2.jpg",
+    image: "/icons/Avatar2.svg",
     stars: 5,
     message:
       "No distractions, no fluff—just what I need when I need it. Super refreshing!",
@@ -20,7 +20,7 @@ const testimonials = [
   {
     name: "Michael Tan",
     role: "Small Business Owner",
-    image: "/avatars/avatar3.jpg",
+    image: "/icons/Avatar3.svg",
     stars: 5,
     message:
       "I didn’t know I needed this app until I started using it. Now I can’t imagine going back.",
@@ -28,7 +28,7 @@ const testimonials = [
   {
     name: "Amanda Lee",
     role: "Financial Analyst",
-    image: "/avatars/avatar8.jpg",
+    image: "/icons/Avatar4.svg",
     stars: 5,
     message:
       "It's rare to find an app that feels this lightweight and powerful at the same time.",
@@ -36,7 +36,7 @@ const testimonials = [
   {
     name: "James Okafor",
     role: "Startup Founder",
-    image: "/avatars/avatar6.jpg",
+    image: "/icons/Avatar5.svg",
     stars: 5,
     message:
       "Setup was quick, and I was up and running in minutes. Love the simplicity.",
@@ -44,7 +44,7 @@ const testimonials = [
   {
     name: "Sophia Martin",
     role: "Digital Marketer",
-    image: "/avatars/avatar7.jpg",
+    image: "/icons/Avatar6.svg",
     stars: 5,
     message:
       "I’ve tried a few alternatives, but this one is easily the most reliable and user-friendly.",
