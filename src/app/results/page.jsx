@@ -41,8 +41,7 @@ const page = () => {
     }, [results, router]);
 
     return (
-        <div className="mx-auto">
-            <Navbar />
+        <div className="p-8 mx-auto">
             <SortOptions />
             <VideoList videos={results} />
         </div>

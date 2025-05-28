@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-col">
         <header className="relative">
           <div className="absolute inset-0 -z-10 h-full w-full">

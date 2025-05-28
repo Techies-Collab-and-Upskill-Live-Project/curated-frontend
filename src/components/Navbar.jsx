@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { routes } from "../config/constant";
 import { Bell } from "lucide-react";

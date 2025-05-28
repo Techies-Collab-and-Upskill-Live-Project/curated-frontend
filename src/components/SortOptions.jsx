@@ -8,7 +8,7 @@ export default function SortOptions() {
     const [selected, setSelected] = useState("All");
 
     return (
-        <div className="flex flex-wrap py-8 gap-2 px-4 pb-2">
+        <div className="flex flex-wrap py-8 gap-2 pb-2">
             {options.map((label) => (
                 <BeautifulButton
                     key={label}

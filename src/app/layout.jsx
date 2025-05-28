@@ -1,6 +1,7 @@
 import { poppins } from "@/assets/fonts";
 import "@/app/styles/globals.css";
 import NextTopLoader from "@/components/ui/top-loader";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "CuratED - Curated Education",
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <Navbar />
         <NextTopLoader />
         {children}
       </body>
