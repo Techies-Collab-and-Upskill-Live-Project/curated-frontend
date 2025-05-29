@@ -29,7 +29,6 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto">
-          {/* Lightbulb Illustration (placeholder emoji for now) */}
           <div className="text-4xl mb-2">💡</div>
 
           <h2 className="text-3xl font-extrabold text-gray-800">
@@ -44,7 +43,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="Search/Playlist Link..."
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-md"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-md text-black placeholder-gray-400"
             />
             <button className="bg-[#ED7D31] text-white px-6 py-2 rounded-lg hover:bg-[#e76d1a]">
               Search
@@ -61,7 +60,7 @@ export default function Home() {
           <div className="aspect-video rounded-lg overflow-hidden shadow-md">
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/8nQ5yGRZCkM"
+              src="https://www.youtube.com/embed/kt3ZtW9MXhw"
               title="Grids in Web Design"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -73,7 +72,7 @@ export default function Home() {
           <div className="aspect-video rounded-lg overflow-hidden shadow-md">
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/3mZ3j0d2XMw"
+              src="https://www.youtube.com/embed/1Rs2ND1ryYc"
               title="Spacing Elements"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
