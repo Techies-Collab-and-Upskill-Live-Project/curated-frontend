@@ -19,21 +19,7 @@ CuratED is a web application that connects students with curated digital learnin
 
 ---
 
-## 📁 Project Structure
 
-```
-/app
-  └── /signup             → Sign-up form UI & logic
-  └── /login              → Login form UI
-/components
-  └── InputField.tsx      → Reusable input component
-  └── Button.tsx          → Custom button
-/public/assets            → Static images (e.g., Google icon)
-/styles
-  └── globals.css         → Tailwind config + global styles
-```
-
----
 
 ## ✨ Features Implemented
 
