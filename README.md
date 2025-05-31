@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here’s the updated `README.md` file for the **CuratED Frontend**, reflecting everything we’ve discussed so far and removing the testing section as requested:
 
-## Getting Started
+---
 
-First, run the development server:
+# CuratED – Frontend
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+CuratED is a web application that connects students with curated digital learning resources across various academic disciplines. This repository hosts the frontend codebase built with modern React (Next.js 14), Tailwind CSS, and reusable components for performance and maintainability.
+
+---
+
+## 🔧 Tech Stack
+
+* **Framework:** Next.js 14 (App Router)
+* **Styling:** Tailwind CSS with custom theming
+* **Component Architecture:** Reusable components (`InputField`, `Button`, etc.)
+* **State Management:** React `useState`, `useEffect` (local state, no external state library used yet)
+* **Form Validation:** `validator` package
+* **Authentication UI:** Sign Up and Login forms
+
+---
+
+## 📁 Project Structure
+
+```
+/app
+  └── /signup             → Sign-up form UI & logic
+  └── /login              → Login form UI
+/components
+  └── InputField.tsx      → Reusable input component
+  └── Button.tsx          → Custom button
+/public/assets            → Static images (e.g., Google icon)
+/styles
+  └── globals.css         → Tailwind config + global styles
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ✨ Features Implemented
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔐 Sign-Up Form
 
-## Learn More
+* Collects: First name, Last name, Email, Password, Confirm Password
+* Password strength validation using `validator.isStrongPassword`:
 
-To learn more about Next.js, take a look at the following resources:
+  * Min 8 characters
+  * At least 1 uppercase, 1 lowercase, 1 number, and 1 special character
+* Real-time feedback if password is weak or doesn't match
+* Terms and Conditions checkbox (validated before submission)
+* Accessible and responsive layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🧩 Custom InputField Component
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A shared input component used across forms. Supports:
 
-## Deploy on Vercel
+* `label`, `value`, `onChange`, `isValid`, `type`, `required`
+* `containerClass` for layout flexibility
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✅ Validation Logic
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All inputs are validated live:
+
+* **Email:** Regex check via `validator`
+* **Password:** Strength validation
+* **Confirm Password:** Match validation
+* **Checkbox:** Ensures terms are accepted
+
+---
+
+## 🎨 Styling
+
+* Built with **Tailwind CSS**
+* Custom colors and box shadows defined in `tailwind.config.js`
+* Box shadow example used:
+
+  ```js
+  boxShadow: {
+    'custom-shadow': '0px 4px 15px 0px #E2725B1A'
+  }
+  ```
+* Form sections are mobile-responsive
+
+---
+
+## 🔄 User Feedback
+
+* Inline error messages:
+
+  * Weak password
+  * Password mismatch
+  * Invalid email
+* Input `isValid` state updates border colors dynamically
+
+---
+
+## 🔗 Setup Instructions
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-org/curated-frontend.git
+   cd curated-frontend
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run Development Server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for Production**
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+## ✅ Next Steps
+
+* Add authentication functionality (API connection)
+* Integrate toast notifications
+* Finalize full navigation and dashboard layout
+* Add global error handling and form submission state
+* Implement testing (Jest, React Testing Library, Playwright)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+Let me know if you want to generate this into a `README.md` file or push it to a repository.
