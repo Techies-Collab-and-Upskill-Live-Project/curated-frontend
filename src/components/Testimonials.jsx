@@ -55,12 +55,16 @@ export default function Testimonials() {
   return (
     <section className="mb-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12">Success Stories</h2>
+        <h2 className="text-4xl sm:text-4xl font-bold mt-10 mb-2">Success Stories</h2>
+         <p className="text-gray-600 max-w-2xl mx-auto mb-12">
+                    See how CuratED is making impact
+                </p>
+        
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 text-left">
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="bg-[#FFF5F5] rounded-xl p-6 shadow-sm flex flex-col items-start"
+              className="bg-[#FFF3F1] rounded-xl p-6 shadow-sm flex flex-col items-start"
             >
               <div className="flex items-center space-x-4 mb-4">
                 <Image
