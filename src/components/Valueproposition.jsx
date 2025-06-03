@@ -23,8 +23,8 @@ export default function ValueProposition() {
         <section className="py-16 bg-white">
             <div className="max-w-7xl mx-auto px-4 text-center mb-12">
                 <h2 className="text-4xl font-bold mb-2">What We Offer</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                    Tools That make learning easier
+                <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+                    Tools that make learning easier
                 </p>
 
                 <div className="grid gap-6 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 text-left">
@@ -40,7 +40,7 @@ export default function ValueProposition() {
                                     height={60}
                                     className="object-contain" />
                             </div>
-                            <div key={index} className="p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <div key={index} className="p-6 rounded-lg">
                                 <h3 className="text-xl font-semibold mb-4">{item.title}</h3>
                                 <p className="text-gray-600">{item.description}</p>
                             </div>

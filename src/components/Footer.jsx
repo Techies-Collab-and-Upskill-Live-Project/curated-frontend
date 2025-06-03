@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FaGooglePlay, FaAppStore } from 'react-icons/fa';
+import { routes } from "../config/constant";
 
 export default function Footer() {
   return (
@@ -37,7 +38,7 @@ export default function Footer() {
             <div>
               <h4 className="font-semibold mb-4">All Pages</h4>
               <ul className="space-y-2">
-                <li><Link href="#" className="text-gray-300 hover:text-white">Home</Link></li>
+                <li><Link href={routes.home} className="text-gray-300 hover:text-white">Home</Link></li>
                 <li><Link href="#" className="text-gray-300 hover:text-white">App</Link></li>
                 <li><Link href="#" className="text-gray-300 hover:text-white">Blogs</Link></li>
                 <li><Link href="#" className="text-gray-300 hover:text-white">Blog Open</Link></li>
@@ -67,17 +68,12 @@ export default function Footer() {
               </button>
             </div>
           </div>
-        </div>
-
+        </div>    
         {/* Bottom Section */}
-        <div className="border-t border-white pt-8 flex flex-col md:flex-row justify-between text-white items-center">
+        <div className="border-t border-white pt-8 text-white text-center">
           <p className="mb-4 md:mb-0">© {new Date().getFullYear()} All rights Reserved</p>
-          <div className="flex space-x-6">
-            <Link href="#" className="hover:text-gray-700">Privacy Policy</Link>
-            <Link href="#" className="hover:text-gray-700">Terms of Services</Link>
-          </div>
-        </div>
-      </div>
+        </div>   
+      </div>       
     </footer>
   );
 }
