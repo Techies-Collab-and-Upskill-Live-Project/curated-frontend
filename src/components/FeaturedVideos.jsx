@@ -38,13 +38,13 @@ const FeaturedVideos = () => {
   };
 
   return (
-    <section className="py-6 px-4 text-white">
+    <section className="py-6 px-4 bg-white">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold">
+        <h2 className="text-4xl sm:text-4xl font-bold mt-10 mb-2">
           Enjoy Your Learning Experience
         </h2>
-        <p className="sm:text-md md:text-lg mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
-          with properly created content designed just for you.
+        <p className="text-gray-600 max-w-2xl mx-auto mb-12">
+          Explore our most viewed and insightful content
         </p>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-3 md:grid-cols-3">
           {selectedVideos.map((id) => (
