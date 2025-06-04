@@ -117,10 +117,3 @@ All inputs are validated live:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-Let me know if you want to generate this into a `README.md` file or push it to a repository.
