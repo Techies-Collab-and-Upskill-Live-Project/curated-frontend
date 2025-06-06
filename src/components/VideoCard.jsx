@@ -2,7 +2,7 @@ import { Bookmark } from "lucide-react";
 
 const VideoCard = ({ video }) => {
     return (
-        <div className="w-[320px] border rounded-md  hover:shadow-md transition-shadow duration-300">
+        <div className="w-[320px] lg:w-[340px]  rounded-md  hover:shadow-md transition-shadow duration-300">
             {/* Thumbnail with duration */}
             <div className="relative w-full h-[280px]  rounded-md overflow-hidden">
                 <img
@@ -16,27 +16,27 @@ const VideoCard = ({ video }) => {
             </div>
 
             {/* Bottom content */}
-            <div className="flex h-[100px] py-2 px-0.5">
+            <div className="flex py-2 px-1">
                 {/* Left side: profile pic + title + channel name + month */}
                 <div className="flex flex-col flex-grow min-w-0">
-                    <div className="flex  gap-4">
+                    <div className="flex  gap-2">
                         <img
                             src="/prorfilr.png"
                             alt="profile"
-                            className="w-[50px] h-[50px] rounded-full object-cover flex-shrink-0"
+                            className="w-[46px] h-[46px] rounded-full object-cover flex-shrink-0"
                         />
-                        <div className="min-w-0">
-                            <h3 className="text-[18px] font-semibold truncate">{video.snippet.title}</h3>
+                        <div className="flex flex-col gap-2 max-w-full">
+                            <h3 className="text-[19px] text-[#262323] font-semibold truncate">{video.snippet.title}</h3>
                             <p className="text-[16px] text-gray-600 truncate">{video.snippet.channelTitle}</p>
-                            <p className="text-[13px] text-gray-500 truncate">3 months ago</p>
+                            <p className="text-[14px] text-[#000000BF] truncate">3 months ago</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Right side: save icon + views justified */}
                 <div className="flex flex-col justify-between items-end ml-6 min-w-[6rem]">
-                    <Bookmark className="text-[#E2725B] text-3xl cursor-pointer hover:scale-110 transition-transform" />
-                    <span className="text-sm text-gray-500 mt-2">100k views</span>
+                    <Bookmark className="text-[#000000] text-[24px] cursor-pointer hover:scale-110 transition-transform" />
+                    <span className="text-sm text-[#000000BF] mt-2">100k views</span>
                 </div>
             </div>
         </div>
