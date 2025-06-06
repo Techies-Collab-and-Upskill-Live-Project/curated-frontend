@@ -18,7 +18,7 @@ const page = () => {
     }, [results, router]);
 
     return (
-        <div className="lg:p-28 mx-auto">
+        <div className="lg:px-28 py-2 mx-auto">
             <SortOptions />
             <VideoList videos={results} />
         </div>

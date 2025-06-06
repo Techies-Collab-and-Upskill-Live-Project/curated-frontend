@@ -2,22 +2,20 @@ import { Bookmark } from "lucide-react";
 
 const VideoCard = ({ video }) => {
     return (
-        <div className="w-[320px] lg:w-[340px]  rounded-md  hover:shadow-md transition-shadow duration-300">
-            {/* Thumbnail with duration */}
+        <div className="w-[320px] lg:w-[340px]  rounded-md">
             <div className="relative w-full h-[280px]  rounded-md overflow-hidden">
                 <img
                     src={video.snippet.thumbnails.high.url}
                     alt="thumbnail"
                     className="w-full h-full object-cover"
                 />
-                <span className="absolute bottom-1 right-1 bg-opacity-75 text-white text-xs px-2 rounded">
+                <span className="absolute bg-[#89888B] p-2 rounded-lg bottom-1 right-1 bg-opacity-75 text-white text-[14px] px-2">
                     30:20
                 </span>
             </div>
 
             {/* Bottom content */}
             <div className="flex py-2 px-1">
-                {/* Left side: profile pic + title + channel name + month */}
                 <div className="flex flex-col flex-grow min-w-0">
                     <div className="flex  gap-2">
                         <img
