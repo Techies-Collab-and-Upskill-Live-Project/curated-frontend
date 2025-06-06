@@ -19,21 +19,7 @@ CuratED is a web application that connects students with curated digital learnin
 
 ---
 
-## 📁 Project Structure
 
-```
-/app
-  └── /signup             → Sign-up form UI & logic
-  └── /login              → Login form UI
-/components
-  └── InputField.tsx      → Reusable input component
-  └── Button.tsx          → Custom button
-/public/assets            → Static images (e.g., Google icon)
-/styles
-  └── globals.css         → Tailwind config + global styles
-```
-
----
 
 ## ✨ Features Implemented
 
@@ -131,10 +117,3 @@ All inputs are validated live:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-Let me know if you want to generate this into a `README.md` file or push it to a repository.
