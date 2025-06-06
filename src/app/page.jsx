@@ -47,7 +47,7 @@ export default function Home() {
               src="/icons/Landing-Image.svg"
               alt="Header Background"
               fill
-              className="object-cover object-center"
+              className="object-cover object-center brightness-50"
               priority
             />
           </div>
