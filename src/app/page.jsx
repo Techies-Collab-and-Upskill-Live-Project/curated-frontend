@@ -6,7 +6,7 @@ import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import Videotopicgrid from "@/components/Videotopicgrid";
+import FeatureCards from "@/components/FeatureCards";
 import FeaturedVideos from "@/components/FeaturedVideos";
 import Valueproposition from "@/components/Valueproposition";
 import Howitworks from "@/components/Howitworks";
@@ -41,7 +41,7 @@ export default function Home() {
     <>
       <Navbar />
       <div className="flex flex-col">
-        <header className="relative">
+        <header className="relative pb-40">
           <div className="absolute inset-0 -z-10 h-full w-full">
             <Image
               src="/icons/Landing-Image.svg"
@@ -55,9 +55,12 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <Herosection />
             <Searchbar onSearch={handleSearch} />
-            <Videotopicgrid />
+            
           </div>
         </header>
+        <div className="relative -mt-32 mb-10 z-10">
+          <FeatureCards />
+        </div>
         <FeaturedVideos />
         <Valueproposition />
         <Howitworks />

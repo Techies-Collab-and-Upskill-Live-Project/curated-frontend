@@ -19,7 +19,7 @@ export default function Herosection() {
                 <h1 className="text-4xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                     Discover Smarter Ways to Learn
                 </h1>
-                <p className="sm:text-md md:text-lg text-white mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl mx-auto">
+                <p className="sm:text-md md:text-lg text-white mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl xl:none mx-auto">
                     CuratED helps you find insightful, educational videos tailored to your interests
                 </p>
             </div>
