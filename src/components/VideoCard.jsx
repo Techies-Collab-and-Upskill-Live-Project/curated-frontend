@@ -2,7 +2,7 @@ import { Bookmark } from "lucide-react";
 
 const VideoCard = ({ video }) => {
     return (
-        <div className="w-[320px] lg:w-[340px]  rounded-md">
+        <div className="w-[320px] lg:w-[340px] rounded-md">
             <div className="relative w-full h-[280px]  rounded-md overflow-hidden">
                 <img
                     src={video.snippet.thumbnails.high.url}
