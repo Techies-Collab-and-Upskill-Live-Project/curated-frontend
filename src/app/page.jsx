@@ -1,7 +1,6 @@
 "use client";
 
 import Image from 'next/image';
-import Navbar from "@/components/Navbar";
 import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
 import Testimonials from "@/components/Testimonials";
@@ -39,7 +38,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
       <div className="flex flex-col">
         <header className="relative">
           <div className="absolute inset-0 -z-10 h-full w-full">
