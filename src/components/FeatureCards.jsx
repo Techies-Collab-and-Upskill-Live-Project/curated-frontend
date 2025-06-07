@@ -19,7 +19,7 @@ const topics = [
   }
 ];
 
-export default function Videotopicgrid() {
+export default function FeatureCards() {
   return (
     <div className="mt-12 w-full max-w-4xl mx-auto">
 
