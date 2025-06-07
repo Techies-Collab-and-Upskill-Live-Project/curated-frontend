@@ -31,6 +31,9 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const router = useRouter();
 
   const validateEmail = (email) =>
@@ -47,6 +50,12 @@ export default function SignUp() {
     if (type === "checkbox") {
       isValid = checked;
       setValidity((prev) => ({ ...prev, [name]: isValid }));
+      setIsTyping(true);
+      // Check if all fields are valid including checkbox
+      const allValid = Object.values({ ...validity, [name]: isValid }).every(
+        Boolean
+      );
+      setIsFormValid(allValid);
       return;
     }
 
@@ -70,6 +79,15 @@ export default function SignUp() {
         password: isStrong,
         confirmPassword: passwordsMatch,
       }));
+
+      setIsTyping(true);
+      // Combine current validity with new password & confirmPassword validity for form check
+      const allValid = Object.values({
+        ...validity,
+        password: isStrong,
+        confirmPassword: passwordsMatch,
+      }).every(Boolean);
+      setIsFormValid(allValid);
       return;
     }
 
@@ -79,6 +97,12 @@ export default function SignUp() {
         ...prev,
         confirmPassword: passwordsMatch,
       }));
+      setIsTyping(true);
+      const allValid = Object.values({
+        ...validity,
+        confirmPassword: passwordsMatch,
+      }).every(Boolean);
+      setIsFormValid(allValid);
       return;
     }
 
@@ -87,13 +111,24 @@ export default function SignUp() {
     }
 
     setValidity((prev) => ({ ...prev, [name]: isValid }));
+
+    setIsTyping(true);
+
+    // Check if all validity fields are true after this change
+    const allValid = Object.values({ ...validity, [name]: isValid }).every(
+      Boolean
+    );
+    setIsFormValid(allValid);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //code to handle the data sent to the api endpoint
+    // Handle API call for sign up here
 
-    //Redirect to the verify email page
+    // Optionally reset typing and validity states on successful submission or redirect
+    setIsTyping(false);
+    setIsFormValid(false);
+
     router.push(routes.verifyEmail);
   };
 
@@ -224,30 +259,38 @@ export default function SignUp() {
           </div>
           {formData.termsAccepted === false &&
             validity.termsAccepted === false && (
-              <p className="text-red-500 text-xs mt-2 ml-10 italic w-[350px]">
+              <p className="text-red-500 text-xs mt-2 ml-16 md:mr-[17rem] italic w-[350px]">
                 You must accept the terms to continue.
               </p>
             )}
+
+          {/* Submit Button with states */}
           <button
-            className={`w-[350px] md:w-[631px] px-4 py-[.75rem] bg-btn_colors-primary text-white font-bold rounded-[10px] mt-6 transition-colors ${
-              Object.values(validity).every((v) => v === true)
-                ? "bg-btn_colors-secondary"
-                : "bg-btn_colors-disabled cursor-not-allowed"
-            }`}
-            disabled={!Object.values(validity).every((v) => v === true)}
+            className={`w-[350px] md:w-[631px] px-4 py-[.75rem] font-bold rounded-[10px] mt-6 transition-colors
+              ${
+                !Object.values(formData).some((val) => val) // Idle: all fields empty
+                  ? "bg-btn_colors-primary cursor-not-allowed text-white"
+                  : isTyping && !isFormValid // Typing but invalid
+                  ? "bg-btn_colors-disabled cursor-not-allowed text-white"
+                  : isFormValid // All valid
+                  ? "bg-btn_colors-secondary text-white cursor-pointer"
+                  : "bg-btn_colors-disabled cursor-not-allowed text-white"
+              }
+            `}
+            disabled={!isFormValid}
             type="submit"
           >
             Sign Up
           </button>
-          <div className="text-[12px] font-[400] mt-6 ">
-            Already on CuratED?
-            <Link href={routes.login}>
-              <span className="text-black font-semibold ml-2 text-[1rem] hover:underline">
-                Login
-              </span>
-            </Link>
-          </div>
         </form>
+        <p className="text-center mt-4 text-[12px]">
+          Already have an account?{" "}
+          <Link href={routes.login}>
+            <span className="font-semibold text-[1rem] cursor-pointer hover:underline">
+              Login
+            </span>
+          </Link>
+        </p>
       </div>
     </div>
   );

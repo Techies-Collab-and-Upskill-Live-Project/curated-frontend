@@ -1,13 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 import InputField from "@/components/InputField";
 import Google from "../../../../public/assets/images/google.png";
 import { routes } from "@/config/constant";
-// import { login } from "@/lib/api/auth"; // Un-comment when ready
+// import { login } from "@/lib/api/auth"; // Uncomment when ready
 import validator from "validator";
 
 export default function Login() {
@@ -25,7 +24,9 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const router = useRouter();
+
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const remembered = localStorage.getItem("rememberMe") === "true";
@@ -50,6 +51,7 @@ export default function Login() {
     const newValue = type === "checkbox" ? checked : value;
 
     setFormData((prev) => ({ ...prev, [name]: newValue }));
+    setIsTyping(true);
 
     let isValid = true;
 
@@ -58,10 +60,23 @@ export default function Login() {
     } else if (name === "email") {
       isValid = validateEmail(value);
     } else if (name === "password") {
-      isValid = value.trim().length >= 8; // Basic length check only
+      isValid = value.trim().length >= 8;
     }
 
     setValidity((prev) => ({ ...prev, [name]: isValid }));
+
+    const allValid =
+      (name === "rememberMe"
+        ? validity.email && validity.password
+        : name === "email"
+        ? isValid && validity.password
+        : name === "password"
+        ? isValid && validity.email
+        : validity.email && validity.password) &&
+      formData.email &&
+      formData.password;
+
+    setIsFormValid(allValid);
   };
 
   const handleSubmit = async (e) => {
@@ -69,7 +84,6 @@ export default function Login() {
     setError("");
 
     try {
-      // Replace with actual API call
       // const { token, user } = await login(formData);
 
       if (formData.rememberMe) {
@@ -83,8 +97,7 @@ export default function Login() {
         localStorage.removeItem("password");
         // localStorage.removeItem("token");
       }
-
-      router.push(routes.verifyEmail);
+      // Redirect after successful login
     } catch (err) {
       setError(err.message);
     }
@@ -97,6 +110,7 @@ export default function Login() {
           <h6 className="font-[600] text-xl md:font-bold md:text-2xl">Login</h6>
           <p className="">with</p>
         </div>
+
         <button className="flex items-center justify-center hover:text-white hover:bg-btn_colors-primary transition-colors gap-2 px-4 py-[.75rem] w-[351px] md:w-[631px] md:mx-auto bg-secondary text-[#262323] font-bold rounded-[10px] mt-4">
           <Image
             src={Google}
@@ -165,8 +179,8 @@ export default function Login() {
                 Remember Me
               </label>
             </div>
-            <Link href={routes.home}>
-              <span className="text-sm text-dark hover:underline ml-auto">
+            <Link href={routes.resetPassword}>
+              <span className="text-sm text-dark hover:underline">
                 Forgot Password?
               </span>
             </Link>
@@ -176,12 +190,16 @@ export default function Login() {
 
           <button
             type="submit"
+            disabled={!isFormValid}
             className={`w-[350px] md:w-[631px] px-4 py-[.75rem] text-white font-bold rounded-[10px] mt-6 transition-colors ${
-              validity.email && validity.password
-                ? "bg-btn_colors-secondary"
+              !formData.email && !formData.password
+                ? "bg-btn_colors-primary cursor-not-allowed"
+                : isTyping && !isFormValid
+                ? "bg-btn_colors-disabled cursor-not-allowed"
+                : isFormValid
+                ? "bg-btn_colors-secondary cursor-pointer"
                 : "bg-btn_colors-disabled cursor-not-allowed"
             }`}
-            disabled={!validity.email || !validity.password}
           >
             Login
           </button>
@@ -190,7 +208,7 @@ export default function Login() {
             Don’t have an account on CuratED?
             <Link href={routes.signUp}>
               <span className="text-black font-semibold ml-2 text-[1rem] hover:underline">
-                Sign Up
+                Signup
               </span>
             </Link>
           </div>

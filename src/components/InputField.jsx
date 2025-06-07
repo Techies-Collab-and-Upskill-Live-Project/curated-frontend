@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 const InputField = ({
   label,
   name,
+  id,
   type = "text",
   value,
   onChange,
@@ -23,6 +24,7 @@ const InputField = ({
       <input
         type={type}
         name={name}
+        id={id || name}
         value={value}
         required={required}
         onChange={onChange}
