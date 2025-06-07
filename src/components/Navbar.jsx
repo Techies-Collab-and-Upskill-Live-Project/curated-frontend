@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { routes } from "../config/constant";
-import { Bell } from "lucide-react";
+import { IconBell } from "@tabler/icons-react";
 import { useState } from "react";
 import { IconSearch } from '@tabler/icons-react';
 import { useAuthStore } from "@/store/useAuthStore";
@@ -73,7 +73,7 @@ export default function Navbar() {
       {
         isLoggedIn && (
           <div className="flex items-center lg:mr-12 gap-12">
-            <Bell />
+            <IconBell />
             <img src="/prorfilr.png" />
           </div>
         )
