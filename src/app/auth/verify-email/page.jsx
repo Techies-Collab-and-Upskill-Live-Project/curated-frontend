@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconShield } from "@tabler/icons-react";
-// import VerificationSuccessModal from "@/components/modals/VerificationSuccessModal";
-// import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
+import { IconCircleDotted, IconShield } from "@tabler/icons-react";
+import VerificationSuccessModal from "@/components/modals/VerificationSuccessModal";
+import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
 import { routes } from "@/config/constant";
 
 export default function EmailVerification() {
@@ -20,7 +19,7 @@ export default function EmailVerification() {
   const [isValid, setIsValid] = useState(false);
 
   const router = useRouter();
-  const email = "test@example.com"; // Replace this with actual email prop or state
+  // const email = "test@example.com"; // Replace this with actual email prop or state
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -74,7 +73,7 @@ export default function EmailVerification() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, code }),
+        body: JSON.stringify({ code }),
       });
 
       if (response.ok) {
@@ -121,17 +120,21 @@ export default function EmailVerification() {
     router.push(routes.dashboard);
   };
 
-  const handleResetPasswordDemo = () => {
-    setShowResetModal(true);
-  };
+  // const handleResetPasswordDemo = () => {
+  //   setShowResetModal(true);
+  // };
+
+  // const handleSuccessModalDemo = () => {
+  // setShowSuccessModal(true);
+  // };
 
   return (
-    <div className="flex items-center flex-col justify-center my-24 md:my-12">
+    <div className="flex items-center flex-col justify-center my-24 md:my-28">
       <div className="md:shadow-custom-soft md:p-20 md:w-[773px] md:rounded-xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-            <IconShield className="w-8 h-8 text-secondary m-auto" />
+          <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <IconShield className="w-10 h-10 text-secondary m-auto" />
           </div>
           <h2 className="font-bold text-2xl mb-2">Verify Your Email</h2>
           <p className="text-sm text-gray-600">
@@ -199,7 +202,16 @@ export default function EmailVerification() {
                 : "bg-btn_colors-disabled cursor-not-allowed text-white"
             }`}
           >
-            {isLoading ? "Verifying..." : "Verify Email"}
+            {isLoading ? (
+              <span>
+                <IconCircleDotted
+                  className="animate-spin text-white mx-auto"
+                  size={30}
+                />
+              </span>
+            ) : (
+              "Verify Email"
+            )}
           </button>
         </div>
 
@@ -223,14 +235,14 @@ export default function EmailVerification() {
         </div>
 
         {/* Demo Button */}
-        <div className="mt-8 text-center">
+        {/* <div className="mt-8 text-center">
           <button
-            onClick={handleResetPasswordDemo}
+            onClick={handleSuccessModalDemo}
             className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
           >
-            Demo: Show Reset Link Sent Modal
+            Demo: Show Verification Success Modal
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Modals (uncomment and implement) */}

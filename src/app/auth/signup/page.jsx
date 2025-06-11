@@ -286,7 +286,7 @@ export default function SignUp() {
         <p className="text-center mt-4 text-[12px]">
           Already have an account?{" "}
           <Link href={routes.login}>
-            <span className="font-semibold text-[1rem] cursor-pointer hover:underline">
+            <span className="font-semibold text-[1rem] cursor-pointer hover:underline ml-1">
               Login
             </span>
           </Link>

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import InputField from "@/components/InputField";
 import { routes } from "@/config/constant";
+import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
+import { IconCircleDotted } from "@tabler/icons-react";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -11,6 +13,8 @@ export default function ResetPassword() {
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const validateEmail = (email) =>
@@ -24,6 +28,10 @@ export default function ResetPassword() {
 
     const valid = validateEmail(val);
     setIsValid(valid);
+
+    // Clear any previous errors/messages when user starts typing
+    if (error) setError("");
+    if (message) setMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -36,24 +44,37 @@ export default function ResetPassword() {
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
       // TODO: call your API to trigger forgot password email
       // await forgotPassword({ email });
 
-      setMessage(
-        "If this email is registered, you will receive password reset instructions shortly."
-      );
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Reset state to untouched
+      // Show the modal instead of inline message
+      setShowResetModal(true);
+
+      // Reset form state
       setEmail("");
       setIsTyping(false);
       setIsValid(false);
-
-      // Optional: redirect to login after delay
-      // setTimeout(() => router.push(routes.login), 5000);
     } catch (err) {
       setError("Failed to send reset email. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowResetModal(false);
+    // Optional: redirect to login page after modal closes
+    // router.push(routes.login);
+  };
+
+  const handleResetPasswordDemo = () => {
+    setShowResetModal(true);
   };
 
   return (
@@ -79,6 +100,7 @@ export default function ResetPassword() {
             required
             isValid={isTyping ? isValid : null} // Null prevents red border before typing
             containerClass="w-[350px] md:w-[630px]"
+            disabled={isSubmitting}
           />
           {error && <p className="text-red-500 text-xs italic">{error}</p>}
           {message && (
@@ -87,19 +109,28 @@ export default function ResetPassword() {
 
           <button
             type="submit"
-            disabled={!isValid}
-            className={`font-bold py-3 rounded-lg transition-colors w-[350px] md:w-[630px]
+            disabled={!isValid || isSubmitting}
+            className={`font-bold py-3 rounded-lg transition-colors w-[350px] md:w-[630px] relative
               ${
                 !email
                   ? "bg-btn_colors-primary cursor-not-allowed text-white"
                   : isTyping && !isValid
                   ? "bg-btn_colors-disabled text-white cursor-not-allowed"
-                  : isValid
-                  ? "bg-btn_colors-secondary text-white cursor-pointer"
+                  : isValid && !isSubmitting
+                  ? "bg-btn_colors-secondary text-white cursor-pointer hover:opacity-90"
                   : "bg-btn_colors-disabled cursor-not-allowed text-white"
               }`}
           >
-            Send Reset Link
+            {isSubmitting ? (
+              <span>
+                <IconCircleDotted
+                  className="animate-spin text-white mx-auto"
+                  size={30}
+                />
+              </span>
+            ) : (
+              "Send Reset Link"
+            )}
           </button>
         </form>
         <p className="mt-6 text-center text-sm">
@@ -111,6 +142,12 @@ export default function ResetPassword() {
           </Link>
         </p>
       </div>
+
+      <ResetLinkSentModal
+        isOpen={showResetModal}
+        onClose={handleModalClose}
+        email={email || "test@example.com"} // Use the actual email or fallback
+      />
     </div>
   );
 }
