@@ -6,7 +6,9 @@ import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
 import InputField from "@/components/InputField";
 import Google from "../../../../public/assets/images/google.png";
 import { routes } from "@/config/constant";
-// import { login } from "@/lib/api/auth"; // Uncomment when ready
+import { useToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
+import { login } from "@/api/authApi"; // Uncomment when ready
 import validator from "validator";
 
 export default function Login() {
@@ -29,6 +31,9 @@ export default function Login() {
 
   const [isTyping, setIsTyping] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const router = useRouter();
+  const {addToast} = useToast();
 
   useEffect(() => {
     const remembered = localStorage.getItem("rememberMe") === "true";
@@ -88,21 +93,33 @@ export default function Login() {
 
     try {
       // const { token, user } = await login(formData);
+      const payload = {
+        email: formData.email,
+        password: formData.password,
+      };
+
+      await login(payload);
+
+      addToast("Login Successful!", "success");
+
+
 
       if (formData.rememberMe) {
-        localStorage.setItem("rememberMe", "true");
         localStorage.setItem("email", formData.email);
-        localStorage.setItem("password", formData.password);
         // localStorage.setItem("token", token);
       } else {
-        localStorage.removeItem("rememberMe");
         localStorage.removeItem("email");
-        localStorage.removeItem("password");
         // localStorage.removeItem("token");
       }
       // Redirect after successful login
-    } catch (err) {
-      setError(err.message);
+      router.push(routes.home);
+    } catch (error) {
+      console.error("Signup error:", error);
+      const errorMsg =
+        error.response?.data?.message || error.message || "Login failed";
+      addToast(errorMsg, "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 

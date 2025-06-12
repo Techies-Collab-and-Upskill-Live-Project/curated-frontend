@@ -6,9 +6,10 @@ import Image from "next/image";
 import Google from "../../../../public/assets/images/google.png";
 import InputField from "@/components/InputField";
 import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
-import {useToast } from "@/components/Toast";
+import { useToast } from "@/components/Toast";
 import validator from "validator";
 import { useRouter } from "next/navigation";
+import { signup } from "@/api/authApi"; // Uncomment when ready
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -129,15 +130,34 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     // Handle API call for sign up here
+    try {
+      const payload = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      };
 
-  await new Promise((resolve)=> setTimeout(resolve, 2000)); // Simulate API call delay
+      await signup(payload);
 
-    // Optionally reset typing and validity states on successful submission or redirect
-    setIsTyping(false);
-    setIsFormValid(false);
+      addToast("Signup successful! Redirecting to verify email...", "success");
 
-    router.push(routes.verifyEmail);
+      // Optionally reset typing and validity states on successful submission or redirect
+      setIsTyping(false);
+      setIsFormValid(false);
+
+      router.push(routes.verifyEmail);
+    } catch (error) {
+      console.error("Signup error:", error);
+      const errorMsg =
+        error.response?.data?.message || error.message || "Signup failed";
+      addToast(errorMsg, "error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  
   };
 
   return (
@@ -280,7 +300,7 @@ export default function SignUp() {
                   ? "bg-btn_colors-primary cursor-not-allowed text-white"
                   : isTyping && !isFormValid // Typing but invalid
                   ? "bg-btn_colors-disabled cursor-not-allowed text-white"
-                  : isFormValid  && !isSubmitting// All valid
+                  : isFormValid && !isSubmitting // All valid
                   ? "bg-btn_colors-secondary text-white cursor-pointer"
                   : "bg-btn_colors-disabled cursor-not-allowed text-white"
               }

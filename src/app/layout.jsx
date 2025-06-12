@@ -1,6 +1,7 @@
 import { poppins } from "../../public/assets/fonts";
 import "@/app/styles/globals.css";
 import { ToastProvider } from "@/components/Toast/ToastProvider";
+import "@/api/mock"
 
 export const metadata = {
   title: "CuratED - Curated Education",
