@@ -5,7 +5,7 @@ import { routes } from "@/config/constant";
 import Image from "next/image";
 import Google from "../../../../public/assets/images/google.png";
 import InputField from "@/components/InputField";
-import { IconEye, IconEyeClosed } from "@tabler/icons-react";
+import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
 import validator from "validator";
 import { useRouter } from "next/navigation";
 
@@ -33,6 +33,8 @@ export default function SignUp() {
 
   const [isTyping, setIsTyping] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -121,9 +123,12 @@ export default function SignUp() {
     setIsFormValid(allValid);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     // Handle API call for sign up here
+
+  await new Promise((resolve)=> setTimeout(resolve, 2000)); // Simulate API call delay
 
     // Optionally reset typing and validity states on successful submission or redirect
     setIsTyping(false);
@@ -272,7 +277,7 @@ export default function SignUp() {
                   ? "bg-btn_colors-primary cursor-not-allowed text-white"
                   : isTyping && !isFormValid // Typing but invalid
                   ? "bg-btn_colors-disabled cursor-not-allowed text-white"
-                  : isFormValid // All valid
+                  : isFormValid  && !isSubmitting// All valid
                   ? "bg-btn_colors-secondary text-white cursor-pointer"
                   : "bg-btn_colors-disabled cursor-not-allowed text-white"
               }
@@ -280,7 +285,16 @@ export default function SignUp() {
             disabled={!isFormValid}
             type="submit"
           >
-            Sign Up
+            {isSubmitting ? (
+              <span>
+                <IconCircleDotted
+                  className="animate-spin text-white mx-auto"
+                  size={30}
+                />
+              </span>
+            ) : (
+              "Signup"
+            )}
           </button>
         </form>
         <p className="text-center mt-4 text-[12px]">

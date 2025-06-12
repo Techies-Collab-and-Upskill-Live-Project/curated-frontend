@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IconEye, IconEyeClosed } from "@tabler/icons-react";
+import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
 import InputField from "@/components/InputField";
 import Google from "../../../../public/assets/images/google.png";
 import { routes } from "@/config/constant";
@@ -24,6 +24,8 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -81,6 +83,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setError("");
 
     try {
@@ -201,7 +204,16 @@ export default function Login() {
                 : "bg-btn_colors-disabled cursor-not-allowed"
             }`}
           >
-            Login
+            {isLoading ? (
+              <span>
+                <IconCircleDotted
+                  className="animate-spin text-white mx-auto"
+                  size={30}
+                />
+              </span>
+            ) : (
+              "Login"
+            )}
           </button>
 
           <div className="text-[12px] font-[400] mt-6">

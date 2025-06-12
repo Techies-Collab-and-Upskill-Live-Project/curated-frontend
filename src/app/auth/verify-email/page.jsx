@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IconCircleDotted, IconShield } from "@tabler/icons-react";
 import VerificationSuccessModal from "@/components/modals/VerificationSuccessModal";
-import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
 import { routes } from "@/config/constant";
 
 export default function EmailVerification() {
@@ -13,7 +12,6 @@ export default function EmailVerification() {
   const [timeLeft, setTimeLeft] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showResetModal, setShowResetModal] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -120,10 +118,7 @@ export default function EmailVerification() {
     router.push(routes.dashboard);
   };
 
-  // const handleResetPasswordDemo = () => {
-  //   setShowResetModal(true);
-  // };
-
+  // function to handle the success modal demo
   // const handleSuccessModalDemo = () => {
   // setShowSuccessModal(true);
   // };
@@ -246,17 +241,11 @@ export default function EmailVerification() {
       </div>
 
       {/* Modals (uncomment and implement) */}
-      {/* <VerificationSuccessModal
+      <VerificationSuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
         onContinue={handleSuccessModalContinue}
       />
-
-      <ResetLinkSentModal
-        isOpen={showResetModal}
-        onClose={() => setShowResetModal(false)}
-        email={email}
-      /> */}
     </div>
   );
 }
