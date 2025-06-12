@@ -2,10 +2,9 @@ import Image from 'next/image';
 
 export default function Herosection() {
     return (
-        <div className="text-center relative">
-            {/* Bulb Icon Image */}
-            <div className="absolute 
-                right-[89%] -translate-x-1/2 mt-12">
+        <div className="text-center relative px-4 mt-16">
+            {/* Bulb Icon - Centered on mobile, original position on larger screens */}
+            <div className="flex justify-center sm:block sm:absolute sm:right-[89%] sm:mt-4 sm:-translate-x-1/2 sm:mt-12">
                 <Image
                     src="/icons/Bulb.svg"
                     alt="Lightbulb icon"
@@ -15,11 +14,11 @@ export default function Herosection() {
                 />
             </div>
 
-            <div className="mt-20 sm:pt-14 md:pt-16 lg:pt-20">
-                <h1 className="text-4xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                    Discover Smarter Ways to Learn
+            <div className="mt-6 sm:mt-10 sm:pt-7 md:pt-16 lg:pt-20">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                    Discover Smarter<br className="sm:hidden" /> Ways to Learn
                 </h1>
-                <p className="sm:text-md md:text-lg text-white mb-8 sm:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl xl:none mx-auto">
+                <p className="text-sm sm:text-md md:text-lg text-white mb-6 sm:mb-8 md:mb-10 max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl mx-auto mt-4">
                     CuratED helps you find insightful, educational videos tailored to your interests
                 </p>
             </div>
