@@ -1,6 +1,6 @@
 import { poppins } from "../../public/assets/fonts";
 import "@/app/styles/globals.css";
-
+import { ToastProvider } from "@/components/Toast/ToastProvider";
 
 export const metadata = {
   title: "CuratED - Curated Education",
@@ -10,10 +10,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.variable}>
-      <body
-        className={`${poppins.className} antialiased`}
-      >
-        {children}
+      <body className={`${poppins.className} antialiased`}>
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );

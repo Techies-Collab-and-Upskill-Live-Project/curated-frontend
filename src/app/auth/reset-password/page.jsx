@@ -6,6 +6,7 @@ import InputField from "@/components/InputField";
 import { routes } from "@/config/constant";
 import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
 import { IconCircleDotted } from "@tabler/icons-react";
+import { useToast } from "@/components/Toast";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ export default function ResetPassword() {
   const [showResetModal, setShowResetModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+
+  const { addToast } = useToast();
 
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
@@ -28,10 +31,6 @@ export default function ResetPassword() {
 
     const valid = validateEmail(val);
     setIsValid(valid);
-
-    // Clear any previous errors/messages when user starts typing
-    if (error) setError("");
-    if (message) setMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -40,7 +39,11 @@ export default function ResetPassword() {
     setMessage("");
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
+      addToast({
+        id: Date.now(),
+        type: "error",
+        message: "Please enter a valid email address",
+      });
       return;
     }
 
@@ -61,6 +64,11 @@ export default function ResetPassword() {
       setIsTyping(false);
       setIsValid(false);
     } catch (err) {
+      addToast({
+        id: Date.now(),
+        type: "error",
+        message: "Failed to send reset email. Please try again later.",
+      });
       setError("Failed to send reset email. Please try again later.");
     } finally {
       setIsSubmitting(false);
@@ -102,10 +110,6 @@ export default function ResetPassword() {
             containerClass="w-[350px] md:w-[630px]"
             disabled={isSubmitting}
           />
-          {error && <p className="text-red-500 text-xs italic">{error}</p>}
-          {message && (
-            <p className="text-green-600 text-xs italic">{message}</p>
-          )}
 
           <button
             type="submit"

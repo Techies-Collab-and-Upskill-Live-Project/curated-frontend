@@ -6,6 +6,7 @@ import Image from "next/image";
 import Google from "../../../../public/assets/images/google.png";
 import InputField from "@/components/InputField";
 import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
+import {useToast } from "@/components/Toast";
 import validator from "validator";
 import { useRouter } from "next/navigation";
 
@@ -35,6 +36,8 @@ export default function SignUp() {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { addToast } = useToast();
 
   const router = useRouter();
 
