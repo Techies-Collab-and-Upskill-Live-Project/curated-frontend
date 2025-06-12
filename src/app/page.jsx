@@ -35,11 +35,11 @@ export default function Home() {
   console.log(results)
 
   if (loading) return <LoadingSpinner />
-
-  return (
+  
+ return (
     <>
       <div className="flex flex-col">
-        <header className="relative pb-40">
+        <header className="relative pb-32 sm:pb-40">
           <div className="absolute inset-0 -z-10 h-full w-full">
             <Image
               src="/icons/Landing-Image.svg"
@@ -50,13 +50,12 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-col items-center text-center">
+          <div className="flex flex-col items-center text-center px-4">
             <Herosection />
             <Searchbar onSearch={handleSearch} />
-            
           </div>
         </header>
-        <div className="relative -mt-32 mb-10 z-10">
+        <div className="relative -mt-24 sm:-mt-32 mb-8 sm:mb-10 z-10">
           <FeatureCards />
         </div>
         <FeaturedVideos />
