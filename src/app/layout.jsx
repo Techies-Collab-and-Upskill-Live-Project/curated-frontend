@@ -2,6 +2,8 @@ import { poppins } from "../../public/assets/fonts";
 import "@/app/styles/globals.css";
 import { ToastProvider } from "@/components/Toast/ToastProvider";
 import "@/api/mock"
+import NextTopLoader from "@/components/ui/top-loader";
+import NavbarWrapper from "@/components/NavbarWrapper";
 
 export const metadata = {
   title: "CuratED - Curated Education",
@@ -13,6 +15,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className={poppins.variable}>
       <body className={`${poppins.className} antialiased`}>
         <ToastProvider>{children}</ToastProvider>
+    <html lang="en">
+      <body className={`${poppins.className} antialiased`}>
+        <NextTopLoader />
+        {children}
       </body>
     </html>
   );

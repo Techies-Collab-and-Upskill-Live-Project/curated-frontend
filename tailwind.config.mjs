@@ -11,13 +11,15 @@ const config = {
         primary: "#E2725B",
         secondary: "#F9E3DE",
         border_dark: "#89888B",
-
+        border_light: "#F9E3DE",
+        
         btn_colors: {
           primary: "#E2725B",
           accent: "#CC5C47",
           secondary: "#B94D3A",
           disabled: "#F3C4B9",
         },
+
 
         outline_colors: {
           100: "#E2725B",

@@ -13,3 +13,18 @@ body {
   font-family: var(--font-poppins), sans-serif;
 }
 
+
+@media (max-width:1000px) {
+  .mobile {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .mobile2 {
+    padding: 10px;
+  }
+}
