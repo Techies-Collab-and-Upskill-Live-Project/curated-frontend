@@ -1,5 +1,6 @@
 "use client"
 
+import Navbar from '@/components/Navbar';
 import SortOptions from '@/components/SortOptions';
 import VideoList from '@/components/VideoList';
 import { useSearchStore } from '@/store/useSearchStore'
@@ -18,10 +19,13 @@ const page = () => {
     }, [results, router]);
 
     return (
-        <div className="lg:px-28 py-2 mobile2 mx-auto">
-            <SortOptions />
-            <VideoList videos={results} />
-        </div>
+        <>
+            <Navbar />
+            <div className="lg:px-28 py-2 mobile2 mx-auto">
+                <SortOptions />
+                <VideoList videos={results} />
+            </div>
+        </>
     )
 }
 
