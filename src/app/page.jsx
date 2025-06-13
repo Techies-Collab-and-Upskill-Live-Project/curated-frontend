@@ -13,10 +13,22 @@ import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
 import { useSearchStore } from '@/store/useSearchStore';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import Navbar from '@/components/Navbar';
+import { useAuthStore } from '@/store/useAuthStore';
+import { useEffect } from 'react';
 
 export default function Home() {
   const router = useRouter()
   const { results, setResults, loading, setLoading, clearResults } = useSearchStore();
+
+  const { isLoggedIn, user } = useAuthStore()
+
+  useEffect(() => {
+    if (isLoggedIn || user) {
+      router.push("/dashboard");
+    }
+  }, [isLoggedIn, router]);
+
 
   const handleSearch = async (query) => {
     setLoading(true);
@@ -38,6 +50,7 @@ export default function Home() {
 
   return (
     <>
+      <Navbar />
       <div className="flex flex-col">
         <header className="relative pb-40">
           <div className="absolute inset-0 -z-10 h-full w-full">
@@ -53,7 +66,7 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <Herosection />
             <Searchbar onSearch={handleSearch} />
-            
+
           </div>
         </header>
         <div className="relative -mt-32 mb-10 z-10">

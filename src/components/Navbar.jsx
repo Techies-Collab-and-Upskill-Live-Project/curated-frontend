@@ -12,7 +12,7 @@ export default function Navbar() {
   const [query, setQuery] = useState('');
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const pathname = usePathname(); // Get current route
-  const isHomePage = pathname === "/";
+  const isHomePage = pathname === "/dashboard";
 
 
   console.log('User login status is ', isLoggedIn)

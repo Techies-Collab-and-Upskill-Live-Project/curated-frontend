@@ -13,7 +13,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
         <NextTopLoader />
-        <NavbarWrapper />
         {children}
       </body>
     </html>
