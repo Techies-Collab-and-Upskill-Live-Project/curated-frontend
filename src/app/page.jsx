@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import Navbar from '@/components/Navbar';
 import { useAuthStore } from '@/store/useAuthStore';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export default function Home() {
   const router = useRouter()
@@ -23,11 +23,11 @@ export default function Home() {
 
   const { isLoggedIn, user } = useAuthStore()
 
-  useEffect(() => {
-    if (isLoggedIn || user) {
-      router.push("/dashboard");
-    }
-  }, [isLoggedIn, router]);
+  // useEffect(() => {
+  //   if (isLoggedIn || user) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [isLoggedIn, router]);
 
 
   const handleSearch = async (query) => {
