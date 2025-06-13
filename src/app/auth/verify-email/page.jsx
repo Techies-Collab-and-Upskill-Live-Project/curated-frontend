@@ -2,7 +2,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IconCircleDotted, IconShield } from "@tabler/icons-react";
+import { useToast } from "@/components/Toast";
 import VerificationSuccessModal from "@/components/modals/VerificationSuccessModal";
+import { verifyEmailCode } from "@/api/authApi";
+import { resendVerificationCode } from "@/api/authApi";
 import { routes } from "@/config/constant";
 
 export default function EmailVerification() {
@@ -17,7 +20,12 @@ export default function EmailVerification() {
   const [isValid, setIsValid] = useState(false);
 
   const router = useRouter();
-  // const email = "test@example.com"; // Replace this with actual email prop or state
+  const { addToast } = useToast();
+
+  const storedEmail =
+    typeof window == !"undefined"
+      ? localStorage.getItem("verificationEmail")
+      : null;
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -59,33 +67,25 @@ export default function EmailVerification() {
 
     const code = verificationCode.join("");
     if (code.length !== 4) {
-      setError("Please enter the complete 4-digit code");
+      addToast("Please enter the complete 4-digit code", "error");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth/verify-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      });
+      const response = await verifyEmailCode(code, storedEmail);
 
-      if (response.ok) {
+      if (response.status === 200) {
         setShowSuccessModal(true);
         setIsTyping(false);
         setIsValid(false);
-      } else {
-        const data = await response.json();
-        setError(
-          data.message || "Invalid verification code. Please try again."
-        );
       }
     } catch (err) {
-      setError("Invalid verification code. Please try again.");
+      const message =
+        err.response?.data?.message ||
+        "Invalid verification code. Please try again.";
+      addToast(message, "error");
     } finally {
       setIsLoading(false);
     }
@@ -93,29 +93,26 @@ export default function EmailVerification() {
 
   const handleResend = async () => {
     try {
-      const response = await fetch("/api/auth/resend-verification", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await resendVerificationCode(storedEmail);
 
-      if (response.ok) {
+      if (response.status === 200) {
         setTimeLeft(60);
         setCanResend(false);
         setError("");
-      } else {
-        setError("Failed to resend code. Please try again.");
+        addToast("Verification code resent", "success");
       }
     } catch (err) {
-      setError("Failed to resend code. Please try again.");
+      addToast(
+        err.response?.data?.message ||
+          "Failed to resend code, please try again.",
+        "error"
+      );
     }
   };
 
   const handleSuccessModalContinue = () => {
     setShowSuccessModal(false);
-    router.push(routes.dashboard);
+    router.push(routes.home);
   };
 
   // function to handle the success modal demo

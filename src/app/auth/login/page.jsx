@@ -33,7 +33,7 @@ export default function Login() {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const router = useRouter();
-  const {addToast} = useToast();
+  const { addToast } = useToast();
 
   useEffect(() => {
     const remembered = localStorage.getItem("rememberMe") === "true";
@@ -102,8 +102,6 @@ export default function Login() {
 
       addToast("Login Successful!", "success");
 
-
-
       if (formData.rememberMe) {
         localStorage.setItem("email", formData.email);
         // localStorage.setItem("token", token);
@@ -111,6 +109,10 @@ export default function Login() {
         localStorage.removeItem("email");
         // localStorage.removeItem("token");
       }
+
+      // ✅ Store email for use on verification page
+      localStorage.setItem("verificationEmail", formData.email);
+
       // Redirect after successful login
       router.push(routes.home);
     } catch (error) {
