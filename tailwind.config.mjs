@@ -12,13 +12,23 @@ const config = {
         secondary: "#F9E3DE",
         border_dark: "#89888B",
         border_light: "#F9E3DE",
-
+        
         btn_colors: {
           primary: "#E2725B",
           accent: "#CC5C47",
           secondary: "#B94D3A",
           disabled: "#F3C4B9",
         },
+
+
+        outline_colors: {
+          100: "#E2725B",
+          200: "#CC5C47",
+          300: "#E2725B",
+        },
+      },
+      boxShadow: {
+        "custom-soft": "0px 4px 15px 0px rgba(226, 114, 91, 0.1)", // #E2725B at 10% opacity
       },
       screens: {
         base: "0px",
