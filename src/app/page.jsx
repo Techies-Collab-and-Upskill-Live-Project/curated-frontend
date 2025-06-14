@@ -1,6 +1,6 @@
 "use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 import Herosection from "@/components/Herosection";
 import Searchbar from "@/components/Searchbar";
 import Testimonials from "@/components/Testimonials";
@@ -10,20 +10,32 @@ import FeaturedVideos from "@/components/FeaturedVideos";
 import Valueproposition from "@/components/Valueproposition";
 import Howitworks from "@/components/Howitworks";
 import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
-import { useSearchStore } from '@/store/useSearchStore';
-import { useRouter } from 'next/navigation';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import { useSearchStore } from "@/store/useSearchStore";
+import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import Navbar from "@/components/Navbar";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 export default function Home() {
-  const router = useRouter()
-  const { results, setResults, loading, setLoading, clearResults } = useSearchStore();
+  const router = useRouter();
+  const { results, setResults, loading, setLoading, clearResults } =
+    useSearchStore();
+
+  const { isLoggedIn, user } = useAuthStore();
+
+  useEffect(() => {
+    if (isLoggedIn || user) {
+      router.push("/dashboard");
+    }
+  }, [isLoggedIn, router]);
 
   const handleSearch = async (query) => {
     setLoading(true);
     try {
       const results = await fetchYouTubeVideos(query);
       setResults(results);
-      router.push('/results')
+      router.push("/results");
     } catch (error) {
       console.error("Error fetching videos:", error);
       clearResults();
@@ -32,12 +44,13 @@ export default function Home() {
     }
   };
 
-  console.log(results)
+  console.log(results);
 
-  if (loading) return <LoadingSpinner />
-  
- return (
+  if (loading) return <LoadingSpinner />;
+
+  return (
     <>
+      <Navbar />
       <div className="flex flex-col">
         <header className="relative pb-32 sm:pb-40">
           <div className="absolute inset-0 -z-10 h-full w-full">
