@@ -1,4 +1,3 @@
-// import { IconSearch } from '@tabler/icons-react';
 'use client'
 
 import { IconSearch } from '@tabler/icons-react';
@@ -14,7 +13,9 @@ export default function Searchbar({ onSearch }) {
 
   return (
     <div className="w-full px-4 sm:px-0 max-w-2xl relative">
-      <form className="flex items-center text-white border rounded-[10px] gap-1 sm:gap-2 mb-2" onSubmit={handleSubmit}>
+      <form 
+      data-testid="search-form"
+      className="flex items-center text-white border rounded-[10px] gap-1 sm:gap-2 mb-2" onSubmit={handleSubmit}>
         {/* Input Container with Icon */}
         <div className="relative flex-1">
 
