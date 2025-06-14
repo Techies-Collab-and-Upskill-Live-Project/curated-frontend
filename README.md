@@ -1,4 +1,3 @@
-Here’s the updated `README.md` file for the **CuratED Frontend**, reflecting everything we’ve discussed so far and removing the testing section as requested:
 
 ---
 

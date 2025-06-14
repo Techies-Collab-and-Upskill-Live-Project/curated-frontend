@@ -12,14 +12,13 @@ const config = {
         secondary: "#F9E3DE",
         border_dark: "#89888B",
         border_light: "#F9E3DE",
-        
+
         btn_colors: {
           primary: "#E2725B",
           accent: "#CC5C47",
           secondary: "#B94D3A",
           disabled: "#F3C4B9",
         },
-
 
         outline_colors: {
           100: "#E2725B",
@@ -29,6 +28,10 @@ const config = {
       },
       boxShadow: {
         "custom-soft": "0px 4px 15px 0px rgba(226, 114, 91, 0.1)", // #E2725B at 10% opacity
+      },
+      fontFamily: {
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
       screens: {
         base: "0px",
