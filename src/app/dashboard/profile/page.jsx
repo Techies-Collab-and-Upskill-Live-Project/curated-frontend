@@ -1,17 +1,195 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import { IconEdit, IconLogout, IconPhoto } from "@tabler/icons-react";
 
-export default function ProfileDashboard() {
-  
+export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState("");
+  const [preview, setPreview] = useState("/avatar.jpg"); // Default avatar
+  const [profile, setProfile] = useState({
+    name: "John Doe",
+    username: "@johndoe",
+    email: "CuratED@gmail.com",
+    image: "/avatar.jpg",
+  });
+
+  const [watchHistory, setWatchHistory] = useState([]);
+  const [savedVideos, setSavedVideos] = useState([]);
+
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreview(url);
+      setProfile({ ...profile, image: url });
+    }
+  };
+
+  const handleSave = () => {
+    const { name, username, email } = profile;
+    if (!name || !username || !email) {
+      setError("All fields are required.");
+      return;
+    }
+    setError("");
+    setIsEditing(false);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-        {/* Header */}
-        <div className="bg-indigo-600 p-6">
-          <h1 className="text-2xl font-bold text-white">Dashboard Profile</h1>
+    <div className="min-h-screen bg-white px-4 py-6 md:px-12">
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Top Section */}
+        <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
+          {/* Avatar & Info */}
+          <div className="flex gap-4 items-center">
+            <div className="relative">
+              <Image
+                src={preview}
+                alt="Profile"
+                width={80}
+                height={80}
+                className="rounded-full object-cover border"
+              />
+              {isEditing && (
+                <label className="absolute -bottom-1 -right-1 bg-white border rounded-full p-1 cursor-pointer">
+                  <IconPhoto className="w-4 h-4 text-gray-600" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                </label>
+              )}
+            </div>
+
+            <div>
+              {isEditing ? (
+                <div className="space-y-1">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter name"
+                    value={profile.name}
+                    onChange={handleChange}
+                    className="border rounded px-2 py-1 w-full"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                    value={profile.username}
+                    onChange={handleChange}
+                    className="border rounded px-2 py-1 w-full"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter email"
+                    value={profile.email}
+                    onChange={handleChange}
+                    className="border rounded px-2 py-1 w-full"
+                    required
+                  />
+                  {error && (
+                    <p className="text-sm text-red-500">{error}</p>
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm space-y-1">
+                  <p>
+                    <span className="font-semibold">Name:</span> {profile.name}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Username:</span> {profile.username}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Email:</span> {profile.email}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+          {/* Edit/Save Button */}
+          <button
+            onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
+            className="px-4 py-2 border rounded text-sm hover:bg-gray-50"
+          >
+            {isEditing ? "Save" : (
+              <div className="flex items-center gap-1">
+                <IconEdit className="w-4 h-4" /> Edit
+              </div>
+            )}
+          </button>
+        </div>
+
+        {/* Watch History */}
+        <Section title="Watch History" videos={watchHistory} />
+
+        {/* Saved Videos */}
+        <Section title="Saved Videos" videos={savedVideos} />
+
+        {/* Account Settings */}
+        <div className="space-y-2">
+          <h2 className="font-semibold text-sm">Account Settings</h2>
+          <p className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</p>
+          <button className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded">
+            <IconLogout className="w-4 h-4" /> Logout
+          </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Reusable section
+function Section({ title, videos }) {
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-sm font-semibold">{title}</h2>
+        <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">View All</button>
+      </div>
+
+      {videos.length === 0 ? (
+        <div className="flex items-center justify-center h-40 border rounded bg-gray-50">
+          <div className="text-center text-gray-500 text-sm">
+            <svg
+              className="mx-auto mb-2"
+              width="40"
+              height="40"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M10 8v8l6-4-6-4zm-8 4c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2 2 6.477 2 12z" />
+            </svg>
+            You do not have any {title.toLowerCase()} yet
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {videos.map((vid, i) => (
+            <div key={i} className="border rounded p-2">
+              <Image
+                src={vid.thumbnail}
+                alt="video"
+                width={160}
+                height={90}
+                className="rounded"
+              />
+              <p className="text-sm mt-1">{vid.title}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
