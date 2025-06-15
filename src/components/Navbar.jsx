@@ -73,8 +73,12 @@ export default function Navbar() {
       {
         isLoggedIn && (
           <div className="flex items-center lg:mr-12 gap-12">
-            <IconBell />
-            <img src="/prorfilr.png" />
+            <Link href={routes.dashboard.notifications}> 
+              <IconBell />
+            </Link>            
+            <Link href={routes.dashboard.profile}>            
+              <img src="/prorfilr.png" />
+            </Link>            
           </div>
         )
       }
