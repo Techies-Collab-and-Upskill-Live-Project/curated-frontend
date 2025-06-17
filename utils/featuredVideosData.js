@@ -15,11 +15,5 @@ export const videoIds = [
   "6TUvFffaOBE",
   "noz8rKWXVYw", // Crash Course: Personal Finance for Beginners :contentReference[oaicite:1]{index=1}
   "Jp2_CTGLtqQ", // Personal Finance Crash Course – Money Management Basics :contentReference[oaicite:2]{index=2}
-  "Zh40xbPCpws",
-  "SyVMma1IkXM", // Blockchain Full Course – Simplilearn :contentReference[oaicite:1]{index=1}
-  "D6NexyfJ0Y4", // Cryptocurrency for Beginners – Ishan Sharma :contentReference[oaicite:2]{index=2}
-  "_160oMzblY8",
-  "mslUjcbzhwA", // Build a Blockchain in 30 Minutes – Reddit shared tutorial :contentReference[oaicite:6]{index=6}
-  // 🛠️ DAO Explained
-  "DAO_AnimatedXYZ",
+  // "Zh40xbPCpws"
 ];
