@@ -7,7 +7,7 @@ export const routes = {
   dashboard: {
     base: "/dashboard",
     profile: "/dashboard/profile",
-    settings: "/dashboard/settings",
+    changePassword: "/dashboard/change-password",
     notifications: "/dashboard/notifications",
   },
 };

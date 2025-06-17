@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
+import { IconCircleDotted } from "@tabler/icons-react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import InputField from "@/components/InputField";
 import Google from "../../../../public/assets/images/google.png";
 import { routes } from "@/config/constant";
@@ -179,7 +180,7 @@ export default function Login() {
               className="absolute right-4 top-[46px] cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? <IconEye /> : <IconEyeClosed />}
+              {showPassword ? <FaRegEye size={21} /> : <FaRegEyeSlash size={21}/>}
             </div>
             {formData.password && !validity.password && (
               <p className="text-red-500 text-xs mt-1 italic">

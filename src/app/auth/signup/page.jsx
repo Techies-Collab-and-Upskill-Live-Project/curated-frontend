@@ -5,7 +5,8 @@ import { routes } from "@/config/constant";
 import Image from "next/image";
 import Google from "../../../../public/assets/images/google.png";
 import InputField from "@/components/InputField";
-import { IconCircleDotted, IconEye, IconEyeClosed } from "@tabler/icons-react";
+import { IconCircleDotted } from "@tabler/icons-react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useToast } from "@/components/Toast";
 import validator from "validator";
 import { useRouter } from "next/navigation";
@@ -157,7 +158,6 @@ export default function SignUp() {
     } finally {
       setIsSubmitting(false);
     }
-  
   };
 
   return (
@@ -235,10 +235,14 @@ export default function SignUp() {
               containerClass="w-[350px] md:w-[631px] mt-8"
             />
             <div
-              className="absolute right-4 top-[46px] cursor-pointer"
+              className="absolute right-4 top-[47px] cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? <IconEye /> : <IconEyeClosed />}
+              {showPassword ? (
+                <FaRegEye size={21} />
+              ) : (
+                <FaRegEyeSlash size={21} />
+              )}
             </div>
             {formData.password && !validity.password && (
               <p className="text-red-500 text-xs mt-1 italic">
@@ -259,10 +263,10 @@ export default function SignUp() {
               containerClass="w-[350px] md:w-[631px] mt-8"
             />
             <div
-              className="absolute right-4 top-[46px] cursor-pointer"
+              className="absolute right-4 top-[47px] cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <IconEye /> : <IconEyeClosed />}
+              {showConfirmPassword ? <FaRegEye size={21} /> : <FaRegEyeSlash size={21} />}
             </div>
             {formData.confirmPassword && !validity.confirmPassword && (
               <p className="text-red-500 text-xs mt-1 italic">
