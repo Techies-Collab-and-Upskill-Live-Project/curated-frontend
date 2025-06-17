@@ -6,6 +6,9 @@ export async function fetchYouTubeVideos(query) {
 
   const res = await fetch(endpoint);
   const data = await res.json();
+  if (!res.ok) {
+    throw new Error(`YouTube API error: ${data.error.message}`);
+  }
 
   const filteredVideos = data.items.filter((video) => {
     const title = video.snippet.title.toLowerCase();
