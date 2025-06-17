@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Searchbar Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full px-4 sm:px-0 max-w-2xl relative"
+  >
+    <form
+      class="flex items-center text-white border rounded-[10px] gap-1 sm:gap-2 mb-2"
+    >
+      <div
+        class="relative flex-1"
+      >
+        <svg
+          data-testid="search-icon"
+        />
+        <input
+          class="w-full pl-8 sm:pl-10 pr-2 sm:pr-4 py-2 text-sm sm:text-base focus:outline-none bg-transparent"
+          placeholder="Search/Playlist Link..."
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="bg-primary text-white px-3 sm:px-6 py-2 text-sm sm:text-base rounded-md transition-colors"
+        type="submit"
+      >
+        Search
+      </button>
+    </form>
+  </div>
+</DocumentFragment>
+`;
