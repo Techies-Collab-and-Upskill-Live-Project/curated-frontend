@@ -45,7 +45,7 @@ const VideoPlayerPage = (props) => {
 
             {/* Title & Channel */}
             <h1 className="text-[18px] text-[#262323] font-bold mb-2">{video.snippet.title}</h1>
-            <div className="flex items-center justify-between">
+            <div className="md:flex items-center justify-between">
                 <div className="flex items-center gap-4 justify-between">
                     <img src="/prorfilr.png" className="rounded w-14 h-14" />
                     <div className="flex flex-col  justify-between items-center">
@@ -54,10 +54,10 @@ const VideoPlayerPage = (props) => {
                     </div>
                 </div>
                 <div className="flex items-center gap-4 justify-between">
-                    <div className="flex items-center justify-between bg-[#F9E3DE] text-[#000000] text-[16px] py-3 px-6 rounded-md gap-2">
+                    <div className="flex items-center md:m-0 mt-4 justify-between bg-[#F9E3DE] text-[#000000] text-[16px] py-3 md:px-6 p-2 rounded-md gap-2">
                         <ThumbsUp /> 4.8k | <ThumbsDown />
                     </div>
-                    <div className="flex items-center justify-between bg-[#F9E3DE] text-[#000000] text-[16px] py-3 px-6 rounded-md gap-2">
+                    <div className="flex items-center justify-between bg-[#F9E3DE] text-[#000000] text-[16px] py-3 p-2 md:px-6 rounded-md gap-2">
                         <Bookmark />
                         Save Video</div>
                 </div>
