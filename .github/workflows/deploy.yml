@@ -22,10 +22,12 @@ jobs:
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: Install dependencies (with sharp for Linux)
+      - name: Install sharp for Linux (force correct binary)
+        run: npm install --force --platform=linux --arch=x64 sharp
+      
+      - name: Install remaining dependencies (including optional)
         run: npm install --include=optional
-
-      # ✅ (Optional) Verify sharp installed
+      
       - name: Verify sharp installation
         run: node -e "require('sharp'); console.log('Sharp is working ✅');"
 
