@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { videoIds } from '../../utils/featuredVideosData';
+import { useEffect, useState } from "react";
+import { videoIds } from "../../utils/featuredVideosData";
 
-const STORAGE_KEY = 'featuredVideos';
 const VIDEO_COUNT = 3;
 
 function getRandomVideos(count = VIDEO_COUNT) {
@@ -14,23 +13,8 @@ const FeaturedVideos = () => {
   const [playVideoIds, setPlayVideoIds] = useState([]);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          setSelectedVideos(parsed);
-          return;
-        }
-      }
-
-      const randomVideos = getRandomVideos();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(randomVideos));
-      setSelectedVideos(randomVideos);
-    } catch (error) {
-      console.error('Error loading featured videos:', error);
-    }
+    const randomVideos = getRandomVideos();
+    setSelectedVideos(randomVideos);
   }, []);
 
   const handleThumbnailClick = (id) => {
@@ -40,7 +24,7 @@ const FeaturedVideos = () => {
   return (
     <section className="py-6 px-4 bg-white">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl sm:text-4xl font-bold mt-10 mb-2">
+        <h2 className="text-4xl font-bold mt-10 mb-2">
           Enjoy Your Learning Experience
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-12">
