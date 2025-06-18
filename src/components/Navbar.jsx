@@ -44,41 +44,15 @@ export default function Navbar() {
           </div>
         )
       }
-
-      {
-        isLoggedIn && !isHomePage && (
-          <div className="lg:w-[690px] relative">
-            <form className="flex items-center text-white border rounded-[10px] gap-2 mb-2" onSubmit={handleSubmit}>
-              {/* Input Container with Icon */}
-              <div className="relative flex-1">
-                <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2 " />
-                <input
-                  type="text"
-                  className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent"
-                  required
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-              </div>
-
-              {/* Search Button */}
-              <button type='submit' className="bg-primary text-white px-6 py-2 rounded-md transition-colors">
-                Search
-              </button>
-            </form>
-
-          </div>
-        )
-      }
       {
         isLoggedIn && (
           <div className="flex items-center lg:mr-12 gap-12">
-            <Link href={routes.dashboard.notifications}> 
+            <Link href={routes.dashboard.notifications}>
               <IconBell />
-            </Link>            
-            <Link href={routes.dashboard.profile}>            
+            </Link>
+            <Link href={routes.dashboard.profile}>
               <img src="/prorfilr.png" />
-            </Link>            
+            </Link>
           </div>
         )
       }
