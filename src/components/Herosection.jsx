@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Herosection() {
     return (
-        <div className="text-center relative px-4 mt-16">
+        <div className="text-center relative px-4 mt-24">
             {/* Bulb Icon - Centered on mobile, original position on larger screens */}
             <div className="flex justify-center sm:block sm:absolute sm:right-[89%] sm:mt-4 sm:-translate-x-1/2 sm:mt-12">
                 <Image
