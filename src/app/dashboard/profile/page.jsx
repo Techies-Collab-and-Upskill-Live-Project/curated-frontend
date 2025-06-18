@@ -9,10 +9,10 @@ import {routes} from "@/config/constant.js";
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
-  const [preview, setPreview] = useState("/avatar.jpg"); // Default avatar
+  const [preview, setPreview] = useState("/avatar.jpg"); 
   const [profile, setProfile] = useState({
     name: "John Doe",
-    username: "@johndoe",
+    username: "@johndee",
     email: "CuratED@gmail.com",
     image: "/avatar.jpg",
   });
@@ -44,11 +44,10 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white px-4 py-6 md:px-12">
+    <div className="min-h-screen bg-white px-4 py-6 md:px-12 relative">
       <div className="max-w-5xl mx-auto space-y-10">
-        {/* Top Section */}
-        <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
-          {/* Avatar & Info */}
+        {/* Top Section - Hidden on mobile when editing */}
+        <div className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${isEditing ? "sm:flex hidden" : ""}`}>
           <div className="flex gap-4 items-center">
             <div className="relative">
               <Image
@@ -70,7 +69,6 @@ export default function ProfilePage() {
                 </label>
               )}
             </div>
-
             <div>
               {isEditing ? (
                 <div className="space-y-1">
@@ -101,22 +99,14 @@ export default function ProfilePage() {
                     className="border rounded px-2 py-1 w-full"
                     required
                   />
-                  {error && (
-                    <p className="text-sm text-red-500">{error}</p>
-                  )}
+                  {error && <p className="text-sm text-red-500">{error}</p>}
                 </div>
               ) : (
                 <div className="text-sm space-y-1">
-                  <p>
-                    <span className="font-semibold">Name:</span> {profile.name}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Username:</span> {profile.username}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Email:</span> {profile.email}
-                  </p>
-                </div>
+                  <p><span className="font-semibold">Name:</span> {profile.name}</p>
+                  <p><span className="font-semibold">Username:</span> {profile.username}</p>
+                  <p><span className="font-semibold">Email:</span> {profile.email}</p>
+                  </div>
               )}
             </div>
           </div>
@@ -148,11 +138,85 @@ export default function ProfilePage() {
           </button>
         </div>
       </div>
+
+      {/* Mobile Modal Form */}
+      {isEditing && (
+        <div className="fixed inset-0 z-50 bg-white p-6 sm:hidden overflow-y-auto">
+          <div className="flex flex-col items-center text-center">
+            <div className="relative mb-6">
+              <Image
+                src={preview}
+                alt="Profile"
+                width={140}
+                height={140}
+                className="rounded-full object-cover"
+              />
+              <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full cursor-pointer">
+                <IconPhoto className="w-6 h-6 text-white" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
+            <div className="w-full space-y-4">
+              <div>
+                <label className="block text-left font-semibold mb-1">Name</label>
+                <input
+                  name="name"
+                  type="text"
+                  value={profile.name}
+                  onChange={handleChange}
+                  placeholder="Enter name"
+                  required
+                  className="w-full border rounded px-4 py-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-left font-semibold mb-1">Username</label>
+                <input
+                  name="username"
+                  type="text"
+                  value={profile.username}
+                  onChange={handleChange}
+                  placeholder="@username"
+                  required
+                  className="w-full border rounded px-4 py-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-left font-semibold mb-1">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  value={profile.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  required
+                  className="w-full border rounded px-4 py-2"
+                />
+              </div>
+
+              {error && <p className="text-red-600 text-sm">{error}</p>}
+
+              <button
+                onClick={handleSave}
+                className="w-full bg-red-400 hover:bg-red-500 text-white py-3 font-semibold rounded-lg mt-4"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-// Reusable section
 function Section({ title, videos }) {
   return (
     <div>
@@ -160,7 +224,6 @@ function Section({ title, videos }) {
         <h2 className="text-sm font-semibold">{title}</h2>
         <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">View All</button>
       </div>
-
       {videos.length === 0 ? (
         <div className="flex items-center justify-center h-40 border rounded bg-gray-50">
           <div className="text-center text-gray-500 text-sm">
