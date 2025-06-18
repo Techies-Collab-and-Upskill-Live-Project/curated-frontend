@@ -45,25 +45,6 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
-      <nav className="flex justify-between items-center p-4 md:p-6 bg-white shadow-md">
-        <Link href={routes.home}>
-          <h1 className="font-bold text-[#F15A29] text-xl md:text-2xl">
-            CuratED
-          </h1>
-        </Link>
-        <div className="flex items-center gap-2 md:gap-4">
-          <button className="relative p-2 hover:bg-gray-100 rounded-full">
-            <Bell className="w-5 h-5 text-gray-700" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
-          <img
-            src="https://i.pravatar.cc/40"
-            alt="Profile"
-            className="w-8 h-8 rounded-full"
-          />
-        </div>
-      </nav>
-
       <main className="flex-grow">
         <div className="relative w-full h-dvh lg:h-screen">
           <Image

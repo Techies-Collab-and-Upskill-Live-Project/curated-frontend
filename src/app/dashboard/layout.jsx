@@ -2,13 +2,19 @@
 
 import Navbar from "@/components/Navbar";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import React, { useEffect } from "react";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { isLoggedIn, user } = useAuthStore();
+
+  // Add routes where you don't want to show the navbar
+  const noNavbarRoutes = [
+    '/dashboard/change-password',
+    // Add more routes here
+  ];
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -18,7 +24,7 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div>
-      <Navbar />
+      {!noNavbarRoutes.includes(pathname) && <Navbar />}
       {children}
     </div>
   );

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { IconEdit, IconLogout, IconPhoto } from "@tabler/icons-react";
+import Link from "next/link";
+import {routes} from "@/config/constant.js";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
@@ -140,7 +142,7 @@ export default function ProfilePage() {
         {/* Account Settings */}
         <div className="space-y-2">
           <h2 className="font-semibold text-sm">Account Settings</h2>
-          <p className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</p>
+          <Link href={routes.dashboard.changePassword} className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</Link>
           <button className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded">
             <IconLogout className="w-4 h-4" /> Logout
           </button>
