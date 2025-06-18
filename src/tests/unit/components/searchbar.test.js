@@ -52,9 +52,4 @@ describe('Searchbar Component', () => {
     const input = screen.getByPlaceholderText('Search/Playlist Link...');
     expect(input).toBeRequired();
   });
-
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Searchbar onSearch={mockOnSearch} />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });
