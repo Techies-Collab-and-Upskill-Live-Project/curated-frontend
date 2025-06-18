@@ -22,8 +22,12 @@ jobs:
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (with sharp for Linux)
+        run: npm install --include=optional
+
+      # ✅ (Optional) Verify sharp installed
+      - name: Verify sharp installation
+        run: node -e "require('sharp'); console.log('Sharp is working ✅');"
 
       - name: Build project
         run: npm run build
@@ -37,6 +41,7 @@ jobs:
           elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
             npx vercel --yes --token=$VERCEL_TOKEN --prod --confirm --alias prodcurated.vercel.app
           fi
+
       - name: Post deployment message
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
