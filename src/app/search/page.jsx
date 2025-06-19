@@ -1,85 +1,64 @@
 "use client";
 
-import Image from "next/image";
-import Herosection from "@/components/Herosection";
-import Searchbar from "@/components/Searchbar";
-import Testimonials from "@/components/Testimonials";
-import Footer from "@/components/Footer";
-import FeatureCards from "@/components/FeatureCards";
-import FeaturedVideos from "@/components/FeaturedVideos";
-import Valueproposition from "@/components/Valueproposition";
-import Howitworks from "@/components/Howitworks";
-import { fetchYouTubeVideos } from "../../utils/fetchYouTube";
-import { useSearchStore } from "@/store/useSearchStore";
-import { useRouter } from "next/navigation";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import Navbar from "@/components/Navbar";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { Bell } from "lucide-react";
+import { routes } from "../../config/constant";
+import Searchbar from "../../components/Searchbar";
 
-export default function Home() {
-  const router = useRouter();
-  const { results, setResults, loading, setLoading, clearResults } =
-    useSearchStore();
+export default function SearchPage() {
+  const [history, setHistory] = useState([]);
 
-  const { isLoggedIn, user } = useAuthStore();
-
-  useEffect(() => {
-    if (isLoggedIn || user) {
-      router.push("/dashboard");
-    }
-  }, [isLoggedIn, router]);
-
-  const handleSearch = async (query) => {
-    setLoading(true);
-    try {
-      const results = await fetchYouTubeVideos(query);
-      setResults(results);
-      router.push("/results");
-    } catch (error) {
-      console.error("Error fetching videos:", error);
-      clearResults();
-    } finally {
-      setLoading(false);
-    }
+  const onSearch = (q) => {
+    if (!q) return;
+    const dummy = {
+      id: q,
+      title: `Result for "${q}"`,
+      thumbnail: "https://via.placeholder.com/320x180.png?text=Video",
+    };
+    const nh = [dummy, ...history.filter((v) => v.id !== q)];
+    setHistory(nh);
   };
 
-  console.log(results);
-
-  if (loading) return <LoadingSpinner />;
-
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-col">
-        <header className="relative pb-32 sm:pb-40">
-          <div className="absolute inset-0 -z-10 h-full w-full">
-            <Image
-              src="/icons/Landing-Image.svg"
-              alt="Header Background"
-              fill
-              className="object-cover object-center brightness-50"
-              priority
-            />
-          </div>
-
-          <div className="flex flex-col items-center text-center px-4">
-            <Herosection />
-            <Searchbar onSearch={handleSearch} />
-          </div>
-        </header>
-        <div className="relative -mt-24 sm:-mt-32 mb-8 sm:mb-10 z-10">
-          <FeatureCards />
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      <nav className="flex items-center justify-between px-4 py-4 bg-white shadow-sm">
+        <Link href={routes.home} className="font-bold text-[#F15A29] text-xl">
+          CuratED
+        </Link>
+        <div className="flex-1 mx-4 md:mx-8 max-w-xl">
+          <Searchbar onSearch={onSearch} />
         </div>
-        <FeaturedVideos />
-        <Valueproposition />
-        <Howitworks />
-        <Testimonials />
-      </div>
+        <div className="flex items-center gap-3">
+          <Bell className="w-5 h-5 text-gray-700" />
+        </div>
+      </nav>
 
-      <footer>
-        <Footer />
-      </footer>
-    </>
+      <main className="flex-grow flex items-center justify-center p-6">
+        {history.length === 0 ? (
+          <div className="bg-white p-8 rounded-lg shadow max-w-md w-full text-center">
+            <h2 className="font-bold text-xl mb-2">
+              Try Searching to get started
+            </h2>
+            <p className="text-gray-600">
+              Start searching to build your history
+            </p>
+          </div>
+        ) : (
+          <section className="container mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {history.map((v) => (
+              <div key={v.id} className="bg-white rounded-lg shadow p-4">
+                <img
+                  src={v.thumbnail}
+                  alt={v.title}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <h3 className="mt-2 font-medium">{v.title}</h3>
+              </div>
+            ))}
+          </section>
+        )}
+      </main>
+    </div>
   );
 }

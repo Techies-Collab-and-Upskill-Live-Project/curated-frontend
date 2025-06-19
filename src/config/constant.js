@@ -1,3 +1,5 @@
+import { Search } from "lucide-react";
+
 export const routes = {
   home: "/",
   login: "/auth/login",
@@ -9,5 +11,6 @@ export const routes = {
     profile: "/dashboard/profile",
     settings: "/dashboard/settings",
     notifications: "/dashboard/notifications",
+    search: "/search",
   },
 };
