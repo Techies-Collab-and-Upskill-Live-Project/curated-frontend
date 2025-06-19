@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Bell, Bookmark } from "lucide-react";
 import { routes } from "../../config/constant.js";
+import Herosection from "../../components/Herosection"
 import Searchbar from "../../components/Searchbar";
 import Footer from "../../components/Footer";
 
@@ -46,35 +47,22 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <main className="flex-grow">
-        <div className="relative w-full h-dvh lg:h-screen">
-          <Image
-            src="/icons/Landing-Image.svg"
-            alt="Header Background"
-            fill
-            className="object-cover object-center filter brightness-140"
-            priority
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-60" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        <header className="relative pb-32 sm:pb-40">
+          <div className="absolute inset-0 -z-10 h-full w-full">
             <Image
-              src="/icons/Bulb.svg"
-              alt="Lightbulb icon"
-              width={81.34}
-              height={104.41}
-              className="mb-4 w-[60px] h-[76px] sm:w-[70px] sm:h-[90px] md:w-[81px] md:h-[104px]"
+              src="/icons/Landing-Image.svg"
+              alt="Header Background"
+              fill
+              className="object-cover object-center brightness-50"
+              priority
             />
-            <h1 className="text-white text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
-              Discover Smarter Ways to Learn
-            </h1>
-            <p className="text-white mt-4 mb-6 max-w-xl text-sm sm:text-base md:text-lg">
-              CuratED helps you find insightful, educational videos tailored to
-              your interests
-            </p>
-            <div className="w-full max-w-md">
-              <Searchbar onSearch={handleSearch} />
-            </div>
           </div>
-        </div>
+
+          <div className="flex flex-col items-center text-center px-4">
+            <Herosection />
+            <Searchbar onSearch={handleSearch} />
+          </div>
+        </header>
 
         <div className="text-center text-sm text-gray-400 mt-2 mb-6 px-4">
           Use the search bar to find videos
