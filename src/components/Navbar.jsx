@@ -3,27 +3,17 @@
 import Link from "next/link";
 import { routes } from "../config/constant";
 import { IconBell } from "@tabler/icons-react";
-import { useState } from "react";
-import { IconSearch } from '@tabler/icons-react';
 import { useAuthStore } from "@/store/useAuthStore";
-import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const [query, setQuery] = useState('');
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const pathname = usePathname(); // Get current route
-  const isHomePage = pathname === "/dashboard";
-
+  const profile = useAuthStore((state) => state.profile); 
 
   console.log('User login status is ', isLoggedIn)
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(query);
-  };
+  
   return (
-    <nav className="flex items-center  justify-between p-6">
-      <Link href={routes.home}>
+    <nav className="flex items-center justify-between p-6">
+      <Link href={isLoggedIn ? routes.dashboard.base : routes.home}>
         <h1 className="md:text-2xl font-bold text-primary md:ml-20">CuratED</h1>
       </Link>
       {
@@ -51,7 +41,11 @@ export default function Navbar() {
               <IconBell />
             </Link>
             <Link href={routes.dashboard.profile}>
-              <img src="/prorfilr.png" />
+              <img 
+                src={profile?.image || "/avatar.jpg"} 
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
             </Link>
           </div>
         )
