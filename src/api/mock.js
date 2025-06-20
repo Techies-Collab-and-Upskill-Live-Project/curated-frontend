@@ -26,27 +26,38 @@ mock.onPost("/auth/reset-password").reply(200, {
   message: "Password reset email sent",
 });
 
-
 // ✅ Mock email verification
-mock.onPost('/auth/verify-email').reply((config) => {
-    const { code } = JSON.parse(config.data);
-  
-    if (code === '1234') {
-      return [200, { message: 'Email verified successfully!' }];
-    }
-  
-    return [400, { message: 'Invalid verification code.' }];
-  });
-  
-  // 🔁 Mock resend verification
-  mock.onPost('/auth/resend-verification').reply((config) => {
-    const { email } = JSON.parse(config.data);
-  
-    if (email) {
-      return [200, { message: 'Verification code resent.' }];
-    }
-  
-    return [400, { message: 'Email is required.' }];
-  });
-  
+mock.onPost("/auth/verify-email").reply((config) => {
+  const { code } = JSON.parse(config.data);
+
+  if (code === "1234") {
+    return [200, { message: "Email verified successfully!" }];
+  }
+
+  return [400, { message: "Invalid verification code." }];
+});
+
+// 🔁 Mock resend verification
+mock.onPost("/auth/resend-verification").reply((config) => {
+  const { email } = JSON.parse(config.data);
+
+  if (email) {
+    return [200, { message: "Verification code resent." }];
+  }
+
+  return [400, { message: "Email is required." }];
+});
+
+// 🔐 Mock change password
+mock.onPost("/auth/change-password").reply((config) => {
+  const { currentPassword, newPassword } = JSON.parse(config.data);
+
+  console.log("Received change-password payload:", config.data);
+
+  if (currentPassword === "Password123@" && newPassword) {
+    return [200, { message: "Password changed successfully" }];
+  }
+
+  return [400, { message: "Invalid old password or new password is missing" }];
+});
 export default mock;
