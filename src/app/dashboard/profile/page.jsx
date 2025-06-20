@@ -1,27 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { IconEdit, IconLogout, IconPhoto } from "@tabler/icons-react";
 import Link from "next/link";
-import {routes} from "@/config/constant.js";
+import { routes } from "@/config/constant.js";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
-  const [preview, setPreview] = useState("/avatar.jpg"); 
-  const [profile, setProfile] = useState({
-    name: "John Doe",
-    username: "@johndee",
-    email: "CuratED@gmail.com",
-    image: "/avatar.jpg",
+  const [preview, setPreview] = useState("");
+  
+  // Get profile data and actions from Zustand store
+  const profile = useAuthStore((state) => state.profile);
+  const updateProfile = useAuthStore((state) => state.updateProfile);
+  const updateProfileImage = useAuthStore((state) => state.updateProfileImage);
+  const logout = useAuthStore((state) => state.logout);
+
+  // Local form state for editing
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    email: "",
   });
 
   const [watchHistory, setWatchHistory] = useState([]);
   const [savedVideos, setSavedVideos] = useState([]);
 
+  // Initialize form data and preview when component mounts or profile changes
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        name: profile.name,
+        username: profile.username,
+        email: profile.email,
+      });
+      setPreview(profile.image);
+    }
+  }, [profile]);
+
   const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleImageUpload = (e) => {
@@ -29,18 +49,33 @@ export default function ProfilePage() {
     if (file) {
       const url = URL.createObjectURL(file);
       setPreview(url);
-      setProfile({ ...profile, image: url });
+      // Update the store immediately so it reflects in navbar
+      updateProfileImage(url);
     }
   };
 
   const handleSave = () => {
-    const { name, username, email } = profile;
+    const { name, username, email } = formData;
     if (!name || !username || !email) {
       setError("All fields are required.");
       return;
     }
+    
+    // Update the profile in the store
+    updateProfile({
+      name,
+      username,
+      email,
+      image: preview, // Make sure the image is also saved
+    });
+    
     setError("");
     setIsEditing(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    // Redirect to home or login page if needed
   };
 
   return (
@@ -51,7 +86,7 @@ export default function ProfilePage() {
           <div className="flex gap-4 items-center">
             <div className="relative">
               <Image
-                src={preview}
+                src={preview || "/avatar.jpg"}
                 alt="Profile"
                 width={80}
                 height={80}
@@ -76,7 +111,7 @@ export default function ProfilePage() {
                     type="text"
                     name="name"
                     placeholder="Enter name"
-                    value={profile.name}
+                    value={formData.name}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
@@ -85,7 +120,7 @@ export default function ProfilePage() {
                     type="text"
                     name="username"
                     placeholder="Enter username"
-                    value={profile.username}
+                    value={formData.username}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
@@ -94,7 +129,7 @@ export default function ProfilePage() {
                     type="email"
                     name="email"
                     placeholder="Enter email"
-                    value={profile.email}
+                    value={formData.email}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
@@ -103,10 +138,10 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="text-sm space-y-1">
-                  <p><span className="font-semibold">Name:</span> {profile.name}</p>
-                  <p><span className="font-semibold">Username:</span> {profile.username}</p>
-                  <p><span className="font-semibold">Email:</span> {profile.email}</p>
-                  </div>
+                  <p><span className="font-semibold">Name:</span> {profile?.name}</p>
+                  <p><span className="font-semibold">Username:</span> {profile?.username}</p>
+                  <p><span className="font-semibold">Email:</span> {profile?.email}</p>
+                </div>
               )}
             </div>
           </div>
@@ -133,7 +168,10 @@ export default function ProfilePage() {
         <div className="space-y-2">
           <h2 className="font-semibold text-sm">Account Settings</h2>
           <Link href={routes.dashboard.changePassword} className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</Link>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded">
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
+          >
             <IconLogout className="w-4 h-4" /> Logout
           </button>
         </div>
@@ -145,7 +183,7 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center text-center">
             <div className="relative mb-6">
               <Image
-                src={preview}
+                src={preview || "/avatar.jpg"}
                 alt="Profile"
                 width={140}
                 height={140}
@@ -168,7 +206,7 @@ export default function ProfilePage() {
                 <input
                   name="name"
                   type="text"
-                  value={profile.name}
+                  value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter name"
                   required
@@ -181,7 +219,7 @@ export default function ProfilePage() {
                 <input
                   name="username"
                   type="text"
-                  value={profile.username}
+                  value={formData.username}
                   onChange={handleChange}
                   placeholder="@username"
                   required
@@ -194,7 +232,7 @@ export default function ProfilePage() {
                 <input
                   name="email"
                   type="email"
-                  value={profile.email}
+                  value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
                   required
@@ -217,6 +255,7 @@ export default function ProfilePage() {
     </div>
   );
 }
+
 function Section({ title, videos }) {
   return (
     <div>
