@@ -53,7 +53,7 @@ export default function Home() {
       <Navbar />
       <div className="flex flex-col">
         <header className="relative pb-32 sm:pb-40">
-          <div className="absolute inset-0 -z-10 h-full w-full md:h-[803px] md:top-[95px]">
+          <div className="absolute inset-0 -z-10 h-full w-full">
             <Image
               src="/icons/Landing-Image.svg"
               alt="Header Background"
