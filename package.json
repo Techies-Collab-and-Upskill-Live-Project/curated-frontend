@@ -36,12 +36,12 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9.29.0",
     "@playwright/test": "^1.53.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
-    "eslint": "^9",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.1.5",
     "jest": "^30.0.0",
     "jest-environment-jsdom": "^30.0.0",
