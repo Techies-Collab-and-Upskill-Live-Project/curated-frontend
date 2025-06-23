@@ -43,3 +43,6 @@ next-env.d.ts
 # snapshots files for testing
 /__snapshots__/
 *.snap
+
+# ignore text files
+*.txt
