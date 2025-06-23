@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter, usePathname } from "next/navigation";
+import SearchBar from "@/app/dashboard/_components/SearchBar";
 import React, { useEffect } from "react";
 
 const DashboardLayout = ({ children }) => {
@@ -12,7 +13,7 @@ const DashboardLayout = ({ children }) => {
 
   // Add routes where you don't want to show the navbar
   const noNavbarRoutes = [
-    '/dashboard/change-password',
+    "/dashboard/change-password",
     // Add more routes here
   ];
 
@@ -25,6 +26,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div>
       {!noNavbarRoutes.includes(pathname) && <Navbar />}
+      {!noNavbarRoutes.includes(pathname) && <SearchBar />}
       {children}
     </div>
   );
