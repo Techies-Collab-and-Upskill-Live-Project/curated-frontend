@@ -34,7 +34,7 @@ const config = {
         manrope: ["Manrope", "sans-serif"],
       },
       screens: {
-        base: "0px",
+        base: "300px",
         sm: "640px",
         md: "900px",
         "2md": "1000px",
