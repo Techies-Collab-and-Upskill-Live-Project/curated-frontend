@@ -115,11 +115,6 @@ export default function EmailVerification() {
     router.push(routes.home);
   };
 
-  // function to handle the success modal demo
-  // const handleSuccessModalDemo = () => {
-  // setShowSuccessModal(true);
-  // };
-
   return (
     <div className="flex items-center flex-col justify-center my-24 md:my-28">
       <div className="md:shadow-custom-soft md:p-20 md:w-[773px] md:rounded-xl">
@@ -225,16 +220,6 @@ export default function EmailVerification() {
             </p>
           )}
         </div>
-
-        {/* Demo Button */}
-        {/* <div className="mt-8 text-center">
-          <button
-            onClick={handleSuccessModalDemo}
-            className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
-          >
-            Demo: Show Verification Success Modal
-          </button>
-        </div> */}
       </div>
 
       {/* Modals (uncomment and implement) */}

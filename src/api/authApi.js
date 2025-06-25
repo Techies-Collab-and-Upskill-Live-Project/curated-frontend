@@ -14,7 +14,5 @@ export const verifyEmailCode = (code) =>
 export const resendVerificationCode = (email) =>
   api.post("/auth/resend-verification", { email });
 
-export async function changePassword(payload) {
-  const res = await axios.post("/api/auth/change-password", payload); // Or actual backend route
-  return res.data;
-}
+export const changePassword = (currentPassword, newPassword) =>
+  api.post("/auth/change-password", { currentPassword, newPassword }); // Or actual backend route

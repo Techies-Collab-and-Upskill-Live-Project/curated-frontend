@@ -11,7 +11,9 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
-  
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+
   // Get profile data and actions from Zustand store
   const profile = useAuthStore((state) => state.profile);
   const updateProfile = useAuthStore((state) => state.updateProfile);
@@ -60,7 +62,6 @@ export default function ProfilePage() {
       setError("All fields are required.");
       return;
     }
-    
     // Update the profile in the store
     updateProfile({
       name,
@@ -68,7 +69,7 @@ export default function ProfilePage() {
       email,
       image: preview, // Make sure the image is also saved
     });
-    
+
     setError("");
     setIsEditing(false);
   };
@@ -82,6 +83,11 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-white px-4 py-6 md:px-12 relative">
       <div className="max-w-5xl mx-auto space-y-10">
         {/* Top Section - Hidden on mobile when editing */}
+        <div
+          className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${
+            isEditing ? "sm:flex hidden" : ""
+          }`}
+        >
         <div className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${isEditing ? "sm:flex hidden" : ""}`}>
           <div className="flex gap-4 items-center">
             <div className="relative">
@@ -138,6 +144,17 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="text-sm space-y-1">
+                  <p>
+                    <span className="font-semibold">Name:</span> {profile?.name}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Username:</span>{" "}
+                    {profile?.username}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Email:</span>{" "}
+                    {profile?.email}
+                  </p>
                   <p><span className="font-semibold">Name:</span> {profile?.name}</p>
                   <p><span className="font-semibold">Username:</span> {profile?.username}</p>
                   <p><span className="font-semibold">Email:</span> {profile?.email}</p>
@@ -150,7 +167,9 @@ export default function ProfilePage() {
             onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
             className="px-4 py-2 border rounded text-sm hover:bg-gray-50"
           >
-            {isEditing ? "Save" : (
+            {isEditing ? (
+              "Save"
+            ) : (
               <div className="flex items-center gap-1">
                 <IconEdit className="w-4 h-4" /> Edit
               </div>
@@ -167,6 +186,13 @@ export default function ProfilePage() {
         {/* Account Settings */}
         <div className="space-y-2">
           <h2 className="font-semibold text-sm">Account Settings</h2>
+          <Link
+            href={routes.dashboard.changePassword}
+            className="text-sm text-blue-600 cursor-pointer hover:underline"
+          >
+            Change Password
+          </Link>
+          <button
           <Link href={routes.dashboard.changePassword} className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</Link>
           <button 
             onClick={handleLogout}
@@ -202,6 +228,9 @@ export default function ProfilePage() {
 
             <div className="w-full space-y-4">
               <div>
+                <label className="block text-left font-semibold mb-1">
+                  Name
+                </label>
                 <label className="block text-left font-semibold mb-1">Name</label>
                 <input
                   name="name"
@@ -215,6 +244,9 @@ export default function ProfilePage() {
               </div>
 
               <div>
+                <label className="block text-left font-semibold mb-1">
+                  Username
+                </label>
                 <label className="block text-left font-semibold mb-1">Username</label>
                 <input
                   name="username"
@@ -228,6 +260,9 @@ export default function ProfilePage() {
               </div>
 
               <div>
+                <label className="block text-left font-semibold mb-1">
+                  Email
+                </label>
                 <label className="block text-left font-semibold mb-1">Email</label>
                 <input
                   name="email"
@@ -261,7 +296,9 @@ function Section({ title, videos }) {
     <div>
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">View All</button>
+        <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">
+          View All
+        </button>
       </div>
       {videos.length === 0 ? (
         <div className="flex items-center justify-center h-40 border rounded bg-gray-50">

@@ -129,7 +129,7 @@ export default function ResetPassword() {
               <span>
                 <IconCircleDotted
                   className="animate-spin text-white mx-auto"
-                  size={30}
+                  size={24}
                 />
               </span>
             ) : (
