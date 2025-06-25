@@ -65,7 +65,6 @@ export default function Notifications() {
                 className="w-32 h-20 rounded-lg object-cover"
               />
 
-              {/* Text Content */}
               <div className="flex-1">
                 <h3 className="text-gray-800 text-sm leading-snug">
                   A new video on:
