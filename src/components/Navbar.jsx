@@ -38,7 +38,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {isLoggedIn && !isHomePage && (
+      {isLoggedIn && (
         <div className="lg:w-[690px] relative hidden lg:block">
           <form
             className="flex items-center text-white border rounded-[10px] gap-2 mb-2"
@@ -70,8 +70,6 @@ export default function Navbar() {
             <IconBell />
           </Link>
           <Link href={routes.dashboard.profile}>
-            <img src="/prorfilr.png" />
-
             <img
               src={profile?.image || "/avatar.jpg"}
               alt="Profile"

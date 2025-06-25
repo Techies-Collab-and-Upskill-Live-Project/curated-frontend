@@ -1,12 +1,10 @@
 "use client";
 
-
 const search = [
   // 'search history',
   // 'search history',
   // 'search history',
   // 'search history',
-
 ];
 
 export default function SearchPage() {
@@ -20,20 +18,10 @@ export default function SearchPage() {
           <p className="text-[.99rem] md:text-base base:text-[.65rem]">
             Start watching videos to help us build your search history
           </p>
-]
-
-const page = () => {
-  return <div className="flex mx-auto flex-col">
-    {
-      !search.length ? (
-        <div className="shadow max-w-2xl mx-auto flex flex-col items-center p-8">
-          <h1 className="text-2xl font-bold mb-4">Try Searching to get started</h1>
-          <p>Start watching videos to help us build your search history</p>
         </div>
       ) : (
         <div className="p-8 text-2xl">
           {search.map((item, idx) => (
-
             <p key={idx} className="p-4">
               {item}
             </p>
@@ -43,13 +31,3 @@ const page = () => {
     </section>
   );
 }
-            <p key={idx} className="p-4">{item}</p>
-          ))}
-        </div>
-      )
-    }
-
-  </div>;
-};
-
-export default page;
