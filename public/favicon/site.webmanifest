@@ -1,0 +1,29 @@
+{
+  "name": "CuratED",
+  "short_name": "CuratED",
+  "icons": [
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#E2725B",
+  "description": "CuratED: Empowering learners with curated educational content, interactive lessons, and personalized learning experiences.",
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "type": "image/png",
+      "sizes": "1895x815"
+    },
+    {
+      "src": "/screenshot2.png",
+      "type": "image/png",
+      "sizes": "1879x816"
+    }
+  ],
+  "categories": ["education", "productivity", "technology"]
+}
