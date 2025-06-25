@@ -10,7 +10,6 @@ import { routes } from "@/config/constant";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/navigation";
 import { login } from "@/api/authApi"; // Uncomment when ready
-import validator from "validator";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -180,7 +179,11 @@ export default function Login() {
               className="absolute right-4 top-[46px] cursor-pointer"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? <FaRegEye size={21} /> : <FaRegEyeSlash size={21}/>}
+              {showPassword ? (
+                <FaRegEye size={21} />
+              ) : (
+                <FaRegEyeSlash size={21} />
+              )}
             </div>
             {formData.password && !validity.password && (
               <p className="text-red-500 text-xs mt-1 italic">
@@ -225,12 +228,10 @@ export default function Login() {
             }`}
           >
             {isLoading ? (
-              <span>
-                <IconCircleDotted
-                  className="animate-spin text-white mx-auto"
-                  size={30}
-                />
-              </span>
+              <IconCircleDotted
+                className="animate-spin text-white mx-auto"
+                size={24}
+              />
             ) : (
               "Login"
             )}

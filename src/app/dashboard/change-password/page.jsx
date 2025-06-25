@@ -5,9 +5,12 @@ import validator from "validator";
 import { useToast } from "@/components/Toast";
 import InputField from "@/components/InputField";
 import { IconCircleDotted } from "@tabler/icons-react";
-import { FaRegEye, FaRegEyeSlash} from "react-icons/fa";
-import { changePassword } from "@/api/authApi"; // You’ll create this API function
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import {IconArrowLeftDashed} from "@tabler/icons-react";
+import { changePassword } from "@/api/authApi";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import {routes} from "@/config/constant";
 
 export default function ChangePasswordPage() {
   const [formData, setFormData] = useState({
@@ -26,6 +29,8 @@ export default function ChangePasswordPage() {
     confirmPassword: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const { addToast } = useToast();
   const router = useRouter();
@@ -42,9 +47,10 @@ export default function ChangePasswordPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Validate passwords
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (!isTyping && value.trim() !== "") setIsTyping(true);
+
     let isValid = true;
     switch (name) {
       case "currentPassword":
@@ -58,7 +64,11 @@ export default function ChangePasswordPage() {
         break;
     }
 
-    setValidity((prev) => ({ ...prev, [name]: isValid }));
+    const updatedValidity = { ...validity, [name]: isValid };
+    setValidity(updatedValidity);
+
+    const allValid = Object.values(updatedValidity).every(Boolean);
+    setIsFormValid(allValid);
   };
 
   const togglePasswordVisibility = (field) => {
@@ -70,15 +80,17 @@ export default function ChangePasswordPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
+
     try {
-      await changePassword({
+      const payload = {
         currentPassword: formData.currentPassword,
         newPassword: formData.newPassword,
-      });
+      };
+      await changePassword(payload);
+
       addToast("Password changed successfully!", "success");
-      router.push("/dashboard"); // or routes.home
+      router.push("/dashboard");
     } catch (error) {
       addToast(
         error?.response?.data?.message || "Password change failed",
@@ -89,11 +101,25 @@ export default function ChangePasswordPage() {
     }
   };
 
+  const getButtonStateClass = () => {
+    if (isFormValid) return "bg-btn_colors-secondary text-white cursor-pointer";
+    if (isTyping) return "bg-btn_colors-disabled text-white cursor-not-allowed";
+    return "bg-btn_colors-primary text-white cursor-not-allowed";
+  };
+
   return (
     <div className="flex flex-col items-center justify-center my-28">
-      <div className="md:shadow-custom-soft p-5 md:p-20 md:w-[773px] md:rounded-xl">
+      <Link
+        href={routes.dashboard.profile}
+        className="flex items-center sm:mr-[320px] base:mr-[300px] md:mr-[930px] hover:underline hover:text-primary"
+      >
+        <IconArrowLeftDashed size={24}/>
+        <span className="">Back</span>
+      </Link>
+      <div className="md:shadow-custom-soft p-5 md:p-20 md:w-[773px] md:rounded-xl base:mt-5">
         <h2 className="text-2xl font-bold mb-6 text-center">Change Password</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-10 mx-10">
+          {/* Current Password */}
           <div className="relative">
             <InputField
               label="Current Password"
@@ -117,6 +143,7 @@ export default function ChangePasswordPage() {
             </div>
           </div>
 
+          {/* New Password */}
           <div className="relative">
             <InputField
               label="New Password"
@@ -126,7 +153,6 @@ export default function ChangePasswordPage() {
               onChange={handleChange}
               isValid={validity.newPassword}
               required
-              containerClass=""
             />
             <div
               className="absolute right-4 top-[15px] cursor-pointer"
@@ -146,6 +172,7 @@ export default function ChangePasswordPage() {
             )}
           </div>
 
+          {/* Confirm Password */}
           <div className="relative">
             <InputField
               label="Confirm New Password"
@@ -174,14 +201,11 @@ export default function ChangePasswordPage() {
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            disabled={!Object.values(validity).every(Boolean) || isLoading}
-            className={`w-full px-4 py-[.75rem] font-bold rounded-[10px] transition-colors ${
-              Object.values(validity).every(Boolean)
-                ? "bg-btn_colors-secondary text-white cursor-pointer"
-                : "bg-btn_colors-disabled text-white cursor-not-allowed"
-            }`}
+            disabled={!isFormValid || isLoading}
+            className={`w-full px-4 py-[.75rem] font-bold rounded-[10px] transition-colors ${getButtonStateClass()}`}
           >
             {isLoading ? (
               <IconCircleDotted className="animate-spin mx-auto" size={24} />
