@@ -52,8 +52,6 @@ mock.onPost("/auth/resend-verification").reply((config) => {
 mock.onPost("/auth/change-password").reply((config) => {
   const { currentPassword, newPassword } = JSON.parse(config.data);
 
-  console.log("Received change-password payload:", config.data);
-
   if (currentPassword === "Password123@" && newPassword) {
     return [200, { message: "Password changed successfully" }];
   }
