@@ -50,3 +50,46 @@ mock.onPost('/auth/verify-email').reply((config) => {
   });
   
 export default mock;
+
+// mock notifications
+export const getuserNotifications = async (userId) => {
+    await new Promise((resolve)=> setTimeout(resolve, 1000)); 
+    return[
+        {
+            id:1,
+            type:"new video",
+            message:"new video from React hooks crash course",
+            source:"Freecodecamp.org",
+            image:"https://source.unsplash.com/random/300x300",
+            duration:"2:30",
+            timestamp:"todayISO",   
+        },
+        {
+            id:2,
+            type:"new comment",
+            message:"new comment on your post",
+            source:"Freecodecamp.org",
+            image:"https://source.unsplash.com/random/300x300",
+            duration:"1:15",
+            timestamp:"yesterdayISO",   
+        },
+        {
+            id:3,
+            type:"new follower",
+            message:"John Doe started following you",
+            source:"Freecodecamp.org",
+            duration:"0:45",
+            image:"https://source.unsplash.com/random/300x300",
+            timestamp:"TodayISO",   
+        },
+        {
+            id:4,
+            type:"like",
+            message:"Jane Smith liked your post",
+            source:"Freecodecamp.org",
+            duration:"0:30",
+            image:"https://source.unsplash.com/random/300x300 ",
+            timestamp:"2025-10-04T16:45:00Z",
+        }
+      ]
+}
