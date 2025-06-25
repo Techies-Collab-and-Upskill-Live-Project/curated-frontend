@@ -44,8 +44,6 @@ export default function Home() {
     }
   };
 
-  console.log(results);
-
   if (loading) return <LoadingSpinner />;
 
   return (

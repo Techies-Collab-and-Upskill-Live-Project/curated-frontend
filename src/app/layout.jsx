@@ -17,7 +17,19 @@ const poppins = Poppins({
 
 export const metadata = {
   title: "CuratED - Curated Education",
-  description: "Empowering digital learning experiences",
+  description:
+    "CuratED empowers learners with expertly curated educational content, interactive lessons, and personalized learning paths to fuel growth and innovation.",
+  keywords:
+    "education, e-learning, digital learning, curated content, online courses, interactive lessons, personalized learning, productivity, technology, lifelong learning, CuratED",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon.ico" },
+    ],
+    apple: "/favicon/apple-touch-icon.png",
+  },
+  manifest: "/favicon/site.webmanifest",
 };
 
 export default function RootLayout({ children }) {
