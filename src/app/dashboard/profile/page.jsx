@@ -11,8 +11,6 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-
 
   // Get profile data and actions from Zustand store
   const profile = useAuthStore((state) => state.profile);
@@ -62,6 +60,7 @@ export default function ProfilePage() {
       setError("All fields are required.");
       return;
     }
+
     // Update the profile in the store
     updateProfile({
       name,
@@ -88,7 +87,6 @@ export default function ProfilePage() {
             isEditing ? "sm:flex hidden" : ""
           }`}
         >
-        <div className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${isEditing ? "sm:flex hidden" : ""}`}>
           <div className="flex gap-4 items-center">
             <div className="relative">
               <Image
@@ -155,9 +153,6 @@ export default function ProfilePage() {
                     <span className="font-semibold">Email:</span>{" "}
                     {profile?.email}
                   </p>
-                  <p><span className="font-semibold">Name:</span> {profile?.name}</p>
-                  <p><span className="font-semibold">Username:</span> {profile?.username}</p>
-                  <p><span className="font-semibold">Email:</span> {profile?.email}</p>
                 </div>
               )}
             </div>
@@ -193,8 +188,6 @@ export default function ProfilePage() {
             Change Password
           </Link>
           <button
-          <Link href={routes.dashboard.changePassword} className="text-sm text-blue-600 cursor-pointer hover:underline">Change Password</Link>
-          <button 
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
           >
@@ -231,7 +224,6 @@ export default function ProfilePage() {
                 <label className="block text-left font-semibold mb-1">
                   Name
                 </label>
-                <label className="block text-left font-semibold mb-1">Name</label>
                 <input
                   name="name"
                   type="text"
@@ -247,7 +239,6 @@ export default function ProfilePage() {
                 <label className="block text-left font-semibold mb-1">
                   Username
                 </label>
-                <label className="block text-left font-semibold mb-1">Username</label>
                 <input
                   name="username"
                   type="text"
@@ -263,7 +254,6 @@ export default function ProfilePage() {
                 <label className="block text-left font-semibold mb-1">
                   Email
                 </label>
-                <label className="block text-left font-semibold mb-1">Email</label>
                 <input
                   name="email"
                   type="email"
