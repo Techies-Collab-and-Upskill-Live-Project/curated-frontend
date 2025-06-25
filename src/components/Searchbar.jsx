@@ -32,7 +32,7 @@ export default function Searchbar({ onSearch }) {
         </div>
 
         {/* Search Button */}
-        <button type='submit' className="bg-primary text-white px-3 sm:px-6 py-2 text-sm sm:text-base rounded-md transition-colors">
+        <button type='submit' className="absolute right-0 top-0.2 bg-primary text-white px-4 sm:px-7 py-2.5 text-sm sm:text-base rounded-md transition-colors z-10">
           Search
         </button>
       </form>

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Searchbar from '@/components/Searchbar'; 
+import Searchbar from '@/components/Searchbar';
 import { IconSearch } from '@tabler/icons-react';
 
 jest.mock('@tabler/icons-react', () => ({
@@ -43,7 +43,7 @@ describe('Searchbar Component', () => {
     const preventDefault = jest.fn();
     const submitEvent = new Event('submit', { bubbles: true });
     submitEvent.preventDefault = preventDefault;
-    
+
     fireEvent(form, submitEvent);
     expect(preventDefault).toHaveBeenCalledTimes(1);
   });

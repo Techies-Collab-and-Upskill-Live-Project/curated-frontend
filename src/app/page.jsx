@@ -61,7 +61,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-col items-center text-center px-4">
+          <div className="flex flex-col items-center text-center px-4 md:pt-[95px]">
             <Herosection />
             <Searchbar onSearch={handleSearch} />
           </div>

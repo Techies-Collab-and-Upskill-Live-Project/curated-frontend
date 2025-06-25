@@ -22,8 +22,14 @@ jobs:
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install sharp for Linux (force correct binary)
+        run: npm install --force --platform=linux --arch=x64 sharp
+      
+      - name: Install remaining dependencies (including optional)
+        run: npm install --include=optional
+      
+      - name: Verify sharp installation
+        run: node -e "require('sharp'); console.log('Sharp is working ✅');"
 
       - name: Build project
         run: npm run build
@@ -33,10 +39,13 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            npx vercel --yes --token=$VERCEL_TOKEN --prod --confirm --alias devcurated.vercel.app
+            DEPLOY_URL=$(npx vercel --yes --token=$VERCEL_TOKEN --prod --confirm)
+            npx vercel alias set $DEPLOY_URL devcurated.vercel.app --token=$VERCEL_TOKEN
           elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            npx vercel --yes --token=$VERCEL_TOKEN --prod --confirm --alias prodcurated.vercel.app
+            DEPLOY_URL=$(npx vercel --yes --token=$VERCEL_TOKEN --prod --confirm)
+            npx vercel alias set $DEPLOY_URL prodcurated.vercel.app --token=$VERCEL_TOKEN
           fi
+
       - name: Post deployment message
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
@@ -44,3 +53,4 @@ jobs:
           elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "Deployed to prodcurated.vercel.app"
           fi
+
