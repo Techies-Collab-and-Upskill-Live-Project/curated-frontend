@@ -54,24 +54,27 @@ export default mock;
 // mock notifications
 export const getuserNotifications = async (userId) => {
     await new Promise((resolve)=> setTimeout(resolve, 1000)); 
+    const now = new Date();
+    const todayISO = now.toISOString();
+    const yesterdayISO = new Date(now.setDate(now.getDate() - 1)).toISOString();
     return[
         {
             id:1,
             type:"new video",
             message:"new video from React hooks crash course",
             source:"Freecodecamp.org",
-            image:"https://source.unsplash.com/random/300x300",
+            image:"/assets/images/video1.jpg",
             duration:"2:30",
-            timestamp:"todayISO",   
+            timestamp:todayISO,   
         },
         {
             id:2,
             type:"new comment",
             message:"new comment on your post",
             source:"Freecodecamp.org",
-            image:"https://source.unsplash.com/random/300x300",
+            image:"/assets/images/video2.jpg",
             duration:"1:15",
-            timestamp:"yesterdayISO",   
+            timestamp:yesterdayISO,   
         },
         {
             id:3,
@@ -79,8 +82,8 @@ export const getuserNotifications = async (userId) => {
             message:"John Doe started following you",
             source:"Freecodecamp.org",
             duration:"0:45",
-            image:"https://source.unsplash.com/random/300x300",
-            timestamp:"TodayISO",   
+            image:"/assets/images/video2.jpg",
+            timestamp:todayISO,   
         },
         {
             id:4,
@@ -88,7 +91,7 @@ export const getuserNotifications = async (userId) => {
             message:"Jane Smith liked your post",
             source:"Freecodecamp.org",
             duration:"0:30",
-            image:"https://source.unsplash.com/random/300x300 ",
+            image:"/assets/images/video1.jpg",
             timestamp:"2025-10-04T16:45:00Z",
         }
       ]

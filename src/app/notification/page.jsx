@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { IconArrowLeft } from "@tabler/icons-react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getuserNotifications } from "@/api/mock"; 
+import { formatDistanceToNow } from 'date-fns';
+
 
 export default function Notification() {
     const [groupedNotifications, setGroupedNotifications] = useState(null);
@@ -54,6 +56,7 @@ export default function Notification() {
     return (
         <main className="min-h-screen bg-gray-100">
         <Navbar />
+        <IconArrowLeft className="mx-4" />
 
         {loading ? (
             <div className="flex justify-center bg-transparent items-center">
@@ -62,7 +65,7 @@ export default function Notification() {
         ) : groupedNotifications &&
             Object.values(groupedNotifications).flat().length === 0 ? (
             <div className="flex items-center h-[70vh] justify-center">
-            <div className="flex justify-center items-center mx-auto flex-col rounded-lg shadow-md bg-[rgba(255, 255, 255, 1)] p-6 w-[350px] h-[278px] shadow-[0_4px_10px_rgba(226,114,91,0.1)]">
+            <div className="flex justify-center items-center mx-auto flex-col rounded-lg shadow-md bg-[rgba(255, 255, 255, 1)] p-6 w-[350px] h-[278px] md:h-[278px] md:w-[820px] shadow-[0_4px_10px_rgba(226,114,91,0.1)]">
                 <h1 className="text-xl mx-4 text-[rgba(38, 35, 35, 1)] font-semibold">
                 No notifications yet!
                 </h1>
@@ -81,15 +84,15 @@ export default function Notification() {
                     {items.map((n) => (
                         <li
                         key={n.id}
-                        className="flex items-start gap-3 bg-white rounded-lg p-3 shadow-md border"
+                        className="flex md:items-start gap-3 bg-white rounded-lg items-center p-3 shadow-md border"
                         >
                         {/* Thumbnail */}
                         {n.image && (
-                            <div className="relative min-w-[100px] h-[70px] rounded overflow-hidden">
+                            <div className="relative flex justify-center items-center min-w-[100px] h-[70px]  rounded overflow-hidden">
                             <img
                                 src={n.image}
                                 alt={n.type}
-                                className="w-full h-full object-cover rounded-md"
+                                className="w-[120px] h-[100vh] object-cover rounded-lg"
                             />
                             {/* Optional video duration tag */}
                             <span className="absolute bottom-1 right-1 bg-[rgba(137, 136, 139, 1)] text-white text-xs px-1.5 py-0.5 rounded">
@@ -103,7 +106,10 @@ export default function Notification() {
                             <p className="text-sm text-gray-500">{n.type}</p>
                             <h3 className="font-semibold text-base">{n.message}</h3>
                             <p className="text-sm text-gray-400">{n.source}</p>
-                            <p className="text-xs text-gray-400 mt-1">{n.timestamp}</p>
+                            {/* <p className="text-xs text-gray-400 mt-1">{n.timestamp}</p> */}
+                            <p className="text-xs text-gray-400 mt-1">
+                                {formatDistanceToNow(new Date(n.timestamp), { addSuffix: true })}
+                            </p>
                         </div>
 
                         {/* Bookmark Icon */}
