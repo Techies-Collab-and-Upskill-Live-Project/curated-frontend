@@ -25,15 +25,17 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             href={routes.login}
-            className="px-4 py-2 border border-primary rounded-[10px] md:px-6 md:py-3 font-medium"
+            className="relative px-4 py-2 border border-primary rounded-[10px] md:px-6 md:py-3 font-medium overflow-hidden group transition-colors duration-300"
           >
-            Login
+            <span className="relative z-10">Login</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
           </Link>
           <Link
             href={routes.signUp}
-            className="border px-4 py-2 bg-primary text-white font-bold rounded-[10px] md:mr-20 md:px-6 md:py-3"
+            className="relative border px-4 py-2 bg-primary text-white font-bold rounded-[10px] md:mr-20 md:px-6 md:py-3 overflow-hidden group"
           >
-            Sign up
+            <span className="relative z-10">Sign up</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
           </Link>
         </div>
       )}
