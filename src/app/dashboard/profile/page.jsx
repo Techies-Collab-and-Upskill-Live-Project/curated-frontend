@@ -6,17 +6,21 @@ import { IconEdit, IconLogout, IconPhoto } from "@tabler/icons-react";
 import Link from "next/link";
 import { routes } from "@/config/constant.js";
 import { useAuthStore } from "@/store/useAuthStore";
+import LogoutModal from "@/components/modals/LogoutModal.jsx";
+import { useToast } from "@/components/Toast"; // Adjust path if needed
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const logout = useAuthStore((state) => state.logout);
+  const { addToast } = useToast(); // Get the toast function
 
   // Get profile data and actions from Zustand store
   const profile = useAuthStore((state) => state.profile);
   const updateProfile = useAuthStore((state) => state.updateProfile);
   const updateProfileImage = useAuthStore((state) => state.updateProfileImage);
-  const logout = useAuthStore((state) => state.logout);
 
   // Local form state for editing
   const [formData, setFormData] = useState({
@@ -73,9 +77,19 @@ export default function ProfilePage() {
     setIsEditing(false);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleLogoutConfirm = () => {
     logout();
-    // Redirect to home or login page if needed
+    setShowLogoutModal(false);
+    addToast("You have successfully logged out.", "success");
+    // Optionally redirect here
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutModal(false);
   };
 
   return (
@@ -188,7 +202,7 @@ export default function ProfilePage() {
             Change Password
           </Link>
           <button
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
           >
             <IconLogout className="w-4 h-4" /> Logout
@@ -277,6 +291,12 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
+
+      <LogoutModal
+        isOpen={showLogoutModal}
+        onClose={handleLogoutCancel}
+        onLogout={handleLogoutConfirm}
+      />
     </div>
   );
 }
