@@ -59,3 +59,43 @@ mock.onPost("/auth/change-password").reply((config) => {
   return [400, { message: "Invalid old password or new password is missing" }];
 });
 export default mock;
+
+export const getuserNotifications = async (userId) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return [
+        {
+            id: 1,
+            type: "New Video",
+            message: "React Hooks Crash Course is live!",
+            timestamp: "2025-07-03T12:00:00Z",
+            image: "https://placehold.co/100x70?text=Video", // Sample thumbnail
+            source: "React Academy",
+            duration: "10:30",
+        },
+        {
+            id: 2,
+            type: "New Comment",
+            message: "Someone commented on your blog post",
+            timestamp: "2025-07-02T14:30:00Z",
+            source: "Blog Platform",
+            image: null,
+        },
+        {
+            id: 3,
+            type: "New Follower",
+            message: "John Doe started following you",
+            timestamp: "2025-07-01T09:15:00Z",
+            image: "https://placehold.co/100x70?text=Profile",
+            source: "Community",
+        },
+        {
+            id: 4,
+            type: "Like",
+            message: "Jane Smith liked your portfolio project",
+            timestamp: "2025-06-29T16:45:00Z",
+            source: "Dev Hub",
+            image: null,
+        }
+    ];
+};
