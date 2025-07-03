@@ -76,7 +76,7 @@ export default function Notification() {
 
     // Notification display UI
     return (
-        <main className="min-h-screen bg-gray-100">
+        <main className="min-h-screen bg-white">
         <Navbar />
         <div className="px-4 pt-6 max-w-2xl mx-auto">
             <IconArrowLeft className="mb-4 cursor-pointer text-gray-600" />
@@ -88,7 +88,7 @@ export default function Notification() {
                     {items.map((n) => (
                     <li
                         key={n.id}
-                        className="flex gap-4 bg-white rounded-lg p-3 shadow-md border"
+                        className="flex gap-4 bg-white rounded-lg p-3"
                     >
                         {/* Thumbnail */}
                         {n.image && (

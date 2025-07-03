@@ -78,8 +78,9 @@ export const getuserNotifications = async (userId) => {
             type: "New Comment",
             message: "Someone commented on your blog post",
             timestamp: "2025-07-02T14:30:00Z",
+            image: "https://placehold.co/100x70?text=Comment", // Sample thumbnail
             source: "Blog Platform",
-            image: null,
+            // image: null,
         },
         {
             id: 3,
@@ -88,6 +89,7 @@ export const getuserNotifications = async (userId) => {
             timestamp: "2025-07-01T09:15:00Z",
             image: "https://placehold.co/100x70?text=Profile",
             source: "Community",
+            duration: "10:20",
         },
         {
             id: 4,
@@ -95,7 +97,9 @@ export const getuserNotifications = async (userId) => {
             message: "Jane Smith liked your portfolio project",
             timestamp: "2025-06-29T16:45:00Z",
             source: "Dev Hub",
-            image: null,
+            duration: "5:15",
+            image: "https://placehold.co/100x70?text=Like", // Sample thumbnail
+            // image: null,
         }
     ];
 };
