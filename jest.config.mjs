@@ -41,5 +41,6 @@ const config = {
     "^.+\\.(js|jsx)$": ["babel-jest", { presets: ["next/babel"] }],
   },
 };
+// module .exports = config;
 
 export default config;
