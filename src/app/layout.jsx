@@ -29,6 +29,9 @@ export const metadata = {
     ],
     apple: "/favicon/apple-touch-icon.png",
   },
+  images: {
+    image: "public/assets/images/Curated.png",
+  },
   manifest: "/favicon/site.webmanifest",
 };
 
