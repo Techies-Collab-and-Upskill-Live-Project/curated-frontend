@@ -6,7 +6,7 @@ export const useAuthStore = create(
     (set, get) => ({
       user: null,
       token: null,
-      isLoggedIn: true,
+      isLoggedIn: false,
 
       // Profile-specific state (ADD THESE)
       profile: {
