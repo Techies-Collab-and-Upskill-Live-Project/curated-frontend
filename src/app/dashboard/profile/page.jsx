@@ -7,7 +7,8 @@ import Link from "next/link";
 import { routes } from "@/config/constant.js";
 import { useAuthStore } from "@/store/useAuthStore";
 import LogoutModal from "@/components/modals/LogoutModal.jsx";
-import { useToast } from "@/components/Toast"; // Adjust path if needed
+import { useToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,6 +17,7 @@ export default function ProfilePage() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const logout = useAuthStore((state) => state.logout);
   const { addToast } = useToast(); // Get the toast function
+  const router = useRouter();
 
   // Get profile data and actions from Zustand store
   const profile = useAuthStore((state) => state.profile);
@@ -83,9 +85,8 @@ export default function ProfilePage() {
 
   const handleLogoutConfirm = () => {
     logout();
-    setShowLogoutModal(false);
     addToast("You have successfully logged out.", "success");
-    // Optionally redirect here
+    setShowLogoutModal(false);
   };
 
   const handleLogoutCancel = () => {
