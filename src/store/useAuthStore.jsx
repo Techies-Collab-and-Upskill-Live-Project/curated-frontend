@@ -36,12 +36,20 @@ export const useAuthStore = create(
           user: null,
           token: null,
           isLoggedIn: false,
+          justLoggedOut: true,
           profile: {
             name: "",
             username: "",
             email: "",
             image: "",
           },
+        }),
+
+      //logout flag
+      clearLogoutFlag: () =>
+        set({
+          justLoggedOut: false,
+          shouldRedirectAfterLogout: false,
         }),
 
       // New method: Update profile info
