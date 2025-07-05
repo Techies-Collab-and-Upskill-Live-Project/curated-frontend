@@ -10,7 +10,8 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useToast } from "@/components/Toast";
 import validator from "validator";
 import { useRouter } from "next/navigation";
-import { signup } from "@/api/authApi"; // Uncomment when ready
+import { signup } from "@/api/authApi";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -132,7 +133,6 @@ export default function SignUp() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Handle API call for sign up here
     try {
       const payload = {
         firstName: formData.firstName,
@@ -143,17 +143,41 @@ export default function SignUp() {
 
       await signup(payload);
 
+      console.log("✅ Email used for signup:", formData.email);
+
+      //set verification email in auth store
+      useAuthStore.getState().setVerificationEmail(formData.email);
+
       addToast("Signup successful! Redirecting to verify email...", "success");
 
-      // Optionally reset typing and validity states on successful submission or redirect
+      // Reset form states
       setIsTyping(false);
       setIsFormValid(false);
 
+      // Navigate to email verification page
       router.push(routes.verifyEmail);
     } catch (error) {
-      console.error("Signup error:", error);
-      const errorMsg =
-        error.response?.data?.message || error.message || "Signup failed";
+      console.error("❌ Signup error:", error);
+
+      let errorMsg = "Signup failed, Please try again.";
+
+      if (error.response?.data) {
+        const errorData = error.response.data;
+
+        // If error is an object (e.g., { email: ["This field is required."] })
+        if (typeof errorData === "object" && !Array.isArray(errorData)) {
+          errorMsg = Object.entries(errorData)
+            .map(([field, messages]) => `${field}: ${messages.join(" ")}`)
+            .join("\n");
+        }
+        // If backend returns a plain string (e.g., "User already exists")
+        else if (typeof errorData === "string") {
+          errorMsg = errorData;
+        }
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+
       addToast(errorMsg, "error");
     } finally {
       setIsSubmitting(false);
@@ -266,7 +290,11 @@ export default function SignUp() {
               className="absolute right-4 top-[47px] cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <FaRegEye size={21} /> : <FaRegEyeSlash size={21} />}
+              {showConfirmPassword ? (
+                <FaRegEye size={21} />
+              ) : (
+                <FaRegEyeSlash size={21} />
+              )}
             </div>
             {formData.confirmPassword && !validity.confirmPassword && (
               <p className="text-red-500 text-xs mt-1 italic">

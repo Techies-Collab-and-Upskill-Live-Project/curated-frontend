@@ -7,12 +7,13 @@ import VerificationSuccessModal from "@/components/modals/VerificationSuccessMod
 import { verifyEmailCode } from "@/api/authApi";
 import { resendVerificationCode } from "@/api/authApi";
 import { routes } from "@/config/constant";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function EmailVerification() {
   const [verificationCode, setVerificationCode] = useState(["", "", "", ""]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [canResend, setCanResend] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -22,10 +23,19 @@ export default function EmailVerification() {
   const router = useRouter();
   const { addToast } = useToast();
 
-  const storedEmail =
-    typeof window == !"undefined"
-      ? localStorage.getItem("verificationEmail")
-      : null;
+  const verificationEmail = useAuthStore((state) => state.verificationEmail);
+  const clearVerificationEmail = useAuthStore(
+    (state) => state.clearVerificationEmail
+  );
+
+  // useEffect(() => {
+  //   if (!verificationEmail) {
+  //     addToast("No verification email found. Please try again.", "error");
+  //     setTimeout(() => {
+  //       router.push(routes.signUp);
+  //     }, 100);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -74,14 +84,22 @@ export default function EmailVerification() {
     setIsLoading(true);
 
     try {
-      const response = await verifyEmailCode(code, storedEmail);
+      const payload = {
+        email: verificationEmail,
+        otp: code,
+      };
+
+      console.log("Sending payload:", payload);
+      const response = await verifyEmailCode(payload);
 
       if (response.status === 200) {
         setShowSuccessModal(true);
         setIsTyping(false);
         setIsValid(false);
+        clearVerificationEmail();
       }
     } catch (err) {
+      console.log("Error response:", err.response?.data);
       const message =
         err.response?.data?.message ||
         "Invalid verification code. Please try again.";
@@ -93,10 +111,10 @@ export default function EmailVerification() {
 
   const handleResend = async () => {
     try {
-      const response = await resendVerificationCode(storedEmail);
+      const response = await resendVerificationCode(verificationEmail);
 
       if (response.status === 200) {
-        setTimeLeft(60);
+        setTimeLeft(300);
         setCanResend(false);
         setError("");
         addToast("Verification code resent", "success");
@@ -112,7 +130,7 @@ export default function EmailVerification() {
 
   const handleSuccessModalContinue = () => {
     setShowSuccessModal(false);
-    router.push(routes.home);
+    router.push(routes.login);
   };
 
   return (

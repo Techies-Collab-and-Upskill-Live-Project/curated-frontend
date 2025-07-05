@@ -114,7 +114,7 @@ export default function Login() {
       localStorage.setItem("verificationEmail", formData.email);
 
       // Redirect after successful login
-      router.push(routes.home);
+      router.push(routes.dashboard.base);
     } catch (error) {
       console.error("Signup error:", error);
       const errorMsg =

@@ -32,9 +32,9 @@ mock.onPost("/auth/verify-email").reply((config) => {
 
   if (code === "1234") {
     return [200, { message: "Email verified successfully!" }];
+  } else {
+    return [400, { message: "Invalid verification code." }];
   }
-
-  return [400, { message: "Invalid verification code." }];
 });
 
 // 🔁 Mock resend verification

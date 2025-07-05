@@ -4,11 +4,13 @@ import { persist } from "zustand/middleware";
 export const useAuthStore = create(
   persist(
     (set, get) => ({
+      // existing fields...
       user: null,
       token: null,
       isLoggedIn: false,
+      justLoggedOut: false,
 
-      // Profile-specific state (ADD THESE)
+      // Profile
       profile: {
         name: "",
         username: "",
@@ -16,7 +18,10 @@ export const useAuthStore = create(
         image: "",
       },
 
-      // Login method (already present, no change needed)
+      // NEW: Verification email for OTP flow
+      verificationEmail: "",
+
+      // AUTH METHODS
       login: (user, token) =>
         set({
           user,
@@ -30,7 +35,6 @@ export const useAuthStore = create(
           },
         }),
 
-      // Logout method (already present)
       logout: () =>
         set({
           user: null,
@@ -43,16 +47,15 @@ export const useAuthStore = create(
             email: "",
             image: "",
           },
+          verificationEmail: "", // Clear on logout
         }),
 
-      //logout flag
       clearLogoutFlag: () =>
         set({
           justLoggedOut: false,
           shouldRedirectAfterLogout: false,
         }),
 
-      // New method: Update profile info
       updateProfile: (updatedProfile) =>
         set((state) => ({
           profile: {
@@ -61,7 +64,6 @@ export const useAuthStore = create(
           },
         })),
 
-      // New method: Update only the profile image
       updateProfileImage: (imageUrl) =>
         set((state) => ({
           profile: {
@@ -69,6 +71,12 @@ export const useAuthStore = create(
             image: imageUrl,
           },
         })),
+
+      // NEW: Set verification email
+      setVerificationEmail: (email) => set({ verificationEmail: email }),
+
+      // NEW: Clear verification email
+      clearVerificationEmail: () => set({ verificationEmail: "" }),
     }),
     {
       name: "auth-storage",
