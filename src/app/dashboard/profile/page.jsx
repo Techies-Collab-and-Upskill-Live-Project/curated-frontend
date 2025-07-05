@@ -83,19 +83,23 @@ export default function ProfilePage() {
       <div className="max-w-5xl mx-auto space-y-10">
         {/* Top Section - Hidden on mobile when editing */}
         <div
-          className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${
-            isEditing ? "sm:flex hidden" : ""
-          }`}
+          className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${isEditing ? "sm:flex hidden" : ""
+            }`}
         >
           <div className="flex gap-4 items-center">
-            <div className="relative">
-              <Image
-                src={preview || "/avatar.jpg"}
-                alt="Profile"
-                width={80}
-                height={80}
-                className="rounded-full object-cover border"
-              />
+            <div className="relative w-20 h-20">
+              {preview ? (
+                <Image
+                  src={preview}
+                  alt="Profile"
+                  fill
+                  className="rounded-full object-cover border"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-300 rounded-full text-white text-2xl font-bold">
+                  {(isEditing ? formData.username : profile?.username)?.charAt(0).toUpperCase() || "?"}
+                </div>
+              )}
               {isEditing && (
                 <label className="absolute -bottom-1 -right-1 bg-white border rounded-full p-1 cursor-pointer">
                   <IconPhoto className="w-4 h-4 text-gray-600" />
@@ -200,14 +204,19 @@ export default function ProfilePage() {
       {isEditing && (
         <div className="fixed inset-0 z-50 bg-white p-6 sm:hidden overflow-y-auto">
           <div className="flex flex-col items-center text-center">
-            <div className="relative mb-6">
-              <Image
-                src={preview || "/avatar.jpg"}
-                alt="Profile"
-                width={140}
-                height={140}
-                className="rounded-full object-cover"
-              />
+            <div className="relative w-36 h-36 mb-6">
+              {preview ? (
+                <Image
+                  src={preview}
+                  alt="Profile"
+                  fill
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-300 rounded-full text-white text-4xl font-bold">
+                  {formData.username?.charAt(0).toUpperCase() || "?"}
+                </div>
+              )}
               <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full cursor-pointer">
                 <IconPhoto className="w-6 h-6 text-white" />
                 <input

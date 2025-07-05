@@ -16,6 +16,7 @@ export default function Navbar() {
     e.preventDefault();
     onSearch(query);
   };
+
   return (
     <nav className="flex items-center justify-between p-6">
       <Link href={isLoggedIn ? routes.dashboard.base : routes.home}>
@@ -45,7 +46,7 @@ export default function Navbar() {
             onSubmit={handleSubmit}
           >
             <div className="relative flex-1">
-              <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2 " />
+              <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2" />
               <input
                 type="text"
                 className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent text-black"
@@ -70,11 +71,17 @@ export default function Navbar() {
             <IconBell />
           </Link>
           <Link href={routes.dashboard.profile}>
-            <img
-              src={profile?.image || "/avatar.jpg"}
-              alt="Profile"
-              className="w-8 h-8 rounded-full object-cover"
-            />
+            {profile?.image ? (
+              <img
+                src={profile.image}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white text-base font-bold">
+                {profile?.username?.charAt(0).toUpperCase() || "?"}
+              </div>
+            )}
           </Link>
         </div>
       )}
