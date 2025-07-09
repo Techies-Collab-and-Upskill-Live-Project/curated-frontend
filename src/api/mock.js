@@ -32,9 +32,9 @@ mock.onPost("/auth/verify-email").reply((config) => {
 
   if (code === "1234") {
     return [200, { message: "Email verified successfully!" }];
+  } else {
+    return [400, { message: "Invalid verification code." }];
   }
-
-  return [400, { message: "Invalid verification code." }];
 });
 
 // 🔁 Mock resend verification
@@ -102,4 +102,33 @@ export const getuserNotifications = async (userId) => {
             // image: null,
         }
     ];
+};
+
+// src/api/mock.js
+
+export const fetchSavedVideos = async () => {
+  await new Promise((res) => setTimeout(res, 1000)); // simulate network delay
+
+  return [
+    {
+      id: 1,
+      title: "Figma UI/UX tutorial",
+      source: "FreeCodeCamp.org",
+      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
+      image: "https://unsplash.com/photos/a-woman-is-looking-at-a-computer-screen-xPjsMamUBK4",
+      duration: "30:52",
+    },
+    {
+      id: 2,
+      title: "Figma UI/UX tutorial",
+      source: "FreeCodeCamp.org",
+      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+      image: "https://unsplash.com/photos/a-black-cell-phone-uT7l-Ds81YM",
+      duration: "42:10",
+    },
+  ];
+};
+export const deleteSavedVideo = async (id) => {
+  await new Promise((res) => setTimeout(res, 500)); // simulate network delay
+  return { success: true, id };
 };

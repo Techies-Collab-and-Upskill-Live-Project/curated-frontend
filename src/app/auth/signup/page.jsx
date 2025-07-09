@@ -10,12 +10,13 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useToast } from "@/components/Toast";
 import validator from "validator";
 import { useRouter } from "next/navigation";
-import { signup } from "@/api/authApi"; // Uncomment when ready
+import { signup } from "@/api/authApi";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -23,8 +24,8 @@ export default function SignUp() {
   });
 
   const [validity, setValidity] = useState({
-    firstName: null,
-    lastName: null,
+    first_name: null,
+    last_name: null,
     email: null,
     password: null,
     confirmPassword: null,
@@ -113,7 +114,7 @@ export default function SignUp() {
       return;
     }
 
-    if (name === "firstName" || name === "lastName") {
+    if (name === "first_name" || name === "last_name") {
       isValid = value.trim() !== "";
     }
 
@@ -132,28 +133,47 @@ export default function SignUp() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Handle API call for sign up here
     try {
       const payload = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         email: formData.email,
         password: formData.password,
       };
 
       await signup(payload);
 
+      //set verification email in auth store
+      useAuthStore.getState().setVerificationEmail(formData.email);
+
       addToast("Signup successful! Redirecting to verify email...", "success");
 
-      // Optionally reset typing and validity states on successful submission or redirect
+      // Reset form states
       setIsTyping(false);
       setIsFormValid(false);
 
+      // Navigate to email verification page
       router.push(routes.verifyEmail);
     } catch (error) {
-      console.error("Signup error:", error);
-      const errorMsg =
-        error.response?.data?.message || error.message || "Signup failed";
+      let errorMsg = "Signup failed, Please try again.";
+
+      if (error.response?.data) {
+        const errorData = error.response.data;
+
+        // If error is an object (e.g., { email: ["This field is required."] })
+        if (typeof errorData === "object" && !Array.isArray(errorData)) {
+          errorMsg = Object.entries(errorData)
+            .map(([field, messages]) => `${field}: ${messages.join(" ")}`)
+            .join("\n");
+        }
+        // If backend returns a plain string (e.g., "User already exists")
+        else if (typeof errorData === "string") {
+          errorMsg = errorData;
+        }
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+
       addToast(errorMsg, "error");
     } finally {
       setIsSubmitting(false);
@@ -191,19 +211,19 @@ export default function SignUp() {
           <div className="flex gap-4">
             <InputField
               label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleChange}
-              isValid={validity.firstName}
+              isValid={validity.first_name}
               required
               containerClass="w-[166px] md:w-[305px]"
             />
             <InputField
               label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
-              isValid={validity.lastName}
+              isValid={validity.last_name}
               required
               containerClass="w-[166px] md:w-[305px]"
             />
@@ -266,7 +286,11 @@ export default function SignUp() {
               className="absolute right-4 top-[47px] cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <FaRegEye size={21} /> : <FaRegEyeSlash size={21} />}
+              {showConfirmPassword ? (
+                <FaRegEye size={21} />
+              ) : (
+                <FaRegEyeSlash size={21} />
+              )}
             </div>
             {formData.confirmPassword && !validity.confirmPassword && (
               <p className="text-red-500 text-xs mt-1 italic">
