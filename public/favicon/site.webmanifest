@@ -18,11 +18,6 @@
       "src": "/screenshot1.png",
       "type": "image/png",
       "sizes": "1895x815"
-    },
-    {
-      "src": "/screenshot2.png",
-      "type": "image/png",
-      "sizes": "1879x816"
     }
   ],
   "categories": ["education", "productivity", "technology"]

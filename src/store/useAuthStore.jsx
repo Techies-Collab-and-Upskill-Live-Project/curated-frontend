@@ -4,11 +4,14 @@ import { persist } from "zustand/middleware";
 export const useAuthStore = create(
   persist(
     (set, get) => ({
+      // Auth fields
       user: null,
-      token: null,
-      isLoggedIn: false,
+      accessToken: null,
+      refreshToken: null,
+      justLoggedOut: false,
+      shouldRedirectAfterLogout: false,
 
-      // Profile-specific state (ADD THESE)
+      // Profile information
       profile: {
         name: "",
         username: "",
@@ -16,43 +19,52 @@ export const useAuthStore = create(
         image: "",
       },
 
-      // Login method (already present, no change needed)
-      login: (user, token) =>
+      // For verification flows like OTP
+      verificationEmail: "",
+
+      // --- AUTH METHODS ---
+
+      login: (loginResponse) => {
+        const { access, refresh, user } = loginResponse;
+
         set({
           user,
-          token,
-          isLoggedIn: true,
+          accessToken: access,
+          refreshToken: refresh,
+          justLoggedOut: false,
+          shouldRedirectAfterLogout: false,
           profile: {
-            name: user.name || "",
+            name: user.full_name || user.first_name || "",
             username: user.username || "",
             email: user.email || "",
             image: user.image || "",
           },
-        }),
+          verificationEmail: user.email || "",
+        });
+      },
 
-      // Logout method (already present)
       logout: () =>
         set({
           user: null,
-          token: null,
-          isLoggedIn: false,
+          accessToken: null,
+          refreshToken: null,
           justLoggedOut: true,
+          shouldRedirectAfterLogout: true,
           profile: {
             name: "",
             username: "",
             email: "",
             image: "",
           },
+          verificationEmail: "",
         }),
 
-      //logout flag
       clearLogoutFlag: () =>
         set({
           justLoggedOut: false,
           shouldRedirectAfterLogout: false,
         }),
 
-      // New method: Update profile info
       updateProfile: (updatedProfile) =>
         set((state) => ({
           profile: {
@@ -61,7 +73,6 @@ export const useAuthStore = create(
           },
         })),
 
-      // New method: Update only the profile image
       updateProfileImage: (imageUrl) =>
         set((state) => ({
           profile: {
@@ -69,10 +80,23 @@ export const useAuthStore = create(
             image: imageUrl,
           },
         })),
+
+      setVerificationEmail: (email) => set({ verificationEmail: email }),
+
+      clearVerificationEmail: () => set({ verificationEmail: "" }),
+
+      // Auth status getter
+      checkAuth: () => !!get().accessToken,
     }),
     {
-      name: "auth-storage",
-      skipHydration: true,
+      name: "auth-storage", // LocalStorage key
+      partialize: (state) => ({
+        user: state.user,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        profile: state.profile,
+        verificationEmail: state.verificationEmail,
+      }),
     }
   )
 );

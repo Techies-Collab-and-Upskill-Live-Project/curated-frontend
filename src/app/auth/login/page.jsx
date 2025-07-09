@@ -9,7 +9,8 @@ import Google from "../../../../public/assets/images/google.png";
 import { routes } from "@/config/constant";
 import { useToast } from "@/components/Toast";
 import { useRouter } from "next/navigation";
-import { login } from "@/api/authApi"; // Uncomment when ready
+import { login } from "@/api/authApi";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -34,6 +35,7 @@ export default function Login() {
 
   const router = useRouter();
   const { addToast } = useToast();
+  const { login: loginToStore } = useAuthStore();
 
   useEffect(() => {
     const remembered = localStorage.getItem("rememberMe") === "true";
@@ -92,33 +94,64 @@ export default function Login() {
     setError("");
 
     try {
-      // const { token, user } = await login(formData);
       const payload = {
         email: formData.email,
         password: formData.password,
       };
 
-      await login(payload);
+      const { access, refresh, user } = await login(payload);
+
+      // ✅ Create the response object that matches your API format
+      const loginResponse = {
+        access,
+        refresh,
+        user,
+      };
+
+      // ✅ Pass the full response object to loginToStore
+      loginToStore(loginResponse);
+
+      if (formData.rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+        localStorage.setItem("email", formData.email);
+        localStorage.setItem("password", formData.password);
+        localStorage.setItem("accessToken", access);
+        localStorage.setItem("refreshToken", refresh);
+      } else {
+        localStorage.removeItem("rememberMe");
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+        localStorage.removeItem("accessToken"); // Fixed typo: was "accesssToken"
+        localStorage.removeItem("refreshToken");
+      }
 
       addToast("Login Successful!", "success");
 
-      if (formData.rememberMe) {
-        localStorage.setItem("email", formData.email);
-        // localStorage.setItem("token", token);
-      } else {
-        localStorage.removeItem("email");
-        // localStorage.removeItem("token");
+      // Redirect after successful login
+      router.replace(routes.dashboard.base);
+    } catch (error) {
+      let errorMsg = "Login failed. Please try again.";
+
+      if (error.response?.data) {
+        const errorData = error.response.data;
+
+        if (typeof errorData === "object" && !Array.isArray(errorData)) {
+          // If error has a 'detail' field (DRF style)
+          if (errorData.detail) {
+            errorMsg = errorData.detail;
+          } else {
+            // Otherwise map all fields
+            errorMsg = Object.entries(errorData)
+              .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+              .join("\n");
+          }
+        } else if (typeof errorData === "string") {
+          errorMsg = errorData;
+        }
+      } else if (error.message) {
+        errorMsg = error.message;
       }
 
-      // ✅ Store email for use on verification page
-      localStorage.setItem("verificationEmail", formData.email);
-
-      // Redirect after successful login
-      router.push(routes.home);
-    } catch (error) {
-      console.error("Signup error:", error);
-      const errorMsg =
-        error.response?.data?.message || error.message || "Login failed";
       addToast(errorMsg, "error");
     } finally {
       setIsLoading(false);
@@ -238,7 +271,7 @@ export default function Login() {
           </button>
 
           <div className="text-[12px] font-[400] mt-6">
-            Don’t have an account on CuratED?
+            Don't have an account on CuratED?
             <Link href={routes.signUp}>
               <span className="text-black font-semibold ml-2 text-[1rem] hover:underline">
                 Signup
