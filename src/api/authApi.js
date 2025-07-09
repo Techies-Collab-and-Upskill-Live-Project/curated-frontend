@@ -1,6 +1,6 @@
 import api from "./axios";
 
-export const login = (payload) => api.post("/login/", payload);
+export const login = (payload) => api.post("/users/login/", payload).then((res)=> res.data);
 
 export const signup = (userData) => api.post("/users/register/", userData);
 

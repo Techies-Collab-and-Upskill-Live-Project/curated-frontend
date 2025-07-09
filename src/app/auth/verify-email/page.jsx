@@ -89,7 +89,6 @@ export default function EmailVerification() {
         otp: code,
       };
 
-      console.log("Sending payload:", payload);
       const response = await verifyEmailCode(payload);
 
       if (response.status === 200) {
@@ -99,7 +98,6 @@ export default function EmailVerification() {
         clearVerificationEmail();
       }
     } catch (err) {
-      console.log("Error response:", err.response?.data);
       const message =
         err.response?.data?.message ||
         "Invalid verification code. Please try again.";

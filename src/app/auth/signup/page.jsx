@@ -15,8 +15,8 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -24,8 +24,8 @@ export default function SignUp() {
   });
 
   const [validity, setValidity] = useState({
-    firstName: null,
-    lastName: null,
+    first_name: null,
+    last_name: null,
     email: null,
     password: null,
     confirmPassword: null,
@@ -114,7 +114,7 @@ export default function SignUp() {
       return;
     }
 
-    if (name === "firstName" || name === "lastName") {
+    if (name === "first_name" || name === "last_name") {
       isValid = value.trim() !== "";
     }
 
@@ -135,15 +135,13 @@ export default function SignUp() {
 
     try {
       const payload = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         email: formData.email,
         password: formData.password,
       };
 
       await signup(payload);
-
-      console.log("✅ Email used for signup:", formData.email);
 
       //set verification email in auth store
       useAuthStore.getState().setVerificationEmail(formData.email);
@@ -157,8 +155,6 @@ export default function SignUp() {
       // Navigate to email verification page
       router.push(routes.verifyEmail);
     } catch (error) {
-      console.error("❌ Signup error:", error);
-
       let errorMsg = "Signup failed, Please try again.";
 
       if (error.response?.data) {
@@ -215,19 +211,19 @@ export default function SignUp() {
           <div className="flex gap-4">
             <InputField
               label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleChange}
-              isValid={validity.firstName}
+              isValid={validity.first_name}
               required
               containerClass="w-[166px] md:w-[305px]"
             />
             <InputField
               label="Last Name"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
-              isValid={validity.lastName}
+              isValid={validity.last_name}
               required
               containerClass="w-[166px] md:w-[305px]"
             />
