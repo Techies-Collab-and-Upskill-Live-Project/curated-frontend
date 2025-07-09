@@ -24,16 +24,30 @@ jobs:
 
       - name: Install sharp for Linux (force correct binary)
         run: npm install --force --platform=linux --arch=x64 sharp
-      
+
       - name: Install remaining dependencies (including optional)
         run: npm install --include=optional
-      
+
       - name: Verify sharp installation
         run: node -e "require('sharp'); console.log('Sharp is working ✅');"
 
+      - name: Print and verify API URL
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.DEV_API_URL }}
+        run: |
+          echo "🔍 API Base URL from secrets: $NEXT_PUBLIC_API_URL"
+          EXPECTED_API_URL="https://slimy-libby-htcode-d75a500b.koyeb.app/api/v1"
+          
+          if [ "$NEXT_PUBLIC_API_URL" != "$EXPECTED_API_URL" ]; then
+            echo "❌ Mismatch: API URL does not match expected value."
+            exit 1
+          else
+            echo "✅ API URL verified."
+          fi
+
       - name: Build project
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.DEV_API_URL }}  # or PROD_API_URL depending on the branch
+          NEXT_PUBLIC_API_URL: ${{ secrets.DEV_API_URL }}
         run: npm run build
 
       - name: Deploy to Vercel
@@ -51,7 +65,7 @@ jobs:
       - name: Post deployment message
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            echo "Deployed to devcurated.vercel.app"
+            echo "🚀 Deployed to devcurated.vercel.app"
           elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "Deployed to prodcurated.vercel.app"
+            echo "🚀 Deployed to prodcurated.vercel.app"
           fi
