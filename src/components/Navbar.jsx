@@ -19,7 +19,6 @@ export default function Navbar() {
     // Placeholder: replace with actual search logic
     console.log("Search submitted:", query);
   };
-
   return (
     <nav className="flex items-center justify-between p-6">
       <Link href={isLoggedIn ? routes.dashboard.base : routes.home}>
@@ -46,46 +45,51 @@ export default function Navbar() {
       )}
 
       {isLoggedIn && (
-        <>
-          {/* Search Bar */}
-          <div className="lg:w-[690px] relative hidden lg:block">
-            <form
-              className="flex items-center text-white border rounded-[10px] gap-2 mb-2"
-              onSubmit={handleSubmit}
-            >
-              <div className="relative flex-1">
-                <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2" />
-                <input
-                  type="text"
-                  className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent text-black"
-                  required
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-primary text-white px-6 py-2 rounded-md transition-colors"
-              >
-                Search
-              </button>
-            </form>
-          </div>
 
-          {/* Profile and Notifications */}
-          <div className="flex items-center lg:mr-12 gap-12">
-            <Link href={routes.dashboard.notifications}>
-              <IconBell />
-            </Link>
-            <Link href={routes.dashboard.profile}>
+        <div className="lg:w-[690px] relative hidden lg:block">
+          <form
+            className="flex items-center text-white border rounded-[10px] gap-2 mb-2"
+            onSubmit={handleSubmit}
+          >
+            <div className="relative flex-1">
+              <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2" />
+              <input
+                type="text"
+                className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent text-black"
+                required
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="bg-primary text-white px-6 py-2 rounded-md transition-colors"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      )}
+      {isLoggedIn && (
+        <div className="flex items-center lg:mr-12 gap-12">
+          <Link href={routes.dashboard.notifications}>
+            <IconBell />
+          </Link>
+          <Link href={routes.dashboard.profile}>
+            {profile?.image ? (
               <img
-                src={profile?.image || "/avatar.jpg"}
+                src={profile.image}
                 alt="Profile"
                 className="w-8 h-8 rounded-full object-cover"
               />
-            </Link>
-          </div>
-        </>
+            ) : (
+              <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white text-base font-bold">
+                {profile?.username?.charAt(0).toUpperCase() || "?"}
+              </div>
+            )}
+          </Link>
+        </div>
       )}
     </nav>
   );
