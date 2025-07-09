@@ -32,6 +32,8 @@ jobs:
         run: node -e "require('sharp'); console.log('Sharp is working ✅');"
 
       - name: Build project
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.DEV_API_URL }}  # or PROD_API_URL depending on the branch
         run: npm run build
 
       - name: Deploy to Vercel
@@ -53,4 +55,3 @@ jobs:
           elif [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "Deployed to prodcurated.vercel.app"
           fi
-
