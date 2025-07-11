@@ -9,6 +9,7 @@ import SearchBar from "@/app/dashboard/_components/SearchBar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToast } from "@/components/Toast";
 import { routes } from "@/config/constant";
+import { useSearchStore } from "@/store/useSearchStore";
 
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
@@ -69,6 +70,35 @@ const DashboardLayout = ({ children }) => {
     hasRedirected,
   ]);
 
+  const { setResults, setLoading } = useSearchStore();
+
+  const handleSearch = async (query) => {
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams({
+        q: query,
+        max_results: '25',
+        educational_focus: 'true',
+        content_filter: 'moderate',
+        sort_by: 'viewCount',
+      });
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/?${params.toString()}`);
+
+      if (!res.ok) {
+        alert("Failed to fetch search results. Please try again later.");
+      }
+      const data = await res.json();
+
+      setResults(data);
+    } catch (error) {
+      console.error("Search error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // While checking auth or before hydration
   if (!isHydrated || (!isLoggedIn && !shouldRedirect)) {
     return (
@@ -84,7 +114,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div>
       {!noNavbarRoutes.includes(pathname) && <Navbar />}
-      {!noNavbarRoutes.includes(pathname) && <SearchBar />}
+      {!noNavbarRoutes.includes(pathname) && <SearchBar onSearch={handleSearch} />}
       {children}
     </div>
   );
