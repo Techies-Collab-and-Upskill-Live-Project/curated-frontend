@@ -10,9 +10,8 @@ import Footer from "../../components/Footer";
 export default function Dashboard() {
   const router = useRouter();
 
-  const handleSearch = (query) => {
-    if (!query) return;
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+  const handleSearch = () => {
+    router.push('/dashboard/search')
   };
 
   return (

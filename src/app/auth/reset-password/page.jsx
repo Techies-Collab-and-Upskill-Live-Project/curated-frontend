@@ -1,22 +1,22 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import InputField from "@/components/InputField";
 import { routes } from "@/config/constant";
 import ResetLinkSentModal from "@/components/modals/ResetLinkSentModal";
 import { IconCircleDotted } from "@tabler/icons-react";
+import { resetPassword } from "@/api/authApi"; // Adjust the import based on your API structure
 import { useToast } from "@/components/Toast";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
 
   const { addToast } = useToast();
 
@@ -39,11 +39,7 @@ export default function ResetPassword() {
     setMessage("");
 
     if (!validateEmail(email)) {
-      addToast({
-        id: Date.now(),
-        type: "error",
-        message: "Please enter a valid email address",
-      });
+      addToast("Please enter a valid email address", "error");
       return;
     }
 
@@ -51,10 +47,9 @@ export default function ResetPassword() {
 
     try {
       // TODO: call your API to trigger forgot password email
-      // await forgotPassword({ email });
+      await resetPassword({ email });
 
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setSubmittedEmail(email); // Store submitted email for modal
 
       // Show the modal instead of inline message
       setShowResetModal(true);
@@ -63,13 +58,27 @@ export default function ResetPassword() {
       setEmail("");
       setIsTyping(false);
       setIsValid(false);
-    } catch (err) {
-      addToast({
-        id: Date.now(),
-        type: "error",
-        message: "Failed to send reset email. Please try again later.",
-      });
-      setError("Failed to send reset email. Please try again later.");
+    } catch (error) {
+      let errorMsg = "Signup failed, Please try again.";
+
+      if (error.response?.data) {
+        const errorData = error.response.data;
+
+        // If error is an object (e.g., { email: ["This field is required."] })
+        if (typeof errorData === "object" && !Array.isArray(errorData)) {
+          errorMsg = Object.entries(errorData)
+            .map(([field, messages]) => `${field}: ${messages.join(" ")}`)
+            .join("\n");
+        }
+        // If backend returns a plain string (e.g., "User already exists")
+        else if (typeof errorData === "string") {
+          errorMsg = errorData;
+        }
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+
+      addToast(errorMsg, "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -150,7 +159,7 @@ export default function ResetPassword() {
       <ResetLinkSentModal
         isOpen={showResetModal}
         onClose={handleModalClose}
-        email={email || "test@example.com"} // Use the actual email or fallback
+        email={submittedEmail} // Use the actual email or fallback
       />
     </div>
   );

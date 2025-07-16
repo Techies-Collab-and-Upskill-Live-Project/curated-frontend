@@ -178,7 +178,7 @@ const VerificationSuccessModal = ({ isOpen, onClose, onContinue }) => {
               onClick={onContinue}
               className="w-full bg-gradient-to-r from-outline_colors-100 to-outline_colors-300 hover:from-btn_colors-accent hover:to-btn_colors-secondary text-white py-3 px-4 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
             >
-              Continue to Dashboard
+              Continue to Login
             </button>
 
             {/* Close Button */}

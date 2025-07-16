@@ -1,6 +1,7 @@
 'use client'
 
 import { IconSearch } from '@tabler/icons-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Searchbar({ onSearch }) {
@@ -12,10 +13,10 @@ export default function Searchbar({ onSearch }) {
   };
 
   return (
-    <div className="w-full px-4 sm:px-0 max-w-2xl relative">
-      <form 
-      data-testid="search-form"
-      className="flex items-center text-white border rounded-[10px] gap-1 sm:gap-2 mb-2" onSubmit={handleSubmit}>
+    <Link href="/dashboard/search" className="w-full px-4 sm:px-0 max-w-2xl relative">
+      <form
+        data-testid="search-form"
+        className="flex items-center text-white border rounded-[10px] gap-1 sm:gap-2 mb-2" onSubmit={handleSubmit}>
         {/* Input Container with Icon */}
         <div className="relative flex-1">
 
@@ -36,6 +37,6 @@ export default function Searchbar({ onSearch }) {
           Search
         </button>
       </form>
-    </div>
+    </Link>
   );
 }
