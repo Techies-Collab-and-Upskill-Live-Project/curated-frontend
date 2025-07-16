@@ -90,8 +90,12 @@ const DashboardLayout = ({ children }) => {
         alert("Failed to fetch search results. Please try again later.");
       }
       const data = await res.json();
+      if (data) {
+        router.push(`/results`);
+      }
+      console.log("Search results:", data);
 
-      setResults(data);
+      setResults(data.results || []);
     } catch (error) {
       console.error("Search error:", error);
     } finally {
