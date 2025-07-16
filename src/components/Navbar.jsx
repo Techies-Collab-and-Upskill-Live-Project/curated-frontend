@@ -45,7 +45,6 @@ export default function Navbar() {
       )}
 
       {isLoggedIn && (
-
         <div className="lg:w-[690px] relative hidden lg:block">
           <form
             className="flex items-center text-white border rounded-[10px] gap-2 mb-2"
@@ -85,7 +84,9 @@ export default function Navbar() {
               />
             ) : (
               <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white text-base font-bold">
-                {profile?.username?.charAt(0).toUpperCase() || "?"}
+                {`${profile?.firstname?.charAt(0).toUpperCase() || ""}${
+                  profile?.lastname?.charAt(0).toUpperCase() || ""
+                }` || "?"}
               </div>
             )}
           </Link>
