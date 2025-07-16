@@ -19,6 +19,13 @@ export default function Navbar() {
     // Placeholder: replace with actual search logic
     console.log("Search submitted:", query);
   };
+
+  const getInitials = () => {
+    const firstInitial = profile?.firstname?.charAt(0).toUpperCase() || "";
+    const lastInitial = profile?.lastname?.charAt(0).toUpperCase() || "";
+    return firstInitial || lastInitial ? `${firstInitial}${lastInitial}` : "?";
+  };
+
   return (
     <nav className="flex items-center justify-between p-6">
       <Link href={isLoggedIn ? routes.dashboard.base : routes.home}>
@@ -83,10 +90,8 @@ export default function Navbar() {
                 className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white text-base font-bold">
-                {`${profile?.firstname?.charAt(0).toUpperCase() || ""}${
-                  profile?.lastname?.charAt(0).toUpperCase() || ""
-                }` || "?"}
+              <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-sm font-bold">
+                {getInitials()}
               </div>
             )}
           </Link>
