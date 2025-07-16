@@ -90,7 +90,7 @@ export default function Navbar() {
                 className="w-8 h-8 rounded-full object-cover"
               />
             ) : (
-              <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-sm font-bold">
+              <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-btn_colors-secondary rounded-full text-white text-sm font-bold">
                 {getInitials()}
               </div>
             )}
