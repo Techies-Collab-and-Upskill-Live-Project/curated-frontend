@@ -1,5 +1,7 @@
 "use client";
 
+import { useSearchStore } from "@/store/useSearchStore";
+
 const search = [
   // 'search history',
   // 'search history',
@@ -8,6 +10,31 @@ const search = [
 ];
 
 export default function SearchPage() {
+  const { setResults, setLoading } = useSearchStore();
+
+  const handleSearch = async (query) => {
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams({
+        q: query,
+        max_results: '25',
+        educational_focus: 'true',
+        content_filter: 'moderate',
+        sort_by: 'viewCount',
+      });
+
+      const res = await fetch(`/api/v1/search/?${params.toString()}`);
+      const data = await res.json();
+
+      setResults(data);
+    } catch (error) {
+      console.error("Search error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="flex mx-auto flex-col">
       {!search.length ? (
