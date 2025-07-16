@@ -38,8 +38,8 @@ export default function ProfilePage() {
   useEffect(() => {
     if (profile) {
       setFormData({
-        name: profile.name,
-        username: profile.username,
+        firstname: profile.firstname,
+        lastname: profile.lastname,
         email: profile.email,
       });
       setPreview(profile.image);
@@ -61,16 +61,16 @@ export default function ProfilePage() {
   };
 
   const handleSave = () => {
-    const { name, username, email } = formData;
-    if (!name || !username || !email) {
+    const { firstname, lastname, email } = formData;
+    if (!firstname || !lastname || !email) {
       setError("All fields are required.");
       return;
     }
 
     // Update the profile in the store
     updateProfile({
-      name,
-      username,
+      firstname,
+      lastname,
       email,
       image: preview, // Make sure the image is also saved
     });
@@ -98,8 +98,9 @@ export default function ProfilePage() {
       <div className="max-w-5xl mx-auto space-y-10">
         {/* Top Section - Hidden on mobile when editing */}
         <div
-          className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${isEditing ? "sm:flex hidden" : ""
-            }`}
+          className={`flex justify-between items-start md:items-center flex-col md:flex-row gap-4 ${
+            isEditing ? "sm:flex hidden" : ""
+          }`}
         >
           <div className="flex gap-4 items-center">
             <div className="relative w-20 h-20">
@@ -112,7 +113,9 @@ export default function ProfilePage() {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-300 rounded-full text-white text-2xl font-bold">
-                  {(isEditing ? formData.username : profile?.username)?.charAt(0).toUpperCase() || "?"}
+                  {(isEditing ? formData.lastname : profile?.lastname)
+                    ?.charAt(0)
+                    .toUpperCase() || "?"}
                 </div>
               )}
               {isEditing && (
@@ -132,18 +135,18 @@ export default function ProfilePage() {
                 <div className="space-y-1">
                   <input
                     type="text"
-                    name="name"
-                    placeholder="Enter name"
-                    value={formData.name}
+                    name="first name"
+                    placeholder="Enter first name"
+                    value={formData.firstname}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
                   />
                   <input
                     type="text"
-                    name="username"
-                    placeholder="Enter username"
-                    value={formData.username}
+                    name="last name"
+                    placeholder="Enter last name"
+                    value={formData.lastname}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
@@ -162,11 +165,12 @@ export default function ProfilePage() {
               ) : (
                 <div className="text-sm space-y-1">
                   <p>
-                    <span className="font-semibold">Name:</span> {profile?.name}
+                    <span className="font-semibold">First Name:</span>{" "}
+                    {profile?.firstname}
                   </p>
                   <p>
-                    <span className="font-semibold">Username:</span>{" "}
-                    {profile?.username}
+                    <span className="font-semibold">Last Name:</span>{" "}
+                    {profile?.lastname}
                   </p>
                   <p>
                     <span className="font-semibold">Email:</span>{" "}
@@ -228,8 +232,19 @@ export default function ProfilePage() {
                   className="rounded-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-300 rounded-full text-white text-4xl font-bold">
-                  {formData.username?.charAt(0).toUpperCase() || "?"}
+                <div className="w-full h-full flex items-center justify-center rounded-full text-white text-4xl font-bold relative overflow-hidden">
+                  {/* Color halves */}
+                  <div className="absolute inset-0">
+                    <div className="h-1/2 w-full bg-primary"></div>
+                    <div className="h-1/2 w-full bg-secondary"></div>
+                  </div>
+
+                  {/* Initials (centered on top of colors) */}
+                  <span className="relative z-10">
+                    {`${profile?.firstname?.charAt(0).toUpperCase() || ""}${
+                      profile?.lastname?.charAt(0).toUpperCase() || ""
+                    }` || "?"}
+                  </span>
                 </div>
               )}
               <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full cursor-pointer">
@@ -246,14 +261,14 @@ export default function ProfilePage() {
             <div className="w-full space-y-4">
               <div>
                 <label className="block text-left font-semibold mb-1">
-                  Name
+                  Firstname
                 </label>
                 <input
-                  name="name"
+                  name="firstname"
                   type="text"
-                  value={formData.name}
+                  value={formData.firstname}
                   onChange={handleChange}
-                  placeholder="Enter name"
+                  placeholder="Enter first name"
                   required
                   className="w-full border rounded px-4 py-2"
                 />
@@ -261,14 +276,14 @@ export default function ProfilePage() {
 
               <div>
                 <label className="block text-left font-semibold mb-1">
-                  Username
+                  Lastname
                 </label>
                 <input
-                  name="username"
+                  name="lastname"
                   type="text"
-                  value={formData.username}
+                  value={formData.lastname}
                   onChange={handleChange}
-                  placeholder="@username"
+                  placeholder="Enter last name"
                   required
                   className="w-full border rounded px-4 py-2"
                 />

@@ -13,8 +13,8 @@ export const useAuthStore = create(
 
       // Profile information
       profile: {
-        name: "",
-        username: "",
+        firstname: "",
+        lastname: "",
         email: "",
         image: "",
       },
@@ -34,8 +34,8 @@ export const useAuthStore = create(
           justLoggedOut: false,
           shouldRedirectAfterLogout: false,
           profile: {
-            name: user.full_name || user.first_name || "",
-            username: user.username || "",
+            firstname: user.firstname || user.first_name || "",
+            lastname: user.lastname || user.last_name || "",
             email: user.email || "",
             image: user.image || "",
           },
@@ -51,8 +51,8 @@ export const useAuthStore = create(
           justLoggedOut: true,
           shouldRedirectAfterLogout: true,
           profile: {
-            name: "",
-            username: "",
+            firstname: "",
+            lastname: "",
             email: "",
             image: "",
           },
