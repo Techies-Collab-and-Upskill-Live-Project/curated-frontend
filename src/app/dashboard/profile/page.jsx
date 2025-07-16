@@ -93,6 +93,12 @@ export default function ProfilePage() {
     setShowLogoutModal(false);
   };
 
+  const getInitials = () => {
+    const firstInitial = profile?.firstname?.charAt(0).toUpperCase() || "";
+    const lastInitial = profile?.lastname?.charAt(0).toUpperCase() || "";
+    return firstInitial || lastInitial ? `${firstInitial}${lastInitial}` : "?";
+  };
+
   return (
     <div className="min-h-screen bg-white px-4 py-6 md:px-12 relative">
       <div className="max-w-5xl mx-auto space-y-10">
@@ -112,10 +118,8 @@ export default function ProfilePage() {
                   className="rounded-full object-cover border"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-300 rounded-full text-white text-2xl font-bold">
-                  {(isEditing ? formData.lastname : profile?.lastname)
-                    ?.charAt(0)
-                    .toUpperCase() || "?"}
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-2xl font-bold">
+                  {getInitials()}
                 </div>
               )}
               {isEditing && (
@@ -232,19 +236,8 @@ export default function ProfilePage() {
                   className="rounded-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center rounded-full text-white text-4xl font-bold relative overflow-hidden">
-                  {/* Color halves */}
-                  <div className="absolute inset-0">
-                    <div className="h-1/2 w-full bg-primary"></div>
-                    <div className="h-1/2 w-full bg-secondary"></div>
-                  </div>
-
-                  {/* Initials (centered on top of colors) */}
-                  <span className="relative z-10">
-                    {`${profile?.firstname?.charAt(0).toUpperCase() || ""}${
-                      profile?.lastname?.charAt(0).toUpperCase() || ""
-                    }` || "?"}
-                  </span>
+                <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-sm font-bold">
+                  {getInitials()}
                 </div>
               )}
               <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full cursor-pointer">
