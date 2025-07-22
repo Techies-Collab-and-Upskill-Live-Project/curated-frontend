@@ -16,7 +16,7 @@ export default function SavedVideos() {
     if (loading) {
         return (
         <div className="flex justify-center items-center h-screen bg-white">
-            <p className="text-gray-500"><LoadingSpinner /></p>
+            <div className="text-gray-500"><LoadingSpinner /></div>
         </div>
         );
     }

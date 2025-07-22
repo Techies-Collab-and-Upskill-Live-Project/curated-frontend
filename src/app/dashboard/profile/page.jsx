@@ -325,7 +325,7 @@ function Section({ title, videos }) {
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-sm font-semibold">{title}</h2>
         <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">
-          View All
+          <Link href={routes.dashboard.saved}>View All</Link>
         </button>
       </div>
       {videos.length === 0 ? (
