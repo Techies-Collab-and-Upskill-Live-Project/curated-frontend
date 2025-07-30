@@ -12,8 +12,8 @@ export const routes = {
     search: "/dashboard/search",
     saved: "/dashboard/saved-videos",
     watchHistory: "/dashboard/watch-history",
-    video: {
-      base: "/dashboard/video",
+    player: {
+      base: "/dashboard/player",
       player: (id) => `/dashboard/video/${id}`,
     },
 

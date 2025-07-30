@@ -1,39 +1,52 @@
 "use client";
 
 import Link from "next/link";
-import { routes } from "../config/constant";
-import { IconBell } from "@tabler/icons-react";
 import { useState } from "react";
-import { IconSearch } from "@tabler/icons-react";
+import { IconBell, IconSearch } from "@tabler/icons-react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { routes } from "../config/constant";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
+  const accessToken = useAuthStore((state) => state.accessToken);
   const profile = useAuthStore((state) => state.profile);
+
+  const isLoggedIn = !!accessToken;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query);
+    // Placeholder: replace with actual search logic
+    console.log("Search submitted:", query);
   };
+
+  const getInitials = () => {
+    const firstInitial = profile?.firstname?.charAt(0).toUpperCase() || "";
+    const lastInitial = profile?.lastname?.charAt(0).toUpperCase() || "";
+    return firstInitial || lastInitial ? `${firstInitial}${lastInitial}` : "?";
+  };
+
   return (
     <nav className="flex items-center justify-between p-6">
       <Link href={isLoggedIn ? routes.dashboard.base : routes.home}>
         <h1 className="md:text-2xl font-bold text-primary md:ml-20">CuratED</h1>
       </Link>
+
       {!isLoggedIn && (
         <div className="flex items-center gap-2">
           <Link
             href={routes.login}
-            className="px-4 py-2 border border-primary rounded-[10px] md:px-6 md:py-3 font-medium"
+            className="relative px-4 py-2 border border-primary rounded-[10px] md:px-6 md:py-3 font-medium overflow-hidden group transition-colors duration-300"
           >
-            Login
+            <span className="relative z-10">Login</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
           </Link>
           <Link
             href={routes.signUp}
-            className="border px-4 py-2 bg-primary text-white font-bold rounded-[10px] md:mr-20 md:px-6 md:py-3"
+            className="relative border px-4 py-2 bg-primary text-white font-bold rounded-[10px] md:mr-20 md:px-6 md:py-3 overflow-hidden group"
           >
-            Sign up
+            <span className="relative z-10">Sign up</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
           </Link>
         </div>
       )}
@@ -45,7 +58,7 @@ export default function Navbar() {
             onSubmit={handleSubmit}
           >
             <div className="relative flex-1">
-              <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2 " />
+              <IconSearch className="absolute text-black left-3 top-1/2 transform -translate-y-1/2" />
               <input
                 type="text"
                 className="w-full pl-10 pr-4 py-2 focus:outline-none bg-transparent text-black"
@@ -70,11 +83,17 @@ export default function Navbar() {
             <IconBell />
           </Link>
           <Link href={routes.dashboard.profile}>
-            <img
-              src={profile?.image || "/avatar.jpg"}
-              alt="Profile"
-              className="w-8 h-8 rounded-full object-cover"
-            />
+            {profile?.image ? (
+              <img
+                src={profile.image}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-btn_colors-secondary rounded-full text-white text-sm font-bold">
+                {getInitials()}
+              </div>
+            )}
           </Link>
         </div>
       )}

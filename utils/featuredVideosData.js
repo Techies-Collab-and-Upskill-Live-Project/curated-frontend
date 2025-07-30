@@ -4,7 +4,6 @@ export const videoIds = [
   "DHjqpvDnNGE", // JavaScript in 100 Seconds
   "bMknfKXIFA8", // React JS Full Course
   "G3e-cpL7ofc", // HTML & CSS Full Course
-  "IlU-zDU6aQ0",
   "IlU-zDU6aQ0", // Python Full Course
   "dBxxi5XAm3U", // We Traveled Back in Time (Brilliant/Kurzgesagt) :contentReference[oaicite:11]{index=11}
   "w4M_LcHsD_M", // The Physics of Time Explained :contentReference[oaicite:12]{index=12}

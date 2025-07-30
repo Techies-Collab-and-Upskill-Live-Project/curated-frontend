@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-8 mb-12 text-white">
           {/* Left Column - Theme */}
           <div>
-            <h3 className="text-2xl font-bold mb-6">CurateD</h3>
+            <h3 className="text-2xl font-bold mb-6">CuratED</h3>
             <p className="mb-6 text-gray-300">Discover smarter ways to learn.</p>
           </div>
 

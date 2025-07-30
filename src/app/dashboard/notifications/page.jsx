@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { getuserNotifications } from "@/api/mock";
 import { IconArrowLeft } from "@tabler/icons-react";
@@ -61,7 +60,6 @@ export default function Notification() {
     if (Object.values(groupedNotifications ?? {}).flat().length === 0) {
         return (
         <main className="min-h-screen bg-gray-100">
-            <Navbar />
             <div className="flex items-center justify-center h-[70vh]">
             <div className="flex flex-col items-center bg-white rounded-lg shadow-lg p-6 w-[350px] md:w-[820px]">
                 <h1 className="text-xl font-semibold text-gray-800">No notifications yet!</h1>
@@ -77,7 +75,6 @@ export default function Notification() {
     // Notification display UI
     return (
         <main className="min-h-screen bg-white">
-        <Navbar />
         <div className="px-4 pt-6 max-w-2xl mx-auto">
             <IconArrowLeft className="mb-4 cursor-pointer text-gray-600" />
             {Object.entries(groupedNotifications).map(([groupTitle, items]) =>

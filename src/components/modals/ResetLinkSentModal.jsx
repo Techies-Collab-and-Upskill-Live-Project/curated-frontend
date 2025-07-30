@@ -8,11 +8,9 @@ const ResetLinkSentModal = ({ isOpen, onClose, email }) => {
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
-      // Small delay to ensure the modal is rendered before animation starts
       setTimeout(() => setIsAnimating(true), 100);
     } else {
       setIsAnimating(false);
-      // Wait for animation to complete before hiding
       const timer = setTimeout(() => setIsVisible(false), 300);
       return () => clearTimeout(timer);
     }
@@ -28,13 +26,18 @@ const ResetLinkSentModal = ({ isOpen, onClose, email }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
       {/* Backdrop */}
       <div
         className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
           isAnimating ? "opacity-100" : "opacity-0"
         }`}
         onClick={handleClose}
+        aria-hidden="true"
       />
 
       {/* Modal */}
@@ -51,7 +54,7 @@ const ResetLinkSentModal = ({ isOpen, onClose, email }) => {
             <IconMailCheck size={40} className="text-white" />
           </div>
 
-          {/* Success Message */}
+          {/* Message */}
           <h2 className="text-2xl font-bold text-gray-900 mb-3">
             Reset Link Sent!
           </h2>
@@ -60,7 +63,10 @@ const ResetLinkSentModal = ({ isOpen, onClose, email }) => {
             We've sent a password reset link to:
           </p>
 
-          <p className="text-[#262323] font-semibold mb-6 break-all">{email}</p>
+          {/* Email Display */}
+          <p className="text-[#262323] font-semibold mb-6 break-all">
+            {email || "your email address"}
+          </p>
 
           {/* Info Box */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">

@@ -6,17 +6,23 @@ import { IconEdit, IconLogout, IconPhoto } from "@tabler/icons-react";
 import Link from "next/link";
 import { routes } from "@/config/constant.js";
 import { useAuthStore } from "@/store/useAuthStore";
+import LogoutModal from "@/components/modals/LogoutModal.jsx";
+import { useToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const logout = useAuthStore((state) => state.logout);
+  const { addToast } = useToast(); // Get the toast function
+  const router = useRouter();
 
   // Get profile data and actions from Zustand store
   const profile = useAuthStore((state) => state.profile);
   const updateProfile = useAuthStore((state) => state.updateProfile);
   const updateProfileImage = useAuthStore((state) => state.updateProfileImage);
-  const logout = useAuthStore((state) => state.logout);
 
   // Local form state for editing
   const [formData, setFormData] = useState({
@@ -32,8 +38,8 @@ export default function ProfilePage() {
   useEffect(() => {
     if (profile) {
       setFormData({
-        name: profile.name,
-        username: profile.username,
+        firstname: profile.firstname,
+        lastname: profile.lastname,
         email: profile.email,
       });
       setPreview(profile.image);
@@ -55,16 +61,16 @@ export default function ProfilePage() {
   };
 
   const handleSave = () => {
-    const { name, username, email } = formData;
-    if (!name || !username || !email) {
+    const { firstname, lastname, email } = formData;
+    if (!firstname || !lastname || !email) {
       setError("All fields are required.");
       return;
     }
 
     // Update the profile in the store
     updateProfile({
-      name,
-      username,
+      firstname,
+      lastname,
       email,
       image: preview, // Make sure the image is also saved
     });
@@ -73,9 +79,24 @@ export default function ProfilePage() {
     setIsEditing(false);
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleLogoutConfirm = () => {
     logout();
-    // Redirect to home or login page if needed
+    addToast("You have successfully logged out.", "success");
+    setShowLogoutModal(false);
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutModal(false);
+  };
+
+  const getInitials = () => {
+    const firstInitial = profile?.firstname?.charAt(0).toUpperCase() || "";
+    const lastInitial = profile?.lastname?.charAt(0).toUpperCase() || "";
+    return firstInitial || lastInitial ? `${firstInitial}${lastInitial}` : "?";
   };
 
   return (
@@ -88,14 +109,19 @@ export default function ProfilePage() {
           }`}
         >
           <div className="flex gap-4 items-center">
-            <div className="relative">
-              <Image
-                src={preview || "/avatar.jpg"}
-                alt="Profile"
-                width={80}
-                height={80}
-                className="rounded-full object-cover border"
-              />
+            <div className="relative w-20 h-20">
+              {preview ? (
+                <Image
+                  src={preview}
+                  alt="Profile"
+                  fill
+                  className="rounded-full object-cover border"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-primary to-btn_colors-secondary rounded-full text-white text-2xl font-bold">
+                  {getInitials()}
+                </div>
+              )}
               {isEditing && (
                 <label className="absolute -bottom-1 -right-1 bg-white border rounded-full p-1 cursor-pointer">
                   <IconPhoto className="w-4 h-4 text-gray-600" />
@@ -113,18 +139,18 @@ export default function ProfilePage() {
                 <div className="space-y-1">
                   <input
                     type="text"
-                    name="name"
-                    placeholder="Enter name"
-                    value={formData.name}
+                    name="first name"
+                    placeholder="Enter first name"
+                    value={formData.firstname}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
                   />
                   <input
                     type="text"
-                    name="username"
-                    placeholder="Enter username"
-                    value={formData.username}
+                    name="last name"
+                    placeholder="Enter last name"
+                    value={formData.lastname}
                     onChange={handleChange}
                     className="border rounded px-2 py-1 w-full"
                     required
@@ -143,11 +169,12 @@ export default function ProfilePage() {
               ) : (
                 <div className="text-sm space-y-1">
                   <p>
-                    <span className="font-semibold">Name:</span> {profile?.name}
+                    <span className="font-semibold">First Name:</span>{" "}
+                    {profile?.firstname}
                   </p>
                   <p>
-                    <span className="font-semibold">Username:</span>{" "}
-                    {profile?.username}
+                    <span className="font-semibold">Last Name:</span>{" "}
+                    {profile?.lastname}
                   </p>
                   <p>
                     <span className="font-semibold">Email:</span>{" "}
@@ -188,7 +215,7 @@ export default function ProfilePage() {
             Change Password
           </Link>
           <button
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
           >
             <IconLogout className="w-4 h-4" /> Logout
@@ -200,14 +227,19 @@ export default function ProfilePage() {
       {isEditing && (
         <div className="fixed inset-0 z-50 bg-white p-6 sm:hidden overflow-y-auto">
           <div className="flex flex-col items-center text-center">
-            <div className="relative mb-6">
-              <Image
-                src={preview || "/avatar.jpg"}
-                alt="Profile"
-                width={140}
-                height={140}
-                className="rounded-full object-cover"
-              />
+            <div className="relative w-36 h-36 mb-6">
+              {preview ? (
+                <Image
+                  src={preview}
+                  alt="Profile"
+                  fill
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-sm font-bold">
+                  {getInitials()}
+                </div>
+              )}
               <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full cursor-pointer">
                 <IconPhoto className="w-6 h-6 text-white" />
                 <input
@@ -222,14 +254,14 @@ export default function ProfilePage() {
             <div className="w-full space-y-4">
               <div>
                 <label className="block text-left font-semibold mb-1">
-                  Name
+                  Firstname
                 </label>
                 <input
-                  name="name"
+                  name="firstname"
                   type="text"
-                  value={formData.name}
+                  value={formData.firstname}
                   onChange={handleChange}
-                  placeholder="Enter name"
+                  placeholder="Enter first name"
                   required
                   className="w-full border rounded px-4 py-2"
                 />
@@ -237,14 +269,14 @@ export default function ProfilePage() {
 
               <div>
                 <label className="block text-left font-semibold mb-1">
-                  Username
+                  Lastname
                 </label>
                 <input
-                  name="username"
+                  name="lastname"
                   type="text"
-                  value={formData.username}
+                  value={formData.lastname}
                   onChange={handleChange}
-                  placeholder="@username"
+                  placeholder="Enter last name"
                   required
                   className="w-full border rounded px-4 py-2"
                 />
@@ -277,6 +309,12 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
+
+      <LogoutModal
+        isOpen={showLogoutModal}
+        onClose={handleLogoutCancel}
+        onLogout={handleLogoutConfirm}
+      />
     </div>
   );
 }
