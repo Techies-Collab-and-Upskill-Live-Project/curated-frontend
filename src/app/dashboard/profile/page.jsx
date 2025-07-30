@@ -118,7 +118,7 @@ export default function ProfilePage() {
                   className="rounded-full object-cover border"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-primary to-secondary rounded-full text-white text-2xl font-bold">
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-primary to-btn_colors-secondary rounded-full text-white text-2xl font-bold">
                   {getInitials()}
                 </div>
               )}
