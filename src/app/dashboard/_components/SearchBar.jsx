@@ -3,16 +3,32 @@
 import { IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false)
   const pathname = usePathname(); // Get current route
   const isProfilePage = pathname === "/dashboard/profile";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch(query);
+    setLoading(true)
+    try{
+      await onSearch(query);
+    }catch(err){
+      console.log("search error", err);
+    }finally{
+      setLoading(false)
+    }
   };
+  if(loading){
+    return(
+      <div>
+        <LoadingSpinner className="w-full h-full bg-transparent" />
+      </div>
+    )
+  }
 
   return (
     (isProfilePage) ? null :
