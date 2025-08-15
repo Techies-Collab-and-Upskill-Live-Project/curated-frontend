@@ -320,11 +320,12 @@ export default function ProfilePage() {
 }
 
 function Section({ title, videos }) {
+  const router = useRouter();
   return (
     <div>
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <button className="text-sm border px-3 py-1 rounded hover:bg-gray-50">
+        <button onClick={()=>{router.push(routes.dashboard.watchHistory)}} className="text-sm border px-3 py-2 rounded-md hover:bg-gray-50">
           View All
         </button>
       </div>

@@ -116,11 +116,21 @@ const DashboardLayout = ({ children }) => {
   }
 
   return (
-    <div>
-      {!noNavbarRoutes.includes(pathname) && <Navbar />}
-      {!noNavbarRoutes.includes(pathname) && <SearchBar onSearch={handleSearch} />}
-      {children}
+   <div className="flex flex-col min-h-screen">
+  {/* Top section: Navbar + Search */}
+  {!noNavbarRoutes.includes(pathname) && (
+    <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 gap-3 bg-white shadow">
+      <Navbar />
+      <SearchBar onSearch={handleSearch} />
     </div>
+  )}
+
+  {/* Content section */}
+  <main className="flex-1 w-full p-4">
+    {children}
+  </main>
+</div>
+
   );
 };
 
