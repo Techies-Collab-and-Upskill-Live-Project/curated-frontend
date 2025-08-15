@@ -157,7 +157,7 @@ const VideoPlayerPage = (props) => {
 
         <div className="flex items-center gap-4 justify-between">
           <div className="flex items-center md:m-0 mt-4 bg-[#F9E3DE] text-[#000000] text-[16px] py-3 md:px-6 p-2 rounded-md gap-2">
-            <ThumbsUp /> 4.8k | <ThumbsDown />
+            <ThumbsUp /> {video.ThumbsUp}<ThumbsDown />
           </div>
           <div className="flex items-center bg-[#F9E3DE] text-[#000000] text-[16px] py-3 p-2 md:px-6 rounded-md gap-2">
             <Bookmark />
